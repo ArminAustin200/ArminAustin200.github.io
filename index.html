@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WareHouseX360</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts (similar vibe to screenshot) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Reset / Base ---------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #000;
+      background-color: #ffffff;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ---------- Layout Helpers ---------- */
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: min(1200px, 100% - 3rem);
+      margin: 0 auto;
+    }
+
+    /* ---------- Header / Nav ---------- */
+    header {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-img {
+      width: 58px;
+      height: auto;
+    }
+
+    .logo-text {
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 3rem;
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 0.2rem;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #000;
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-right .contact-btn {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      padding: 0.4rem 1.6rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      background: #d97917;
+      color: #000;
+      box-shadow: 0 3px 0 #000;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .nav-right .contact-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #e98c28;
+    }
+
+    /* ---------- Hero Section ---------- */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      padding-block: 3rem;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    /* Left side text */
+    .hero-left {
+      padding-right: 2rem;
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.6rem, 3.4vw, 3.2rem);
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-copy {
+      font-size: 1.4rem;
+      max-width: 28rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.8rem;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .primary-btn {
+      background: #000;
+      color: #fff;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+      background: #111;
+    }
+
+    .secondary-btn {
+      background: #f3f3f3;
+      color: #000;
+      border: 2px solid #000;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+      background: #e5e5e5;
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+
+    /* Right side image card */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .console-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 4px solid #000;
+      max-width: 480px;
+      aspect-ratio: 3 / 4;
+      background: #eee;
+    }
+
+    .console-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .carousel-arrow:hover {
+      background: #fff;
+      transform: translateY(-50%) translateY(1px);
+    }
+
+    .carousel-arrow.left {
+      left: 0.8rem;
+    }
+
+    .carousel-arrow.right {
+      right: 0.8rem;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .nav-center {
+        display: none; /* quick & dirty for small screens */
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-left {
+        padding-right: 0;
+      }
+
+      .hero {
+        padding-block: 2.2rem;
+      }
+
+      .console-card {
+        max-width: 420px;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 10;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(100% - 2rem, 100%);
+      }
+
+      .hero-title {
+        font-size: 2.1rem;
+      }
+
+      .hero-copy {
+        font-size: 1.1rem;
+      }
+
+      .nav-right .contact-btn {
+        font-size: 1.05rem;
+        padding-inline: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Header / Nav -->
+    <header>
+      <div class="container nav">
+        <div class="nav-left">
+          <!-- Replace src with your logo -->
+          <img src="https://via.placeholder.com/58x58?text=Logo" alt="WareHouseX360 logo" class="logo-img">
+          <div class="logo-text">WAREHOUSEX360</div>
+        </div>
+
+        <nav class="nav-center">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#prebuilt" class="nav-link">Shop Pre-Built Consoles</a>
+          <a href="#sendin" class="nav-link">Send-In Service</a>
+        </nav>
+
+        <div class="nav-right">
+          <a href="#contact">
+            <button class="contact-btn">Contact Us</button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="hero">
+      <div class="container hero-inner">
+        <!-- Left text -->
+        <section class="hero-left">
+          <h1 class="hero-title">
+            <span>Shop with ease at</span>
+            <span>WareHouseX360</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            View a Wide Variety of
+          </p>
+          <p class="hero-copy">
+            Different Mods/Consoles
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#prebuilt">
+              <button class="primary-btn">
+                <span class="btn-icon">🎮</span>
+                <span>Pre-Built Consoles</span>
+              </button>
+            </a>
+
+            <a href="#sendin">
+              <button class="secondary-btn">
+                <span class="btn-icon">🚚</span>
+                <span>Send-in Services</span>
+              </button>
+            </a>
+          </div>
+        </section>
+
+        <!-- Right image card -->
+        <aside class="hero-right">
+          <div class="console-card">
+            <!-- Replace with your Xbox 360 image -->
+            <img
+              src="https://via.placeholder.com/700x900.png?text=Xbox+360+Image"
+              alt="Xbox 360 console with blue lighting"
+              class="console-img"
+            />
+
+            <!-- Arrows (decorative, no JS yet) -->
+            <button class="carousel-arrow left" aria-label="Previous console">
+              ‹
+            </button>
+            <button class="carousel-arrow right" aria-label="Next console">
+              ›
+            </button>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
