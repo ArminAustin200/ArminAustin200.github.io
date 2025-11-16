@@ -48,6 +48,10 @@
 		/* ---------- Header / Nav ---------- */
 		header {
 			border-bottom: 1px solid #ddd;
+			background: #fff;
+			position: sticky;
+			top: 0;
+			z-index: 20;
 		}
 
 		.nav {
@@ -484,10 +488,11 @@
 
 		/* ---------- Footer Contact Button ---------- */
 		footer {
-			padding: 2rem 0 3rem;
+			padding: 1.8rem 0 2.4rem;
 			background: #000;
 			color: #fff;
 			text-align: center;
+			font-size: 0.9rem;
 		}
 
 		.footer-contact {
@@ -716,8 +721,8 @@
 				<a href="mailto:youremail@example.com">
 					<button class="contact-btn">Contact Us</button>
 				</a>
-				<p>Have questions or a custom request? Reach out any time.</p>
 			</div>
+			&copy; <span id="year"></span> WareHouseX360 – Send-In Modding &amp; Refurbishment Services
 		</footer>
 	</div>
 
@@ -872,5 +877,10 @@
     	});
   	});
 	</script>
+	
+	<script>
+    	// auto year
+    	document.getElementById('year').textContent = new Date().getFullYear();
+  	</script>
 </body>
 </html>
