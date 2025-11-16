@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Send-In Service | WareHouseX360</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Same fonts as home -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Reset ---------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #000;
+      background: #ffffff;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: min(1200px, 100% - 3rem);
+      margin: 0 auto;
+    }
+
+    /* ---------- NAVBAR (copy of home) ---------- */
+    header {
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-img {
+      width: 120px;
+      height: auto;
+    }
+
+    .logo-text {
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 3rem;
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 0.2rem;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #000;
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-right .contact-btn {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      padding: 0.4rem 1.6rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      background: #d97917;
+      color: #000;
+      box-shadow: 0 3px 0 #000;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .nav-right .contact-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #e98c28;
+    }
+
+    /* ---------- TOP BANNER ("Welcome to Our Online Store!") ---------- */
+    .send-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .send-hero-bg {
+      height: 260px;
+      background-image: url("assets/Send-In/Hero_Banner.jpg"); /* <-- replace */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: grayscale(0.1);
+    }
+
+    .send-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.7); /* washed/faded look */
+    }
+
+    .send-hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-inline: 1rem;
+    }
+
+    .send-hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .send-hero-subtitle {
+      font-size: 1.25rem;
+      max-width: 900px;
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    main {
+      flex: 1;
+      padding: 2.5rem 0 3rem;
+    }
+
+    /* Bottom 3-column layout */
+    .send-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.1fr 1.2fr;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    /* Left big console photo */
+    .send-photo-frame {
+      border: 6px solid #000;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .send-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Middle service card */
+    .service-panel {
+      background: #e0e0e0;
+      border-radius: 2rem;
+      padding: 2rem 2.4rem;
+      box-shadow: 0 6px 0 #c7c7c7;
+      min-height: 100%;
+    }
+
+    .service-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.95rem;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .service-subheading {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .service-list {
+      list-style: none;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .service-list li::before {
+      content: "➜ ";
+      font-weight: 700;
+    }
+
+    .price {
+      color: #e00000;
+      font-weight: 900;
+    }
+
+    .service-note {
+      margin-top: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* Right column: shipping + board photo */
+    .shipping-panel {
+      background: #e0e0e0;
+      border-radius: 2rem;
+      padding: 1.6rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 0 #c7c7c7;
+    }
+
+    .shipping-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .shipping-text {
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .shipping-text::before {
+      content: "➜ ";
+      font-weight: 700;
+    }
+
+    .board-photo-frame {
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 6px solid #000;
+    }
+
+    .board-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-panel,
+    .shipping-panel {
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 1.8rem 0 2.4rem;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Smooth hover zoom */
+    .zoomable-board {
+        transition: transform 0.25s ease;
+        cursor: pointer;
+    }
+
+    .zoomable-board:hover {
+        transform: scale(1.06);
+    }
+
+    /* Lightbox overlay */
+    .image-lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        z-index: 200;
+        cursor: zoom-out;
+    }
+
+    .image-lightbox img {
+        max-width: 95vw;
+        max-height: 95vh;
+        object-fit: contain;
+        border-radius: 1rem;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1050px) {
+      .send-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "photo service"
+          "board service";
+      }
+
+      .send-photo-frame {
+        grid-area: photo;
+      }
+
+      .service-panel {
+        grid-area: service;
+      }
+
+      .shipping-panel,
+      .board-photo-frame {
+        grid-area: board;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .nav-center {
+        display: none;
+      }
+
+      .send-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-panel,
+      .shipping-panel {
+        margin-top: 1rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(100% - 2rem, 100%);
+      }
+
+      .send-hero-bg {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- NAVBAR -->
+    <header>
+      <div class="container nav">
+        <div class="nav-left">
+          <!-- Replace with your logo -->
+          <img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
+        </div>
+
+        <nav class="nav-center">
+          <a href="home.html" class="nav-link">Home</a>
+          <a href="prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
+          <a href="send-in.html" class="nav-link active">Send-In Service</a>
+        </nav>
+
+        <div class="nav-right">
+          <a href="contact.html">
+            <button class="contact-btn" type="button">Contact Us</button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- TOP HERO BANNER -->
+    <section class="send-hero">
+      <div class="send-hero-bg"></div>
+      <div class="send-hero-overlay"></div>
+
+      <div class="send-hero-content">
+        <h1 class="send-hero-title">Welcome to Our Online Store!</h1>
+        <p class="send-hero-subtitle">
+          Browse all the systems we currently have in stock! Currently shipping only to CANADA and the USA.
+        </p>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT (BOTTOM HALF) -->
+    <main>
+      <div class="container">
+        <section class="send-grid">
+          <!-- LEFT: big console image -->
+          <div class="send-photo-frame">
+            <!-- replace with your console photo -->
+            <img src="assets/Home/Carousel_3.jpg" alt="Halo 4 Xbox 360 Dual NAND RGH3 with Blue LEDs">
+          </div>
+
+          <!-- MIDDLE: service info card -->
+          <div>
+            <div class="service-panel">
+            
+            <h2 class="service-title">Xbox 360 RGH 3/1.2<br>Service</h2>
+            
+            <h3 class="service-subheading">Service Info</h3>  
+
+              <ul class="service-list">
+                <li>Fresh application of Arctic MX-4</li>
+                <li><span class="price">$75US</span> for just an RGH install</li>
+                <li><span class="price">$95US</span> for RGH + Custom LEDs</li>
+                <li><span class="price">$110US</span> for RGH + LEDs + 500GB HDD upgrade</li>
+              </ul>
+
+              <p class="service-note">
+                ➜ Please Note: custom built consoles may take 2–5 business days to make.
+              </p>
+            </div>
+          </div>
+
+          <!-- RIGHT: shipping + board photo -->
+          <div>
+            <div class="shipping-panel">
+              <h3 class="shipping-title">Shipping</h3>
+              <p class="shipping-text">
+                FREE SHIPPING ON ALL ORDERS IN CANADA. SHIPPING ANYWHERE IN THE USA FOR $15 USD
+              </p>
+            </div>
+
+            <div class="board-photo-frame">
+              <!-- replace with your board photo -->
+              <img src="assets/Send-In/Soldering.jpeg" class="zoomable-board" alt="RGH1.2 Install on Falcon Motherboard">
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      &copy; <span id="year"></span> WareHouseX360 – Send-In Modding &amp; Refurbishment Services
+    </footer>
+  </div>
+
+  <script>
+    // auto year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    const boardImg = document.querySelector('.zoomable-board');
+
+    boardImg.addEventListener('click', () => {
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('image-lightbox');
+
+    const img = document.createElement('img');
+    img.src = boardImg.src;
+
+    lightbox.appendChild(img);
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', () => {
+    lightbox.remove();
+    });
+   });
+  </script>
+</body>
+</html>
