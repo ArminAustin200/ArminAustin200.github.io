@@ -478,7 +478,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <script>
+    <script>
     const boardImg = document.querySelector('.zoomable-board');
 
     boardImg.addEventListener('click', () => {
@@ -487,14 +487,26 @@
 
     const img = document.createElement('img');
     img.src = boardImg.src;
-
     lightbox.appendChild(img);
     document.body.appendChild(lightbox);
 
-    lightbox.addEventListener('click', () => {
-    lightbox.remove();
+    // Function to close lightbox
+    function closeLightbox() {
+      lightbox.remove();
+      document.removeEventListener('keydown', escHandler);
+    }
+
+    // Close on click outside
+    lightbox.addEventListener('click', closeLightbox);
+
+    // Close on ESC key
+    function escHandler(e) {
+        if (e.key === "Escape") {
+          closeLightbox();
+        }
+      }
+      document.addEventListener('keydown', escHandler);
     });
-   });
   </script>
 </body>
 </html>
