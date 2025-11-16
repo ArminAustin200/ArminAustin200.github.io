@@ -5,7 +5,7 @@
   <title>WareHouseX360</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Fonts (similar vibe to screenshot) -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -115,7 +115,8 @@
       transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
     }
 
-    .nav-right .contact-btn:hover {
+    .nav-right .contact-btn:hover,
+    .footer-contact .contact-btn:hover {
       transform: translateY(1px);
       box-shadow: 0 1px 0 #000;
       background: #e98c28;
@@ -136,7 +137,6 @@
       align-items: center;
     }
 
-    /* Left side text */
     .hero-left {
       padding-right: 2rem;
     }
@@ -267,10 +267,145 @@
       right: 0.8rem;
     }
 
+    /* ---------- WHY SECTION (bottom) ---------- */
+    .why-section {
+      margin-top: 2rem;
+      background-image: url("https://via.placeholder.com/1920x1080.png?text=Pixel+Background"); /* replace with your pixel bg */
+      background-size: cover;
+      background-position: center;
+      padding: 3rem 0 4rem;
+      color: #fff;
+    }
+
+    .why-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .why-header-box {
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      background: #000;
+      border-radius: 0.5rem;
+      padding: 0.9rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .why-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      text-align: center;
+      flex: 1;
+    }
+
+    .why-header-logo {
+      width: 130px;
+      height: auto;
+    }
+
+    .why-panels {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+
+    .why-card {
+      background: rgba(128, 157, 179, 0.98);
+      border-radius: 1.5rem;
+      padding: 2.2rem 3rem;
+      color: #fff;
+    }
+
+    .why-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.7rem;
+      margin-bottom: 1.5rem;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .why-features-list {
+      list-style: none;
+      font-size: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .why-features-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    .why-check {
+      font-size: 1.2rem;
+    }
+
+    .why-arrow {
+      margin-left: 0.2rem;
+      font-size: 1.05rem;
+    }
+
+    .muted {
+      opacity: 0.55;
+      font-weight: 500;
+    }
+
+    .why-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .why-gallery img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 0.4rem;
+    }
+
+    /* ---------- Footer Contact Button ---------- */
+    footer {
+      padding: 2rem 0 3rem;
+      background: #000;
+      color: #fff;
+      text-align: center;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .footer-contact p {
+      font-size: 0.95rem;
+    }
+
+    .footer-contact .contact-btn {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+      padding: 0.5rem 2rem;
+      border-radius: 999px;
+      border: 3px solid #fff;
+      background: #d97917;
+      color: #000;
+      box-shadow: 0 3px 0 #fff;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
     /* ---------- Responsive ---------- */
     @media (max-width: 960px) {
       .nav-center {
-        display: none; /* quick & dirty for small screens */
+        display: none;
       }
 
       .hero-inner {
@@ -295,6 +430,14 @@
         background: #fff;
         z-index: 10;
       }
+
+      .why-panels {
+        grid-template-columns: 1fr;
+      }
+
+      .why-card {
+        padding: 2rem;
+      }
     }
 
     @media (max-width: 600px) {
@@ -313,6 +456,14 @@
       .nav-right .contact-btn {
         font-size: 1.05rem;
         padding-inline: 1.2rem;
+      }
+
+      .why-header-box {
+        padding-inline: 1rem;
+      }
+
+      .why-header-logo {
+        display: none; /* hide logo on very small screens */
       }
     }
   </style>
@@ -386,7 +537,7 @@
               class="console-img"
             />
 
-            <!-- Arrows (decorative, no JS yet) -->
+            <!-- Arrows (decorative) -->
             <button class="carousel-arrow left" aria-label="Previous console">
               ‹
             </button>
@@ -397,6 +548,56 @@
         </aside>
       </div>
     </main>
+
+    <!-- WHY WAREHOUSEX360 SECTION -->
+    <section class="why-section" id="why">
+      <div class="why-inner">
+        <div class="why-header-box">
+          <h2 class="why-title">Why WarehouseX360?</h2>
+          <!-- Replace with logo image used in screenshot -->
+          <img src="https://via.placeholder.com/150x70?text=Logo" alt="WarehouseX360 logo" class="why-header-logo">
+        </div>
+
+        <div class="why-panels">
+          <!-- Left card: features -->
+          <div class="why-card">
+            <h3>Every Console Comes With:</h3>
+            <ul class="why-features-list">
+              <li><span class="why-check">✓</span> Guaranteed Warranty <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> Fresh Thermal Paste <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> Upgraded HDD <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> NAND Dumps <span class="why-arrow">›</span></li>
+              <li class="muted"><span class="why-check">✓</span> Full Refurbishment <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> Custom LEDs <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> Accessories Included <span class="why-arrow">›</span></li>
+              <li><span class="why-check">✓</span> Pre-loaded Software <span class="why-arrow">›</span></li>
+            </ul>
+          </div>
+
+          <!-- Right card: board work gallery -->
+          <div class="why-card">
+            <h3>Past Board Work:</h3>
+            <div class="why-gallery">
+              <!-- Replace each src with your board images -->
+              <img src="https://via.placeholder.com/300x220.png?text=Board+1" alt="Board work 1">
+              <img src="https://via.placeholder.com/300x220.png?text=Board+2" alt="Board work 2">
+              <img src="https://via.placeholder.com/300x220.png?text=Board+3" alt="Board work 3">
+              <img src="https://via.placeholder.com/300x220.png?text=Board+4" alt="Board work 4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER CONTACT -->
+    <footer id="contact">
+      <div class="footer-contact">
+        <a href="mailto:youremail@example.com">
+          <button class="contact-btn">Contact Us</button>
+        </a>
+        <p>Have questions or a custom request? Reach out any time.</p>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
