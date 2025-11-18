@@ -631,45 +631,6 @@
 			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
 		}
 
-		/* ---------- Responsive ---------- */
-		@media (max-width: 960px) {
-			.nav-center {
-				display: none;
-			}
-
-			.hero-inner {
-				grid-template-columns: 1fr;
-			}
-
-			.hero-left {
-				padding-right: 0;
-				font-family: "Inter", sans-serif;
-			}
-
-			.hero {
-				padding-block: 2.2rem;
-			}
-
-			.console-card {
-				max-width: 420px;
-			}
-
-			header {
-				position: sticky;
-				top: 0;
-				background: #fff;
-				z-index: 10;
-			}
-
-			.why-panels {
-				grid-template-columns: 1fr;
-			}
-
-			.why-card {
-				padding: 2rem;
-			}
-		}
-
 		.font-inter-black {
   		font-family: "Inter", sans-serif;
   		font-weight: 900;
@@ -725,37 +686,46 @@
 		@media (max-width: 960px) {
 			.nav-center {
 				display: none; /* hide menu by default on small screens */
-		}
+			}
+			
+			.hero-left {
+				text-align: center;
+				padding-right: 0;
+			}
 
-		.nav-toggle {
-				display: inline-flex;
-				align-items: center;
+			.hero-buttons {
 				justify-content: center;
-		}
+			}
 
-		/* When header has .nav-open, show a dropdown menu */
-		header.nav-open .nav-center {
-			display: flex;
-			flex-direction: column;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			background: #111;
-			color: #fff;
-			padding: 0.75rem 1.25rem 1rem;
-			gap: 0.75rem;
-			border-bottom: 1px solid #333;
-		}
+			.nav-toggle {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+			}
 
-		header.nav-open .nav-link::after {
-			background: #fff; /* underline visible on dark dropdown */
-		}
+			/* When header has .nav-open, show a dropdown menu */
+			header.nav-open .nav-center {
+				display: flex;
+				flex-direction: column;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				background: #111;
+				color: #fff;
+				padding: 0.75rem 1.25rem 1rem;
+				gap: 0.75rem;
+				border-bottom: 1px solid #333;
+			}
 
-		/* Optional: shrink nav text a bit on phones */
-		header.nav-open .nav-center {
-			font-size: 1.2rem;
-		}
+			header.nav-open .nav-link::after {
+				background: #fff; /* underline visible on dark dropdown */
+			}
+
+			/* Optional: shrink nav text a bit on phones */
+			header.nav-open .nav-center {
+				font-size: 1.2rem;
+			}
 		}
 
 		/* Dark-mode tweak so the underline is visible on desktop too */
