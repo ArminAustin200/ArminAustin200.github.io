@@ -404,6 +404,98 @@
       margin-top: 1.4rem;
       font-weight: 700;
     }
+  /* Base nav layout (already similar to what you have) */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+  }
+
+  .nav-center {
+    display: flex;
+    gap: 3rem;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+  }
+
+  .nav-link {
+    position: relative;
+    padding-bottom: 0.2rem;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor; /* works in light + dark mode */
+    transition: width 0.2s ease-out;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  /* Mobile toggle button: hidden on desktop */
+  .nav-toggle {
+    display: none;
+    border: 2px solid #000;
+    border-radius: 999px;
+    background: #fff;
+    padding: 0.25rem 0.6rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  /* ------- Mobile layout ------- */
+  @media (max-width: 960px) {
+    .nav-center {
+      display: none; /* hide menu by default on small screens */
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* When header has .nav-open, show a dropdown menu */
+    header.nav-open .nav-center {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #111;
+      color: #fff;
+      padding: 0.75rem 1.25rem 1rem;
+      gap: 0.75rem;
+      border-bottom: 1px solid #333;
+    }
+
+    header.nav-open .nav-link::after {
+      background: #fff; /* underline visible on dark dropdown */
+    }
+
+    /* Optional: shrink nav text a bit on phones */
+    header.nav-open .nav-center {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Dark-mode tweak so the underline is visible on desktop too */
+  body.dark-mode .nav-link::after {
+    background: #f7f7f7;
+  }
+
+  body.dark-mode header.nav-open .nav-center {
+    background: #111;
+  }
 
     /* ---------- Responsive ---------- */
     @media (max-width: 800px) {
@@ -418,29 +510,38 @@
   <div class="page-wrapper">
 
     <!-- NAVBAR -->
-    <header>
-      <div class="container nav">
-        <div class="nav-left">
-          <a href="home.html"><img src="assets/logo/website_logo.png" class="logo-img"></a>
-        </div>
-
-        <nav class="nav-center">
-          <a href="home.html" class="nav-link">Home</a>
-          <a href="#prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
-          <a href="send-in.html" class="nav-link active">Send-In Service</a>
-        </nav>
-
-        <div class="nav-right">
-          <button class="theme-toggle" type="button">
-            <img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
-          </button>
-
-          <a href="contact-us.html">
-            <button class="contact-btn" type="button">Contact Us</button>
-          </a>
-        </div>
+  <header>
+    <div class="container nav">
+      <div class="nav-left">
+        <a href="home.html">
+          <img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
+        </a>
       </div>
-    </header>
+
+      <!-- Toggle button for mobile -->
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <nav class="nav-center">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
+        <a href="send-in.html" class="nav-link">Send-In Service</a>
+        <a href="contact-us.html" class="nav-link">Contact Us</a>
+      </nav>
+
+      <div class="nav-right">
+        <button class="theme-toggle" type="button">
+          <img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
+        </button>
+
+        <a href="contact-us.html">
+          <button class="contact-btn" type="button">Contact Us</button>
+        </a>
+      </div>
+    </div>
+  </header>
+
 
     <!-- TOP HERO -->
     <section class="send-hero">
@@ -574,6 +675,25 @@
       localStorage.setItem("theme", newTheme);
       applyTheme(newTheme);
     });
+  </script>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const headerEl  = document.querySelector('header');
+
+    if (navToggle && headerEl) {
+      navToggle.addEventListener('click', () => {
+        headerEl.classList.toggle('nav-open');
+      });
+
+      // Close menu if you click a link (optional, nice on mobile)
+      headerEl.querySelectorAll('.nav-center .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          headerEl.classList.remove('nav-open');
+        });
+      });
+    }
   </script>
 </body>
 </html>
