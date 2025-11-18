@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us | WareHouseX360</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts (same as other pages) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Reset ---------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      color: #000;
+      background: #ffffff;
+      line-height: 1.5;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: min(1200px, 100% - 3rem);
+      margin: 0 auto;
+    }
+
+    /* ---------- NAVBAR (same as other pages + theme toggle) ---------- */
+    header {
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-img {
+      width: 120px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 3rem;
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 0.2rem;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #000;
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-right .contact-btn {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      padding: 0.35rem 1.4rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      background: #d97917;
+      color: #000;
+      box-shadow: 0 3px 0 #000;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .nav-right .contact-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #e98c28;
+    }
+
+    .theme-toggle {
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: #fff;
+      cursor: pointer;
+      padding: 0.25rem 0.7rem;
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 0 #000;
+      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #f0f0f0;
+    }
+
+    /* ---------- TOP HERO CONTACT SECTION ---------- */
+    .contact-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero-bg {
+      height: 220px;
+      background-image: url("assets/Send-In/Hero_Banner.jpg"); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: grayscale(0.1);
+    }
+
+    .contact-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.7);
+      transition: background 0.25s ease;
+    }
+
+    .contact-hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-inline: 1rem;
+    }
+
+    .contact-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-subtitle {
+      font-size: 0.98rem;
+      max-width: 900px;
+    }
+
+    /* ---------- CONTACT CARDS ---------- */
+    main {
+      flex: 1;
+      padding: 3rem 0 4rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 280px));
+      gap: 2.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .contact-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 2rem 1.5rem;
+        border-radius: 1.25rem;
+        border: 3px solid #000;
+        background: #eee;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-card p,
+    .contact-card h2 {
+        pointer-events: none; /* prevents text from blocking click */
+    }
+
+    .contact-card.copied::after {
+        content: "Copied!";
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        padding: 0.15rem 0.6rem;
+        border-radius: 999px;
+        background: #000;
+        color: #fff;
+        font-size: 0.7rem;
+        letter-spacing: 0.03em;
+    }
+
+    /* Animated hover card */
+    .contact-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+      background: #fafafa;
+    }
+
+    .contact-card-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.1rem;
+      margin-bottom: 1.4rem;
+      text-transform: uppercase;
+    }
+
+    .contact-icon-wrap {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 1.4rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .contact-value {
+      font-size: 0.98rem;
+      font-weight: 700;
+      word-break: break-all;
+      cursor: pointer;       /* for click-to-copy */
+      position: relative;
+    }
+
+    .contact-value.copied::after {
+      content: "Copied!";
+      position: absolute;
+      left: 50%;
+      top: -1.4rem;
+      transform: translateX(-50%);
+      background: #000;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.1rem 0.6rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    /* ---------- CONTACT FORM ---------- */
+    .contact-form-section {
+      margin-top: 3.5rem;
+      max-width: 650px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .contact-form-section h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-form-section p {
+      font-size: 0.95rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .contact-form {
+      text-align: left;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .form-row label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .form-row input,
+    .form-row textarea {
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      border-color: #d97917;
+      box-shadow: 0 0 0 2px rgba(217, 121, 23, 0.25);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      margin-top: 0.6rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .form-submit {
+      font-family: "Playfair Display", serif;
+      font-size: 1rem;
+      padding: 0.5rem 1.6rem;
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: #d97917;
+      color: #000;
+      box-shadow: 0 3px 0 #000;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .form-submit:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #e98c28;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 1.8rem 0 2.4rem;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    /* ---------- DARK MODE OVERRIDES ---------- */
+    body.dark-mode {
+      background: #0b0b0b;
+      color: #f7f7f7;
+    }
+
+    body.dark-mode header {
+      background: #111;
+      border-bottom-color: #333;
+    }
+
+    body.dark-mode .nav-link::after {
+      background: #f7f7f7;
+    }
+
+    body.dark-mode .nav-right .contact-btn {
+      border-color: #f7f7f7;
+      box-shadow: 0 3px 0 #f7f7f7;
+    }
+
+    body.dark-mode .theme-toggle {
+      background: #222;
+      border-color: #f7f7f7;
+      box-shadow: 0 2px 0 #f7f7f7;
+      color: #f7f7f7;
+    }
+
+    body.dark-mode .contact-hero-overlay {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    body.dark-mode .contact-card {
+      background: #171717;
+      border-color: #f7f7f7;
+      box-shadow: 0 4px 0 #555;
+    }
+
+    body.dark-mode .contact-card:hover {
+      background: #202020;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    body.dark-mode .form-row input,
+    body.dark-mode .form-row textarea {
+      background: #111;
+      border-color: #444;
+      color: #f7f7f7;
+    }
+
+    body.dark-mode footer {
+      background: #050505;
+      color: #f7f7f7;
+    }
+    .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Icon styling */
+    .theme-icon {
+        width: 22px;
+        height: 22px;
+      transition: transform 0.25s ease;
+    }
+
+    /* When dark mode is active, rotate icon 180deg */
+    body.dark-mode .theme-icon {
+        transform: rotate(180deg);
+        filter: invert(1) brightness(1.6);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 960px) {
+      .nav-center { display: none; }
+    }
+
+    @media (max-width: 700px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .container { width: min(100% - 2rem, 100%); }
+      .form-actions { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- NAVBAR -->
+    <header>
+      <div class="container nav">
+        <div class="nav-left">
+          <a href="home.html">
+            <img src="assets/logo/website_logo.png" class="logo-img" alt="WareHouseX360 logo">
+          </a>
+        </div>
+
+        <nav class="nav-center">
+          <a href="home.html" class="nav-link">Home</a>
+          <a href="#prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
+          <a href="send-in.html" class="nav-link">Send-In Service</a>
+        </nav>
+
+        <div class="nav-right">
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <img src="assets/icons/mode_toggle.svg" alt="Dark mode toggle" class="theme-icon">
+          </button>
+          <a href="contact-us.html">
+            <button class="contact-btn" type="button">Contact Us</button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="contact-hero">
+      <div class="contact-hero-bg"></div>
+      <div class="contact-hero-overlay"></div>
+
+      <div class="contact-hero-content">
+        <h1 class="contact-title">Contact Our Team!</h1>
+        <p class="contact-subtitle">
+          Message us directly either on Discord, Reddit, or via Email. Feel free to contact us on any of the platforms below!
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT CARDS + FORM -->
+    <main>
+      <div class="container">
+        <div class="contact-grid">
+          <!-- EMAIL CARD -->
+            <a class="contact-card copy-text"
+                data-copy="WarehouseX360@gmail.com"
+                href="mailto:WarehouseX360@gmail.com">
+                <h2 class="contact-card-title">Email</h2>
+
+                <div class="contact-icon-wrap">
+                    <img src="assets/icons/mail_icon.png" alt="Email icon">
+                </div>
+
+                <p class="contact-value">
+                    WarehouseX360@gmail.com
+                </p>
+            </a>
+
+
+            <!-- REDDIT CARD -->
+            <a class="contact-card" href="https://www.reddit.com/user/EducationalAd390/submitted" target="_blank">
+                <h2 class="contact-card-title">Reddit</h2>
+
+                <div class="contact-icon-wrap">
+                    <img src="assets/icons/reddit_icon.png" alt="Reddit icon">
+                </div>
+
+                <p class="contact-value">
+                    u/EducationalAd390
+                </p>
+            </a>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <section class="contact-form-section">
+          <h2>Send Us a Message</h2>
+          <p>Prefer to write us directly? Fill out the form below and we’ll get back to you as soon as we can.</p>
+
+          <!-- mailto-based form (opens email client with pre-filled body) -->
+          <form class="contact-form"
+                action="mailto:warehouseX360@gmail.com"
+                method="POST"
+                enctype="text/plain">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" name="Name" type="text" required>
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="Email" type="email" required>
+            </div>
+
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea id="message" name="Message" required></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button class="form-submit" type="submit">Send Message</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      &copy; <span id="year"></span> WareHouseX360 – All Rights Reserved
+    </footer>
+  </div>
+    <script>
+    // Click-to-copy for any card with .copy-text
+        document.querySelectorAll('.copy-text').forEach(card => {
+        card.addEventListener('click', async (e) => {
+        e.preventDefault(); // we'll open the link manually after
+
+        const value = card.dataset.copy;
+        const href = card.getAttribute('href');
+
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(value);
+            }
+
+            // Show "Copied!" badge on the card
+            card.classList.add('copied');
+            setTimeout(() => card.classList.remove('copied'), 1200);
+        } catch (err) {
+            console.error('Copy failed:', err);
+        }
+
+            // After a tiny delay, proceed with the normal link action (mailto)
+            setTimeout(() => {
+                if (href) {
+                window.location.href = href;
+                }
+            }, 150);
+            });
+        });
+    </script>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---- Dark mode toggle with localStorage ----
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+    }
+
+    //Load saved theme or OS preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else if (window.matchMedia &&
+               window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      applyTheme('dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      applyTheme(newTheme);
+    });
+
+    // ---- Click-to-copy for contact values (email & Reddit) ----
+    const copyEls = document.querySelectorAll('.copy-text');
+
+    copyEls.forEach(el => {
+      el.addEventListener('click', async (e) => {
+        e.preventDefault();  // prevent immediate navigation
+
+        const textToCopy = el.dataset.copy || el.textContent.trim();
+        const originalText = el.textContent;
+
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(textToCopy);
+          }
+          // Show "Copied!" state
+          el.classList.add('copied');
+
+          setTimeout(() => {
+            el.classList.remove('copied');
+          }, 1200);
+        } catch (err) {
+          console.error('Copy failed:', err);
+        }
+
+        // After short delay, continue with original link action
+        setTimeout(() => {
+          const href = el.getAttribute('href');
+          if (href) {
+            if (el.hasAttribute('target') && el.target === '_blank') {
+              window.open(href, '_blank');
+            } else {
+              window.location.href = href;
+            }
+          }
+        }, 100); // small delay so copy has time to run
+      });
+    });
+  </script>
+</body>
+</html>

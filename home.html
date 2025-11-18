@@ -21,6 +21,7 @@
 			color: #000;
 			background-color: #ffffff;
 			line-height: 1.5;
+			transition: background 0.25s ease, color 0.25s ease;
 		}
 
 		a {
@@ -110,10 +111,16 @@
       		width: 100%;
     	}
 
-		.nav-right .contact-btn {
+    	.nav-right {
+      		display: flex;
+      		align-items: center;
+      		gap: 0.6rem;
+    	}
+
+		.contact-btn {
 			font-family: "Playfair Display", serif;
-			font-size: 1.4rem;
-			padding: 0.4rem 1.6rem;
+			font-size: 1.2rem;
+			padding: 0.35rem 1.4rem;
 			border-radius: 999px;
 			border: 3px solid #000;
 			background: #d97917;
@@ -121,6 +128,94 @@
 			box-shadow: 0 3px 0 #000;
 			cursor: pointer;
 			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+		}
+
+		.theme-toggle {
+			border-radius: 999px;
+			border: 2px solid #000;
+			background: #fff;
+			cursor: pointer;
+			padding: 0.25rem 0.7rem;
+			font-size: 1rem;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 0 #000;
+			transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    	}
+
+		/* Dark Mode Toggle Button */
+		.theme-toggle {
+			border: 2px solid #000;
+			border-radius: 999px;
+			background: #fff;
+			cursor: pointer;
+			padding: 0.35rem 0.55rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 0 #000;
+			transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+		}
+
+		.theme-toggle:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #f0f0f0;
+		}
+
+		/* Theme icon (SVG) animation + invert for dark mode visibility */
+		.theme-icon {
+			width: 22px;
+			height: 22px;
+			transition: transform 0.35s ease, filter 0.25s ease;
+		}
+
+		body.dark-mode .theme-icon {
+			filter: invert(1);
+			transform: rotate(180deg);
+		}
+		
+		/*---------------DARK MODE OVERRIDES---------------*/
+		body.dark-mode { 
+     		background: #0b0b0b; 
+      		color: #f7f7f7; 
+    	}
+
+		body.dark-mode header { 
+			background: #111; 
+			border-bottom-color: #333; 
+		}
+
+		body.dark-mode .nav-link::after {
+			background: #f7f7f7;
+		}
+
+		body.dark-mode .nav-right .contact-btn {
+			border-color: #f7f7f7;
+			box-shadow: 0 3px 0 #f7f7f7;
+		}
+
+		body.dark-mode .theme-toggle { 
+			background:#222; 
+			border-color:#f7f7f7; 
+			box-shadow:0 2px 0 #f7f7f7; 
+		}
+
+		body.dark-mode .theme-icon { 
+			transform: rotate(180deg);
+			filter: invert(1) brightness(1.6); 
+		}
+
+		body.dark-mode footer { 
+			background:#050505; 
+		}
+
+		body.dark-mode .primary-btn, 
+		body.dark-mode .secondary-btn {
+			border-color:#202020; 
+			box-shadow: 0 4px 0 rgba(41, 41, 41, 0.4);
 		}
 
 		.nav-right .contact-btn:hover,
@@ -593,7 +688,7 @@
 </head>
 <body>
 	<div class="page-wrapper">
-		<!-- Header / Nav -->
+		<!-- NAVBAR -->
 		<header>
 			<div class="container nav">
 				<div class="nav-left">
@@ -602,12 +697,16 @@
 
 				<nav class="nav-center">
 					<a href="home.html" class="nav-link active">Home</a>
-					<a href="prebuilt" class="nav-link">Shop Pre-Built Consoles</a>
+					<a href="#prebuilt" class="nav-link">Shop Pre-Built Consoles</a>
 					<a href="send-in.html" class="nav-link">Send-In Service</a>
 				</nav>
 
 				<div class="nav-right">
-					<a href="#contact">
+					<button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            			<img src="assets/icons/mode_toggle.svg" alt="Dark mode toggle" class="theme-icon">
+          			</button>
+
+					<a href="contact-us.html">
 						<button class="contact-btn">Contact Us</button>
 					</a>
 				</div>
@@ -718,7 +817,7 @@
 		<!-- FOOTER CONTACT -->
 		<footer id="contact">
 			<div class="footer-contact">
-				<a href="mailto:youremail@example.com">
+				<a href="contact-us.html">
 					<button class="contact-btn">Contact Us</button>
 				</a>
 			</div>
@@ -882,5 +981,27 @@
     	// auto year
     	document.getElementById('year').textContent = new Date().getFullYear();
   	</script>
+
+	<script>
+		// Dark Mode Toggle
+		const themeToggle = document.querySelector(".theme-toggle");
+		const body = document.body;
+
+		function applyTheme(theme){
+			if(theme === "dark") body.classList.add("dark-mode");
+			else body.classList.remove("dark-mode");
+		}
+
+		const savedTheme = localStorage.getItem("theme");
+		if(savedTheme){ applyTheme(savedTheme); }
+		else if(window.matchMedia("(prefers-color-scheme: dark)").matches){ applyTheme("dark"); }
+
+		themeToggle.addEventListener("click", () => {
+			const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+			localStorage.setItem("theme", newTheme);
+			applyTheme(newTheme);
+		});
+  	</script>
+
 </body>
 </html>

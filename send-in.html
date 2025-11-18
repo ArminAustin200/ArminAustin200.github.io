@@ -17,21 +17,15 @@
     }
 
     body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Inter", sans-serif;
       color: #000;
       background: #ffffff;
       line-height: 1.5;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
     .page-wrapper {
       min-height: 100vh;
@@ -51,6 +45,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
     .nav {
@@ -66,17 +61,7 @@
       gap: 0.6rem;
     }
 
-    .logo-img {
-      width: 120px;
-      height: auto;
-    }
-
-    .logo-text {
-      font-family: "Playfair Display", serif;
-      font-size: 1.25rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
+    .logo-img { width: 120px; height: auto; }
 
     .nav-center {
       display: flex;
@@ -93,23 +78,24 @@
     .nav-link::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      height: 2px;
-      background: #000;
+      left: 0; bottom: 0;
+      width: 0; height: 2px;
+      background: currentColor;
       transition: width 0.2s ease-out;
     }
-
     .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
+    .nav-link.active::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    .nav-right .contact-btn {
+    .contact-btn {
       font-family: "Playfair Display", serif;
-      font-size: 1.4rem;
-      padding: 0.4rem 1.6rem;
+      font-size: 1.2rem;
+      padding: 0.35rem 1.4rem;
       border-radius: 999px;
       border: 3px solid #000;
       background: #d97917;
@@ -118,41 +104,60 @@
       cursor: pointer;
       transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
     }
-
-    .nav-right .contact-btn:hover {
+    .contact-btn:hover {
       transform: translateY(1px);
       box-shadow: 0 1px 0 #000;
       background: #e98c28;
     }
 
-    /* ---------- TOP BANNER ("Welcome to Our Online Store!") ---------- */
-    .send-hero {
-      position: relative;
-      overflow: hidden;
+    /* Dark mode toggle button */
+    .theme-toggle {
+      border-radius: 999px;
+      border: 2px solid #000;
+      background: #fff;
+      cursor: pointer;
+      padding: 0.3rem 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 0 #000;
+      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
     }
+    .theme-toggle:hover {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #000;
+      background: #f0f0f0;
+    }
+
+    .theme-icon {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    /* ---------- TOP HERO ---------- */
+    .send-hero { position: relative; overflow: hidden; }
 
     .send-hero-bg {
       height: 260px;
-      background-image: url("assets/Send-In/Hero_Banner.jpg"); /* <-- replace */
+      background-image: url("assets/Send-In/Hero_Banner.jpg");
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
       filter: grayscale(0.1);
     }
 
     .send-hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(255, 255, 255, 0.7); /* washed/faded look */
+      background: rgba(255,255,255,0.7);
+      transition: background 0.25s ease;
     }
 
     .send-hero-content {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
       padding-inline: 1rem;
     }
@@ -175,7 +180,6 @@
       padding: 2.5rem 0 3rem;
     }
 
-    /* Bottom 3-column layout */
     .send-grid {
       display: grid;
       grid-template-columns: 1.2fr 1.1fr 1.2fr;
@@ -183,26 +187,108 @@
       align-items: flex-start;
     }
 
-    /* Left big console photo */
     .send-photo-frame {
       border: 6px solid #000;
       border-radius: 0.5rem;
       overflow: hidden;
     }
 
-    .send-photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Middle service card */
-    .service-panel {
+    .service-panel,
+    .shipping-panel {
       background: #e0e0e0;
       border-radius: 2rem;
-      padding: 2rem 2.4rem;
+      padding: 2rem;
       box-shadow: 0 6px 0 #c7c7c7;
-      min-height: 100%;
+      font-weight: 700;
+    }
+
+    .board-photo-frame {
+      margin-top: 1.2rem;
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 6px solid #000;
+    }
+
+    /* Hover zoom */
+    .zoomable-board {
+      transition: transform 0.25s ease;
+      cursor: pointer;
+    }
+    .zoomable-board:hover { transform: scale(1.06); }
+
+    /* Lightbox */
+    .image-lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      z-index: 200;
+      cursor: zoom-out;
+    }
+    .image-lightbox img {
+      max-width: 95vw; max-height: 95vh;
+      object-fit: contain;
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 1.8rem 0 2.4rem;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    /* ---------- DARK MODE OVERRIDES ---------- */
+    body.dark-mode { 
+      background: #0b0b0b; 
+      color: #f7f7f7; 
+    }
+
+    body.dark-mode header { 
+      background: #111; 
+      border-bottom-color: #333; 
+    }
+
+    body.dark-mode .nav-right .contact-btn {
+      border-color: #f7f7f7;
+      box-shadow: 0 3px 0 #f7f7f7;
+    }
+
+    body.dark-mode .theme-toggle { 
+      background:#222; 
+      border-color:#f7f7f7; 
+      box-shadow:0 2px 0 #f7f7f7; 
+    }
+
+    body.dark-mode .theme-icon { 
+      transform: rotate(180deg); 
+      filter: invert(1) brightness(1.6); 
+    }
+
+    body.dark-mode .send-hero-overlay { 
+      background: rgba(0,0,0,0.55); 
+    }
+
+    body.dark-mode .service-panel,
+    body.dark-mode .shipping-panel { 
+      background:#171717; 
+      box-shadow:0 6px 0 #000; 
+    }
+
+    body.dark-mode .board-photo-frame { 
+      border-color:#333; 
+    }
+
+    body.dark-mode .send-photo-frame {
+      border-color:#333; 
+    }
+    
+    body.dark-mode footer { 
+      background:#050505; 
     }
 
     .service-title {
@@ -214,6 +300,15 @@
       text-underline-offset: 0.18em;
     }
 
+    .shipping-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+    
     .service-subheading {
       text-align: center;
       font-weight: 700;
@@ -245,167 +340,44 @@
       font-weight: 700;
     }
 
-    /* Right column: shipping + board photo */
-    .shipping-panel {
-      background: #e0e0e0;
-      border-radius: 2rem;
-      padding: 1.6rem 2rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 6px 0 #c7c7c7;
-    }
-
-    .shipping-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      text-decoration: underline;
-      text-underline-offset: 0.18em;
-    }
-
-    .shipping-text {
-      font-weight: 700;
-      font-size: 1rem;
-      text-transform: uppercase;
-    }
-
-    .shipping-text::before {
-      content: "➜ ";
-      font-weight: 700;
-    }
-
-    .board-photo-frame {
-      border-radius: 2rem;
-      overflow: hidden;
-      border: 6px solid #000;
-    }
-
-    .board-photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .service-panel,
-    .shipping-panel {
-        font-family: "Inter", sans-serif;
-        font-weight: 700;
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      padding: 1.8rem 0 2.4rem;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    /* Smooth hover zoom */
-    .zoomable-board {
-        transition: transform 0.25s ease;
-        cursor: pointer;
-    }
-
-    .zoomable-board:hover {
-        transform: scale(1.06);
-    }
-
-    /* Lightbox overlay */
-    .image-lightbox {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.85);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-        z-index: 200;
-        cursor: zoom-out;
-    }
-
-    .image-lightbox img {
-        max-width: 95vw;
-        max-height: 95vh;
-        object-fit: contain;
-        border-radius: 1rem;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 1050px) {
-      .send-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-          "photo service"
-          "board service";
-      }
-
-      .send-photo-frame {
-        grid-area: photo;
-      }
-
-      .service-panel {
-        grid-area: service;
-      }
-
-      .shipping-panel,
-      .board-photo-frame {
-        grid-area: board;
-      }
-    }
-
+    /* ---------- Responsive ---------- */
     @media (max-width: 800px) {
-      .nav-center {
-        display: none;
-      }
-
-      .send-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .service-panel,
-      .shipping-panel {
-        margin-top: 1rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        width: min(100% - 2rem, 100%);
-      }
-
-      .send-hero-bg {
-        height: 220px;
-      }
+      .nav-center { display:none; }
+      .send-grid { grid-template-columns:1fr; }
+      .service-panel, .shipping-panel { margin-top:1rem; }
     }
   </style>
 </head>
+
 <body>
   <div class="page-wrapper">
+
     <!-- NAVBAR -->
     <header>
       <div class="container nav">
         <div class="nav-left">
-          <!-- Replace with your logo -->
-          <img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
+          <a href="home.html"><img src="assets/logo/website_logo.png" class="logo-img"></a>
         </div>
 
         <nav class="nav-center">
           <a href="home.html" class="nav-link">Home</a>
-          <a href="prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
+          <a href="#prebuilt.html" class="nav-link">Shop Pre-Built Consoles</a>
           <a href="send-in.html" class="nav-link active">Send-In Service</a>
         </nav>
 
         <div class="nav-right">
-          <a href="contact.html">
+          <button class="theme-toggle" type="button">
+            <img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
+          </button>
+
+          <a href="contact-us.html">
             <button class="contact-btn" type="button">Contact Us</button>
           </a>
         </div>
       </div>
     </header>
 
-    <!-- TOP HERO BANNER -->
+    <!-- TOP HERO -->
     <section class="send-hero">
       <div class="send-hero-bg"></div>
       <div class="send-hero-overlay"></div>
@@ -418,23 +390,21 @@
       </div>
     </section>
 
-    <!-- MAIN CONTENT (BOTTOM HALF) -->
+    <!-- MAIN CONTENT -->
     <main>
       <div class="container">
         <section class="send-grid">
-          <!-- LEFT: big console image -->
+
+          <!-- LEFT image -->
           <div class="send-photo-frame">
-            <!-- replace with your console photo -->
-            <img src="assets/Home/Carousel_3.jpg" alt="Halo 4 Xbox 360 Dual NAND RGH3 with Blue LEDs">
+            <img src="assets/Home/Carousel_3.jpg" alt="">
           </div>
 
-          <!-- MIDDLE: service info card -->
+          <!-- CENTER service panel -->
           <div>
             <div class="service-panel">
-            
-            <h2 class="service-title">Xbox 360 RGH 3/1.2<br>Service</h2>
-            
-            <h3 class="service-subheading">Service Info</h3>  
+              <h2 class="service-title">Xbox 360 RGH 3/1.2 Service</h2>
+              <h3 class="service-subheading">Service Info</h3>
 
               <ul class="service-list">
                 <li>Fresh application of Arctic MX-4</li>
@@ -443,70 +413,84 @@
                 <li><span class="price">$110US</span> for RGH + LEDs + 500GB HDD upgrade</li>
               </ul>
 
-              <p class="service-note">
-                ➜ Please Note: custom built consoles may take 2–5 business days to make.
-              </p>
+              <p class="service-note">➜ Custom built consoles may take 2–5 business days to make.</p>
             </div>
           </div>
 
-          <!-- RIGHT: shipping + board photo -->
+          <!-- RIGHT shipping + board photo -->
           <div>
             <div class="shipping-panel">
               <h3 class="shipping-title">Shipping</h3>
               <p class="shipping-text">
-                FREE SHIPPING ON ALL ORDERS IN CANADA. SHIPPING ANYWHERE IN THE USA FOR $15 USD
+                FREE SHIPPING IN CANADA. USA SHIPPING $15 USD
               </p>
             </div>
 
             <div class="board-photo-frame">
-              <!-- replace with your board photo -->
-              <img src="assets/Send-In/Soldering.jpeg" class="zoomable-board" alt="RGH1.2 Install on Falcon Motherboard">
+              <img src="assets/Send-In/Soldering.jpeg" class="zoomable-board" alt="">
             </div>
           </div>
+
         </section>
       </div>
     </main>
 
     <!-- FOOTER -->
     <footer>
-      &copy; <span id="year"></span> WareHouseX360 – Send-In Modding &amp; Refurbishment Services
+      &copy; <span id="year"></span> WareHouseX360 – Send-In Modding & Refurbishment Services
     </footer>
   </div>
 
+
+  <!-- Scripts -->
   <script>
-    // auto year
+    // Auto year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-    <script>
+  <script>
+    // Lightbox for board image
     const boardImg = document.querySelector('.zoomable-board');
-
     boardImg.addEventListener('click', () => {
-    const lightbox = document.createElement('div');
-    lightbox.classList.add('image-lightbox');
+      const lightbox = document.createElement('div');
+      lightbox.classList.add('image-lightbox');
 
-    const img = document.createElement('img');
-    img.src = boardImg.src;
-    lightbox.appendChild(img);
-    document.body.appendChild(lightbox);
+      const img = document.createElement('img');
+      img.src = boardImg.src;
+      lightbox.appendChild(img);
+      document.body.appendChild(lightbox);
 
-    // Function to close lightbox
-    function closeLightbox() {
-      lightbox.remove();
-      document.removeEventListener('keydown', escHandler);
-    }
-
-    // Close on click outside
-    lightbox.addEventListener('click', closeLightbox);
-
-    // Close on ESC key
-    function escHandler(e) {
-        if (e.key === "Escape") {
-          closeLightbox();
-        }
+      function closeLightbox(){
+        lightbox.remove();
+        document.removeEventListener('keydown', escHandler);
       }
+      lightbox.addEventListener('click', closeLightbox);
+
+      function escHandler(e){ if(e.key === "Escape") closeLightbox(); }
       document.addEventListener('keydown', escHandler);
     });
   </script>
+
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.querySelector(".theme-toggle");
+    const body = document.body;
+
+    function applyTheme(theme){
+      if(theme === "dark") body.classList.add("dark-mode");
+      else body.classList.remove("dark-mode");
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    if(savedTheme){ applyTheme(savedTheme); }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches){ applyTheme("dark"); }
+
+    themeToggle.addEventListener("click", () => {
+      const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      applyTheme(newTheme);
+    });
+  </script>
+
 </body>
 </html>
