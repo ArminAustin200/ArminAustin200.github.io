@@ -987,11 +987,11 @@
 		const thumbs = document.querySelectorAll('.why-thumb');
 
 		let currentIndex = -1;
-
-		// store scroll position for lock/unlock
-		let scrollPosition = 0;
+		let scrollPosition = 0;  // we'll store the scroll position here
 
 		function openModal(index) {
+			const wasOpen = modal.classList.contains('open'); // ✅ already open?
+
 			currentIndex = index;
 			const img = thumbs[currentIndex].querySelector('img');
 			if (!img) return;
@@ -1001,7 +1001,8 @@
 			modal.classList.add('open');
 			modal.setAttribute('aria-hidden', 'false');
 
-			// 🔒 LOCK SCROLL (desktop + mobile)
+			//Only lock scroll the FIRST time the modal opens
+			if (!wasOpen) {
 			scrollPosition = window.scrollY || window.pageYOffset || 0;
 
 			document.body.classList.add('no-scroll');
@@ -1010,6 +1011,7 @@
 			document.body.style.left = '0';
 			document.body.style.right = '0';
 			document.body.style.width = '100%';
+			}
 		}
 
 		function closeModal() {
@@ -1018,7 +1020,7 @@
 			modalImg.src = '';
 			currentIndex = -1;
 
-			// 🔓 UNLOCK SCROLL
+			//Unlock scroll and restore original position
 			document.body.classList.remove('no-scroll');
 			document.body.style.position = '';
 			document.body.style.top = '';
@@ -1029,24 +1031,24 @@
 			window.scrollTo(0, scrollPosition);
 		}
 
-		// click on thumbs → open
+		// Click thumbnails → open at that index
 		thumbs.forEach((btn, index) => {
 			btn.addEventListener('click', () => openModal(index));
 		});
 
-		// X button
+		// Close button (X)
 		if (closeBtn) {
 			closeBtn.addEventListener('click', closeModal);
 		}
 
-		// click backdrop
+		//Click outside image → close
 		modal.addEventListener('click', (e) => {
 			if (e.target === modal) {
 			closeModal();
 			}
 		});
 
-		// keyboard: esc + arrows
+		//Keyboard shortcuts: ESC, left arrow, right arrow
 		document.addEventListener('keydown', (e) => {
 			if (!modal.classList.contains('open')) return;
 
@@ -1061,25 +1063,30 @@
 			}
 		});
 
-		// optional: swipe left/right on mobile
+		//Swipe left/right on mobile to change images
 		let startX = 0;
+
 		modal.addEventListener('touchstart', (e) => {
 			if (!modal.classList.contains('open')) return;
+			if (!e.touches || e.touches.length === 0) return;
 			startX = e.touches[0].clientX;
 		});
 
 		modal.addEventListener('touchend', (e) => {
 			if (!modal.classList.contains('open')) return;
+			if (!e.changedTouches || e.changedTouches.length === 0) return;
+
 			const endX = e.changedTouches[0].clientX;
 			const diff = endX - startX;
 
+			// basic threshold so tiny jitters don't trigger
 			if (Math.abs(diff) > 50) {
 			if (diff < 0) {
 				// swipe left → next
 				const next = (currentIndex + 1) % thumbs.length;
 				openModal(next);
 			} else {
-				// swipe right → prev
+				// swipe right → previous
 				const prev = (currentIndex - 1 + thumbs.length) % thumbs.length;
 				openModal(prev);
 			}
@@ -1087,7 +1094,6 @@
 		});
 		})();
 	</script>
-
 
 
 	<script>
