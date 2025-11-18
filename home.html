@@ -685,9 +685,16 @@
 
 		/* ------- Mobile layout ------- */
 		@media (max-width: 960px) {
-			body {
-				overflow-x: hidden;
+			.console-card {
+				max-width: 100%;
+				overflow: hidden;
 			}
+
+			img, .console-slide{
+				max-width: 100%;
+				height: auto;
+			}
+
 			.nav-center {
 				display: none;
 			}
