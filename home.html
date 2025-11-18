@@ -176,6 +176,13 @@
 			filter: invert(1);
 			transform: rotate(180deg);
 		}
+
+		.nav-right .contact-btn:hover,
+		.footer-contact .contact-btn:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #e98c28;
+		}
 		
 		/*---------------DARK MODE OVERRIDES---------------*/
 		body.dark-mode { 
@@ -222,12 +229,19 @@
 			border-color:#333; 
 		}
 
-		.nav-right .contact-btn:hover,
-		.footer-contact .contact-btn:hover {
-			transform: translateY(1px);
-			box-shadow: 0 1px 0 #000;
-			background: #e98c28;
+		body.dark-mode .carousel-arrow {
+			background: #868686;
 		}
+
+		body.dark-mode .carousel-arrow:hover{
+			background: #757575;
+		}
+
+		body.dark-mode .primary-btn:hover,
+		body.dark-mode .secondary-btn:hover {
+			background: #757575;
+		}
+
 
 		/* ---------- Hero Section ---------- */
 		.hero {
