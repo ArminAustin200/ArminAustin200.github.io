@@ -685,14 +685,23 @@
 
 		/* ------- Mobile layout ------- */
 		@media (max-width: 960px) {
-			.console-card {
-				max-width: 100%;
+			.why-section {
 				overflow: hidden;
 			}
 
-			img, .console-slide{
-				max-width: 100%;
-				height: auto;
+			.why-inner {
+				width: min(100% - 2rem, 100%);
+				margin: 0 auto;
+			}
+
+			.why-panels{
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+
+			.why-card {
+				width: 100%;
+				margin: 0 auto;
 			}
 
 			.nav-center {
