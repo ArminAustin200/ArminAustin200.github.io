@@ -303,68 +303,14 @@
       margin-bottom: 1.6rem;
     }
 
-    .contact-form {
-      text-align: left;
-      display: grid;
-      gap: 1rem;
-    }
-
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .form-row label {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .form-row input,
-    .form-row textarea {
-      font-family: inherit;
-      font-size: 0.95rem;
-      padding: 0.6rem 0.75rem;
-      border-radius: 0.5rem;
-      border: 1px solid #ccc;
-      outline: none;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    }
-
-    .form-row input:focus,
-    .form-row textarea:focus {
-      border-color: #d97917;
-      box-shadow: 0 0 0 2px rgba(217, 121, 23, 0.25);
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .form-actions {
-      margin-top: 0.6rem;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .form-submit {
-      font-family: "Playfair Display", serif;
-      font-size: 1rem;
-      padding: 0.5rem 1.6rem;
-      border-radius: 999px;
-      border: 2px solid #000;
-      background: #d97917;
-      color: #000;
-      box-shadow: 0 3px 0 #000;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
-    }
-
-    .form-submit:hover {
-      transform: translateY(1px);
-      box-shadow: 0 1px 0 #000;
-      background: #e98c28;
+    .google-form-embed iframe {
+      width: 100%;
+      max-width: 100%;
+      height: 1225px; /* adjust if needed */
+      border-radius: 1rem;
+      border: 3px solid #000;
+      box-shadow: 0 4px 0 #000;
+      background: #fff;
     }
 
     /* ---------- FOOTER ---------- */
@@ -419,17 +365,17 @@
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.7);
     }
 
-    body.dark-mode .form-row input,
-    body.dark-mode .form-row textarea {
-      background: #111;
-      border-color: #444;
-      color: #f7f7f7;
-    }
-
     body.dark-mode footer {
       background: #050505;
       color: #f7f7f7;
     }
+
+    body.dark-mode .google-form-embed iframe {
+      border-color: #f7f7f7;
+      box-shadow: 0 4px 0 #f7f7f7;
+      background: #000;
+    }
+
     .theme-toggle {
         display: flex;
         align-items: center;
@@ -537,33 +483,13 @@
             </a>
         </div>
 
-        <!-- CONTACT FORM -->
+        <!-- CONTACT FORM (Google Forms embed) -->
         <section class="contact-form-section">
           <h2>Send Us a Message</h2>
           <p>Prefer to write us directly? Fill out the form below and we’ll get back to you as soon as we can.</p>
 
-          <!-- mailto-based form (opens email client with pre-filled body) -->
-          <form class="contact-form"
-                action="mailto:warehousex360@gmail.com"
-                method="POST"
-                enctype="text/plain">
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input id="name" name="Name" type="text" required>
-            </div>
-
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input id="email" name="Email" type="email" required>
-            </div>
-
-            <div class="form-row">
-              <label for="message">Message</label>
-              <textarea id="message" name="Message" required></textarea>
-            </div>
-
-            <div class="form-actions">
-              <button class="form-submit" type="submit">Send Message</button>
+          <div class="google-form-embed">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhkKYcaDyPs7aHoeQka6dnTO0xqVTAd8ANrqMeZ39yNF4XuA/viewform?embedded=true" width="640" height="1124" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
             </div>
           </form>
         </section>
@@ -575,6 +501,7 @@
       &copy; <span id="year"></span> WareHouseX360 – All Rights Reserved
     </footer>
   </div>
+
     <script>
     // Click-to-copy for any card with .copy-text
         document.querySelectorAll('.copy-text').forEach(card => {
@@ -622,7 +549,7 @@
         }
     }
 
-    //Load saved theme or OS preference
+    // Load saved theme or OS preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       applyTheme(savedTheme);
@@ -637,41 +564,12 @@
       applyTheme(newTheme);
     });
 
-    // ---- Click-to-copy for contact values (email & Reddit) ----
+    // ---- Click-to-copy for contact values (email card already handled above) ----
     const copyEls = document.querySelectorAll('.copy-text');
 
     copyEls.forEach(el => {
       el.addEventListener('click', async (e) => {
-        e.preventDefault();  // prevent immediate navigation
-
-        const textToCopy = el.dataset.copy || el.textContent.trim();
-        const originalText = el.textContent;
-
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(textToCopy);
-          }
-          // Show "Copied!" state
-          el.classList.add('copied');
-
-          setTimeout(() => {
-            el.classList.remove('copied');
-          }, 1200);
-        } catch (err) {
-          console.error('Copy failed:', err);
-        }
-
-        // After short delay, continue with original link action
-        setTimeout(() => {
-          const href = el.getAttribute('href');
-          if (href) {
-            if (el.hasAttribute('target') && el.target === '_blank') {
-              window.open(href, '_blank');
-            } else {
-              window.location.href = href;
-            }
-          }
-        }, 100); // small delay so copy has time to run
+        // this second listener is redundant but harmless; keeping in case you want to expand later
       });
     });
   </script>
