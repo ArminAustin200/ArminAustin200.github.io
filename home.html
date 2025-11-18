@@ -635,7 +635,8 @@
   		font-family: "Inter", sans-serif;
   		font-weight: 900;
 		}
-		/* Base nav layout (already similar to what you have) */
+		
+				/* Base nav layout (already similar to what you have) */
 		.nav {
 			display: flex;
 			align-items: center;
@@ -685,25 +686,15 @@
 		/* ------- Mobile layout ------- */
 		@media (max-width: 960px) {
 			.nav-center {
-				display: none; /* hide menu by default on small screens */
-			}
-			
-			.hero-left {
-				text-align: center;
-				padding-right: 0;
-			}
-
-			.hero-buttons {
-				justify-content: center;
+				display: none;
 			}
 
 			.nav-toggle {
-					display: inline-flex;
-					align-items: center;
-					justify-content: center;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
 			}
 
-			/* When header has .nav-open, show a dropdown menu */
 			header.nav-open .nav-center {
 				display: flex;
 				flex-direction: column;
@@ -716,52 +707,65 @@
 				padding: 0.75rem 1.25rem 1rem;
 				gap: 0.75rem;
 				border-bottom: 1px solid #333;
+				font-size: 1.2rem;
 			}
 
 			header.nav-open .nav-link::after {
-				background: #fff; /* underline visible on dark dropdown */
+				background: #fff;
 			}
 
-			/* Optional: shrink nav text a bit on phones */
-			header.nav-open .nav-center {
-				font-size: 1.2rem;
+			.hero-inner {
+				display: grid;
+				grid-template-columns: 1fr;   /* one column: text then carousel */
+				gap: 1.8rem;
+				justify-items: center;        /* center children horizontally */
+			}
+
+			.hero-left {
+				text-align: center;
+				padding-right: 0;
+			}
+
+			.hero-title {
+				margin-inline: auto;
+			}
+
+			.hero-buttons {
+				justify-content: center;
+			}
+
+			.hero-right {
+				width: 100%;
+				max-width: 420px;             /* keep carousel nicely sized */
+			}
+
+			/* Slightly tighter padding so the images can be bigger */
+			.why-card {
+				padding: 1.6rem 1.4rem 2rem;
+			}
+
+			/* Use a single column so each image can take full width */
+			.why-gallery {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				column-gap: 0.9rem;
+				row-gap: 3.5rem;
+				position: center;
+			}
+
+			.why-thumb img {
+				width: 100%;
+				aspect-ratio: 4 / 3;          /* keep the same shape */
+				object-fit: cover;            /* fill the box nicely */
 			}
 		}
 
 		/* Dark-mode tweak so the underline is visible on desktop too */
 		body.dark-mode .nav-link::after {
-		background: #f7f7f7;
+			background: #f7f7f7;
 		}
 
 		body.dark-mode header.nav-open .nav-center {
-		background: #111;
-		}
-
-		@media (max-width: 600px) {
-			.container {
-				width: min(100% - 2rem, 100%);
-			}
-
-			.hero-title {
-				font-size: 2.1rem;
-			}
-
-			.hero-copy {
-				font-size: 1.1rem;
-			}
-
-			.nav-right .contact-btn {
-				font-size: 1.05rem;
-				padding-inline: 1.2rem;
-			}
-
-			.why-header-box {
-				padding-inline: 1rem;
-			}
-
-			.why-header-logo {
-				display: none; /* hide logo on very small screens */
-			}
+			background: #111;
 		}
 	</style>
 </head>
@@ -968,101 +972,131 @@
 	</script>
 
 	<script>
-  		document.addEventListener('DOMContentLoaded', function () {
-    	/* --- Hero carousel (unchanged) --- */
-    	document.querySelectorAll('.console-card').forEach(function (card) {
-      	const slides = card.querySelectorAll('.console-slide');
-      	const nextBtn = card.querySelector('.carousel-arrow.right');
-      	const prevBtn = card.querySelector('.carousel-arrow.left');
+	document.addEventListener('DOMContentLoaded', function () {
+		/* --- Hero carousel (unchanged) --- */
+		document.querySelectorAll('.console-card').forEach(function (card) {
+		const slides = card.querySelectorAll('.console-slide');
+		const nextBtn = card.querySelector('.carousel-arrow.right');
+		const prevBtn = card.querySelector('.carousel-arrow.left');
 
-      	if (!slides.length) return;
+		if (!slides.length) return;
 
-      	let currentIndex = 0;
-      	slides[0].classList.add('active');
+		let currentIndex = 0;
+		slides[0].classList.add('active');
 
-      	function showSlide(newIndex) {
-        	slides[currentIndex].classList.remove('active');
-        	currentIndex = (newIndex + slides.length) % slides.length;
-        	slides[currentIndex].classList.add('active');
-      	}
+		function showSlide(newIndex) {
+			slides[currentIndex].classList.remove('active');
+			currentIndex = (newIndex + slides.length) % slides.length;
+			slides[currentIndex].classList.add('active');
+		}
 
-      	if (nextBtn) {
-        	nextBtn.addEventListener('click', function () {
-          	showSlide(currentIndex + 1);
-        	});
-      	}
+		if (nextBtn) {
+			nextBtn.addEventListener('click', function () {
+			showSlide(currentIndex + 1);
+			});
+		}
 
-      	if (prevBtn) {
-        	prevBtn.addEventListener('click', function () {
-          	showSlide(currentIndex - 1);
-        	});
-      	}
-    	});
+		if (prevBtn) {
+			prevBtn.addEventListener('click', function () {
+			showSlide(currentIndex - 1);
+			});
+		}
+		});
 
-    	/* --- Board gallery lightbox with arrow-key navigation --- */
-    	const modal = document.getElementById('imageModal');
-    	const modalImg = document.getElementById('imageModalImg');
-    	const closeBtn = document.querySelector('.image-modal-close');
-    	const thumbs = document.querySelectorAll('.why-thumb');
+		/* --- Board gallery lightbox + keyboard + SWIPE navigation --- */
+		const modal   = document.getElementById('imageModal');
+		const modalImg = document.getElementById('imageModalImg');
+		const closeBtn = document.querySelector('.image-modal-close');
+		const thumbs   = document.querySelectorAll('.why-thumb');
 
-    	let currentThumbIndex = -1; // which of the 4 images is currently open
+		let currentThumbIndex = -1;
 
-    	function openModalByIndex(index) {
-      	currentThumbIndex = index;
-      	const btn = thumbs[currentThumbIndex];
-      	const img = btn.querySelector('img');
-      	if (!img) return;
+		function openModalByIndex(index) {
+		currentThumbIndex = index;
+		const btn = thumbs[currentThumbIndex];
+		const img = btn.querySelector('img');
+		if (!img) return;
 
-      	modalImg.src = img.src;
-      	modalImg.alt = img.alt || 'Board work image';
-      	modal.classList.add('open');
-      	modal.setAttribute('aria-hidden', 'false');
-    	}
+		modalImg.src = img.src;
+		modalImg.alt = img.alt || 'Board work image';
+		modal.classList.add('open');
+		modal.setAttribute('aria-hidden', 'false');
+		}
 
-    	function closeModal() {
-      	modal.classList.remove('open');
-      	modal.setAttribute('aria-hidden', 'true');
-      	modalImg.src = '';
-      	currentThumbIndex = -1;
-    	}
+		function closeModal() {
+		modal.classList.remove('open');
+		modal.setAttribute('aria-hidden', 'true');
+		modalImg.src = '';
+		currentThumbIndex = -1;
+		}
 
-    	// Click thumbnails → open that image
-    	thumbs.forEach(function (btn, index) {
-      		btn.addEventListener('click', function () {
-	    		openModalByIndex(index);
-      		});
-    	});
+		// Click thumbnails → open that image
+		thumbs.forEach(function (btn, index) {
+		btn.addEventListener('click', function () {
+			openModalByIndex(index);
+		});
+		});
 
-    	if (closeBtn) {
-      	closeBtn.addEventListener('click', closeModal);
-    	}
+		if (closeBtn) {
+		closeBtn.addEventListener('click', closeModal);
+		}
 
-    	// Click outside the image → close
-    	modal.addEventListener('click', function (e) {
-      		if (e.target === modal) {
-        		closeModal();
-      		}
-    	});
+		// Click outside image → close
+		modal.addEventListener('click', function (e) {
+		if (e.target === modal) closeModal();
+		});
 
-    	// Keyboard controls: Esc, ArrowLeft, ArrowRight
-    	document.addEventListener('keydown', function (e) {
-      	// Only react to keys when modal is open
-      	if (!modal.classList.contains('open')) return;
+		// Keyboard: Esc / ArrowLeft / ArrowRight
+		document.addEventListener('keydown', function (e) {
+		if (!modal.classList.contains('open')) return;
 
-      	if (e.key === 'Escape') {
-        	closeModal();
-      	} else if (e.key === 'ArrowRight') {
-        	// next image
-        	const nextIndex = (currentThumbIndex + 1 + thumbs.length) % thumbs.length;
-        	openModalByIndex(nextIndex);
-      	} else if (e.key === 'ArrowLeft') {
-        	// previous image
-        	const prevIndex = (currentThumbIndex - 1 + thumbs.length) % thumbs.length;
-        	openModalByIndex(prevIndex);
-      		}
-    	});
-  	});
+		if (e.key === 'Escape') {
+			closeModal();
+		} else if (e.key === 'ArrowRight') {
+			const nextIndex = (currentThumbIndex + 1 + thumbs.length) % thumbs.length;
+			openModalByIndex(nextIndex);
+		} else if (e.key === 'ArrowLeft') {
+			const prevIndex = (currentThumbIndex - 1 + thumbs.length) % thumbs.length;
+			openModalByIndex(prevIndex);
+		}
+		});
+
+		/* --- TOUCH SWIPE (for mobile) --- */
+		let touchStartX = null;
+
+		// start of touch
+		modal.addEventListener('touchstart', function (e) {
+		if (!modal.classList.contains('open')) return;
+		if (e.touches.length > 0) {
+			touchStartX = e.touches[0].clientX;
+		}
+		}, { passive: true });
+
+		// end of touch → detect swipe direction
+		modal.addEventListener('touchend', function (e) {
+		if (!modal.classList.contains('open') || touchStartX === null) return;
+
+		const endX = e.changedTouches[0].clientX;
+		const deltaX = endX - touchStartX;
+		const SWIPE_THRESHOLD = 50; // px
+
+		if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+			if (deltaX < 0) {
+			// swipe left → next image
+			const nextIndex = (currentThumbIndex + 1 + thumbs.length) % thumbs.length;
+			openModalByIndex(nextIndex);
+			} else {
+			// swipe right → previous image
+			const prevIndex = (currentThumbIndex - 1 + thumbs.length) % thumbs.length;
+			openModalByIndex(prevIndex);
+			}
+		}
+
+		touchStartX = null;
+		}, { passive: true });
+	});
 	</script>
+
 	
 	<script>
     	// auto year
