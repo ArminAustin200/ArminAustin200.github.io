@@ -975,51 +975,74 @@
 	</div>
 
 	<script>
-		// Simple lightbox for the board images
 		(function () {
-			const modal = document.getElementById('imageModal');
-			const modalImg = document.getElementById('imageModalImg');
-			const closeBtn = document.querySelector('.image-modal-close');
-			const thumbs = document.querySelectorAll('.why-thumb');
+		const modal = document.getElementById('imageModal');
+		const modalImg = document.getElementById('imageModalImg');
+		const closeBtn = document.querySelector('.image-modal-close');
+		const thumbs = document.querySelectorAll('.why-thumb');
 
-			function openModal(src, alt) {
-				modalImg.src = src;
-				modalImg.alt = alt || 'Board work image';
-				modal.classList.add('open');
-				modal.setAttribute('aria-hidden', 'false');
+		let currentIndex = -1;
+
+		function openModal(index) {
+			currentIndex = index;
+			const img = thumbs[currentIndex].querySelector('img');
+			modalImg.src = img.src;
+			modal.classList.add("open");
+			modal.setAttribute("aria-hidden", "false");
+
+			// Disable background scroll
+			document.body.classList.add("no-scroll");
+		}
+
+		function closeModal() {
+			modal.classList.remove("open");
+			modal.setAttribute("aria-hidden", "true");
+			modalImg.src = "";
+			currentIndex = -1;
+			document.body.classList.remove("no-scroll");
+		}
+
+		thumbs.forEach((btn, index) => {
+			btn.addEventListener("click", () => openModal(index));
+		});
+
+		closeBtn.addEventListener("click", closeModal);
+
+		modal.addEventListener("click", (e) => {
+			if (e.target === modal) closeModal();
+		});
+
+		document.addEventListener("keydown", (e) => {
+			if (!modal.classList.contains("open")) return;
+
+			if (e.key === "Escape") closeModal();
+			if (e.key === "ArrowRight") openModal((currentIndex + 1) % thumbs.length);
+			if (e.key === "ArrowLeft")
+			openModal((currentIndex - 1 + thumbs.length) % thumbs.length);
+		});
+
+		/* Touch swipe navigation (mobile) */
+		let startX = 0;
+		modal.addEventListener("touchstart", (e) => {
+			startX = e.touches[0].clientX;
+		});
+
+		modal.addEventListener("touchend", (e) => {
+			const endX = e.changedTouches[0].clientX;
+			const diff = endX - startX;
+
+			// Swipe threshold
+			if (Math.abs(diff) > 50) {
+			if (diff < 0) {
+				openModal((currentIndex + 1) % thumbs.length); // swipe left → next
+			} else {
+				openModal((currentIndex - 1 + thumbs.length) % thumbs.length); // swipe right → prev
 			}
-
-			function closeModal() {
-				modal.classList.remove('open');
-				modal.setAttribute('aria-hidden', 'true');
-				modalImg.src = '';
 			}
-
-			thumbs.forEach(btn => {
-				btn.addEventListener('click', () => {
-					const img = btn.querySelector('img');
-					if (!img) return;
-					openModal(img.src, img.alt);
-				});
-			});
-
-			closeBtn.addEventListener('click', closeModal);
-
-			// Close when clicking outside the image
-			modal.addEventListener('click', (e) => {
-				if (e.target === modal) {
-					closeModal();
-				}
-			});
-
-			// Close on Escape
-			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && modal.classList.contains('open')) {
-					closeModal();
-				}
-			});
+		});
 		})();
 	</script>
+
 
 	<script>
 	document.addEventListener('DOMContentLoaded', function () {
