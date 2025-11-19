@@ -572,16 +572,39 @@
             opacity: 1;
         }
 
+        /* CLOSE BUTTON — improved visibility */
         .product-modal-close {
             position: absolute;
-            top: 0.4rem;
-            right: 0.7rem;
-            font-size: 2rem;
-            background: none;
-            border: none;
-            color: #fff;
+            top: 0.6rem;
+            right: 0.9rem;
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.85);
+            border: 2px solid #000;
+            border-radius: 50%;
+
+            font-size: 1.55rem;
+            font-weight: bold;
+            line-height: 0;                 /* removes default vertical spacing */
+            transform: translateY(-1px);    /* nudges glyph into perfect center */
+
+            color: #000;
             cursor: pointer;
-            z-index: 2;
+
+            z-index: 3;
+            transition: background .25s ease, color .25s ease, border-color .25s ease;
+        }
+
+
+        /* hover effect (optional but nice) */
+        .product-modal-close:hover {
+            background: #fff;
         }
 
         .product-modal-inner {
@@ -859,6 +882,16 @@
         body.dark-mode .email-btn {
             background: #00aa00;
             border-color: #00ff00;
+        }
+
+        body.dark-mode .product-modal-close {
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        body.dark-mode .product-modal-close:hover {
+            background: rgba(0,0,0,0.9);
         }
 
         /* ---------- Mobile modal: full-screen, smaller carousel, no inner scrollbars ---------- */
