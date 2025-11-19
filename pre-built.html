@@ -79,13 +79,6 @@
 			height: auto;
 		}
 
-		.logo-text {
-			font-family: "Playfair Display", serif;
-			font-size: 1.25rem;
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-		}
-
 		.nav-center {
 			display: flex;
 			gap: 3rem;
@@ -150,20 +143,6 @@
 			box-shadow: 0 2px 0 #000;
 			transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
     	}
-
-		/* Dark Mode Toggle Button */
-		.theme-toggle {
-			border: 2px solid #000;
-			border-radius: 999px;
-			background: #fff;
-			cursor: pointer;
-			padding: 0.35rem 0.55rem;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: 0 2px 0 #000;
-			transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-		}
 
 		.theme-toggle:hover {
 			transform: translateY(1px);
@@ -243,11 +222,11 @@
         }
 
         body.dark-mode .product-title {
-        color: #ffffff;
+            color: #ffffff;
         }
 
         body.dark-mode .product-features li::before {
-            color: #f7f7f7; /* arrow color */
+            color: #f7f7f7;
         }
 
         body.dark-mode .product-ref {
@@ -260,16 +239,6 @@
 
         body.dark-mode .product-price--soldout {
             color: #ff5a5a;
-        }
-
-        /* Optional: darken hero overlay & section heading */
-        body.dark-mode .store-hero-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            color: #f7f7f7;
-        }
-
-        body.dark-mode .section-heading {
-            color: #f7f7f7;
         }
 
 		/*----MOBILE NAV TOGGLE----*/
@@ -380,51 +349,55 @@
 			margin-bottom: 1.5rem;
 		}
 
-		.products-grid {
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 1.5rem;
-		}
+        /* ---------- Product grid & cards ---------- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
 
-		@media (min-width: 900px) {
-			.products-grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-		}
+        @media (min-width: 1100px) {
+            .products-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
 
-		.product-card {
-			display: flex;
-			flex-direction: row;
-			border: 1px solid #000;
-			background: #f7f7f7;
-			box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-		}
+        /* Mobile: image on top, text below */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #000;
+            background: #f7f7f7;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
 
-		@media (max-width: 600px) {
-			.product-card {
-				flex-direction: column;
-			}
-		}
+        .product-image-wrapper {
+            width: 100%;
+            border-bottom: 1px solid #000;
+            border-right: none;
+            background: #ddd;
+        }
 
-		.product-image-wrapper {
-			flex: 0 0 40%;
-			border-right: 1px solid #000;
-			background: #ddd;
-		}
+        .product-image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
 
-		@media (max-width: 600px) {
-			.product-image-wrapper {
-				border-right: none;
-				border-bottom: 1px solid #000;
-			}
-		}
+        /* Desktop: image left, text right */
+        @media (min-width: 900px) {
+            .product-card {
+                flex-direction: row;
+            }
 
-		.product-image-wrapper img {
-			display: block;
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
+            .product-image-wrapper {
+                flex: 0 0 40%;
+                border-right: 1px solid #000;
+                border-bottom: none;
+            }
+        }
 
 		.product-info {
 			flex: 1;
@@ -475,7 +448,7 @@
 			font-weight: bold;
 		}
 
-		/* ---------- Footer (same look as home) ---------- */
+		/* ---------- Footer ---------- */
 		footer {
 			padding: 1.8rem 0 2.4rem;
 			background: #000;
@@ -484,280 +457,91 @@
 			font-size: 0.9rem;
 		}
 
-		.footer-contact {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 0.8rem;
-			margin-bottom: 0.3rem;
-		}
-
-		.footer-contact .contact-btn {
-			font-family: "Playfair Display", serif;
-			font-size: 1.3rem;
-			padding: 0.5rem 2rem;
-			border-radius: 999px;
-			border: 3px solid #000;
-			background: #d97917;
-			color: #000;
-			box-shadow: 0 3px 0 #000;
-			cursor: pointer;
-			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
-		}
-
-		.footer-contact .contact-btn:hover {
-			transform: translateY(1px);
-			box-shadow: 0 1px 0 #000;
-			background: #e98c28;
-		}
-
 		body.dark-mode footer {
 			background: #050505;
 		}
 
-        /* ---------- Product Modal ---------- */
+		/* ---------- CLEAN PRODUCT MODAL CSS ---------- */
+
         .product-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 999;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.25s ease;
         }
 
-        /* When open: fade in and allow interaction */
         .product-modal.open {
-        opacity: 1;
-        pointer-events: auto;
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        /* Backdrop fades in too */
         .product-modal-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        opacity: 0;
-        transition: opacity 0.25s ease;
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        .product-modal.open .product-modal-backdrop {
-        opacity: 1;
-        }
-
-        /* Dialog scales & fades in */
         .product-modal-dialog {
-        position: relative;
-        max-width: 1100px;
-        height: 80vh;
-        margin: 3rem auto;
-        background: #000 url("assets/backgrounds/pixel_pattern.png") center/cover no-repeat;
-        color: #fff;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            margin: 3rem auto;
+            background: #000 url("assets/Home/Background.png") center/cover no-repeat;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            overflow: hidden;
 
-        /* start slightly smaller & lower */
-        transform: scale(0.96) translateY(10px);
-        opacity: 0;
-        transition: transform 0.25s ease, opacity 0.25s ease;
+            transform: scale(0.96) translateY(10px);
+            opacity: 0;
+            transition: transform 0.25s ease, opacity 0.25s ease;
         }
 
-        /* When modal is open, animate to full size */
         .product-modal.open .product-modal-dialog {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-        }
-
-        .product-modal-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        }
-
-        .product-modal-dialog {
-        position: relative;
-        max-width: 1100px;
-        height: 80vh;
-        margin: 3rem auto;
-        background: #000 url("assets/backgrounds/pixel_pattern.png") center/cover no-repeat;
-        color: #fff;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
         .product-modal-close {
-        position: absolute;
-        top: 0.4rem;
-        right: 0.7rem;
-        font-size: 2rem;
-        background: none;
-        border: none;
-        color: #fff;
-        cursor: pointer;
-        z-index: 2;
+            position: absolute;
+            top: 0.4rem;
+            right: 0.7rem;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            z-index: 2;
         }
 
         .product-modal-inner {
-        display: grid;
-        grid-template-columns: 2fr 2.2fr 1.2fr;
-        height: 100%;
+            display: grid;
+            grid-template-columns: 2fr 2.2fr 1.2fr;
+            height: 100%;
         }
 
         /* Left (carousel) */
         .product-modal-left {
-        position: relative;
-        padding: 0.35rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+            position: relative;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .product-modal-image-frame {
-        border: 2px solid #fff;
-        background: #111;
-        max-width: 100%;
-        max-height: 100%;
+            border: 2px solid #fff;
+            background: #111;
+            max-width: 100%;
+            max-height: 100%;
         }
 
-        .product-modal-image-frame img {
-        display: block;
-        width: 100%;
-        height: auto;
-        opacity: 1;
-        transition: opacity 0.25s ease;   /* smooth fade */
-        }
-
-        /* temporary class used while switching images */
-        .product-modal-image-frame img.fade-out {
-        opacity: 0;
-        }
-
-        .modal-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        border: none;
-        background: rgba(0,0,0,0.5);
-        color: #fff;
-        font-size: 2rem;
-        padding: 0.2rem 0.5rem;
-        cursor: pointer;
-        }
-
-        .modal-arrow-left { left: 0.4rem; }
-        .modal-arrow-right { right: 0.4rem; }
-
-        .modal-dots {
-        margin-top: 0.5rem;
-        text-align: center;
-        }
-
-        .modal-dot {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: #666;
-        margin: 0 3px;
-        cursor: pointer;
-        }
-
-        .modal-dot.active {
-        background: #fff;
-        }
-
-        /* Middle (details) */
-        .product-modal-middle {
-        padding: 1.2rem 1.5rem;
-        overflow-y: auto;
-        }
-
-        .modal-title {
-        font-size: 1.8rem;
-        text-decoration: underline;
-        margin-bottom: 0.75rem;
-        }
-
-        .modal-price {
-        font-weight: bold;
-        }
-
-        .modal-stock {
-        color: #ff5555;
-        font-weight: bold;
-        }
-
-        .modal-ref {
-        margin-top: 0.4rem;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-        }
-
-        .modal-subheading {
-        font-size: 1rem;
-        text-decoration: underline;
-        margin-top: 1rem;
-        margin-bottom: 0.4rem;
-        }
-
-        .modal-features {
-        list-style: none;
-        padding-left: 0;
-        margin: 0 0 0.5rem;
-        }
-
-        .modal-features li::before {
-        content: "→ ";
-        }
-
-        .modal-description {
-        font-size: 0.95rem;
-        }
-
-        .modal-buy-btn {
-        margin-top: 1.5rem;
-        padding: 0.4rem 1.4rem;
-        border-radius: 999px;
-        border: 2px solid #00ff00;
-        background: #00cc00;
-        color: #000;
-        font-weight: bold;
-        cursor: pointer;
-        }
-
-        /* Right (shipping/warranty) */
-        .product-modal-right {
-        padding: 1.2rem 1rem;
-        border-left: 1px solid rgba(255,255,255,0.3);
-        font-size: 0.9rem;
-        }
-
-        /* Dark-mode tweak */
-        body.dark-mode .product-modal-dialog {
-        background-color: #05020b;
-        }
-
-        /* Responsive */
-        @media (max-width: 960px) {
-        .product-modal-dialog {
-            margin: 1.5rem auto;
-            height: 85vh;
-        }
-
-        .product-modal-inner {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
-        }
-
-        .product-modal-right {
-            border-left: none;
-            border-top: 1px solid rgba(255,255,255,0.3);
-        }
-        .product-card:focus {
-            outline: none;
-        }
-
-        /* Carousel main image with fade transition */
         .product-modal-image-frame img {
             display: block;
             width: 100%;
@@ -769,12 +553,171 @@
         .product-modal-image-frame img.fade-out {
             opacity: 0;
         }
-    }
+
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 2rem;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+        }
+
+        .modal-arrow-left { left: 0.4rem; }
+        .modal-arrow-right { right: 0.4rem; }
+
+        .modal-dots {
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .modal-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #666;
+            margin: 0 3px;
+            cursor: pointer;
+        }
+
+        .modal-dot.active {
+            background: #fff;
+        }
+
+        /* Middle (details) */
+        .product-modal-middle {
+            padding: 1.2rem 1.5rem;
+            overflow-y: auto; /* desktop: allow scrolling if very long */
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            text-decoration: underline;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-price {
+            font-weight: bold;
+        }
+
+        .modal-stock {
+            color: #ff5555;
+            font-weight: bold;
+        }
+
+        .modal-ref {
+            margin-top: 0.4rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .modal-subheading {
+            font-size: 1rem;
+            text-decoration: underline;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 0.5rem;
+        }
+
+        .modal-features li::before {
+            content: "→ ";
+        }
+
+        .modal-description {
+            font-size: 0.95rem;
+        }
+
+        .modal-buy-btn {
+            margin-top: 1.5rem;
+            padding: 0.4rem 1.4rem;
+            border-radius: 999px;
+            border: 2px solid #00ff00;
+            background: #00cc00;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Right (shipping/warranty) */
+        .product-modal-right {
+            padding: 1.2rem 1rem;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            background-color: rgba(0,0,0,0.85);
+            font-size: 0.9rem;
+            overflow-y: auto; /* desktop only; overridden on mobile */
+        }
+
+        /* Dark mode tweak */
+        body.dark-mode .product-modal-dialog {
+            background-color: #05020b;
+        }
+
+        /* ---------- Mobile modal: full-screen, smaller carousel, no inner scrollbars ---------- */
+        @media (max-width: 900px) {
+            .product-modal {
+                align-items: stretch;
+            }
+
+            .product-modal-dialog {
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                overflow-y: auto; /* single scrollbar for whole modal */
+            }
+
+            .product-modal-inner {
+                display: flex;
+                flex-direction: column;
+                min-height: 100%;
+            }
+
+            .product-modal-left {
+                flex: 0 0 auto;
+                padding: 0.75rem 0.75rem 0.25rem;
+            }
+
+            .product-modal-image-frame {
+                max-height: 40vh; /* smaller carousel */
+            }
+
+            .product-modal-image-frame img {
+                max-height: 40vh;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+
+            .product-modal-middle,
+            .product-modal-right {
+                overflow: visible; /* no inner scrollbars */
+            }
+
+            .product-modal-right {
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.3);
+            }
+
+            .modal-arrow-left { left: 0.3rem; }
+            .modal-arrow-right { right: 0.3rem; }
+        }
+
 	</style>
 </head>
 <body>
 	<div class="page-wrapper">
-		<!-- NAVBAR (copied from home.html, pre-built link marked active) -->
+		<!-- NAVBAR -->
 		<header>
 			<div class="container nav">
 				<div class="nav-left">
@@ -831,53 +774,52 @@
 
     <!-- PRODUCT MODAL -->
     <div id="product-modal" class="product-modal" aria-hidden="true">
-    <div class="product-modal-backdrop"></div>
+        <div class="product-modal-backdrop"></div>
 
-    <div class="product-modal-dialog" role="dialog" aria-modal="true">
-        <button class="product-modal-close" type="button">&times;</button>
+        <div class="product-modal-dialog" role="dialog" aria-modal="true">
+            <button class="product-modal-close" type="button">&times;</button>
 
-        <div class="product-modal-inner">
-        <!-- Left: image + carousel -->
-        <div class="product-modal-left">
-            <div class="product-modal-image-frame">
-            <img id="modal-main-image" src="" alt="">
+            <div class="product-modal-inner">
+                <!-- Left: image + carousel -->
+                <div class="product-modal-left">
+                    <div class="product-modal-image-frame">
+                        <img id="modal-main-image" src="" alt="">
+                    </div>
+                    <button id="modal-prev" class="modal-arrow modal-arrow-left">&#10094;</button>
+                    <button id="modal-next" class="modal-arrow modal-arrow-right">&#10095;</button>
+                    <div id="modal-dots" class="modal-dots"></div>
+                </div>
+
+                <!-- Middle: details -->
+                <div class="product-modal-middle">
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <p id="modal-price" class="modal-price"></p>
+                    <p id="modal-stock" class="modal-stock"></p>
+                    <p id="modal-ref" class="modal-ref"></p>
+
+                    <h3 class="modal-subheading">Product Information</h3>
+                    <ul id="modal-features" class="modal-features"></ul>
+
+                    <h3 class="modal-subheading">Description</h3>
+                    <p id="modal-description" class="modal-description"></p>
+
+                    <button class="modal-buy-btn" type="button">BUY</button>
+                </div>
+
+                <!-- Right: shipping / warranty -->
+                <aside class="product-modal-right">
+                    <h3 class="modal-subheading">Shipping</h3>
+                    <p class="modal-text-small">
+                        FREE SHIPPING ON ALL ORDERS IN CANADA! SHIPPING ANYWHERE IN THE USA FOR $15 USD!
+                    </p>
+
+                    <h3 class="modal-subheading" style="margin-top:1.5rem;">Warranty</h3>
+                    <p class="modal-text-small">
+                        Our 90 day warranty covers your system from the date of purchase. Within the 90-day period, we will replace any device that is found to be defective due to manufacturing defects. User damage/damage caused by misuse or unauthorized modifications will not be covered by this warranty. Tampering with the warranty sticker immediately voids the 90-day warranty.
+                    </p>
+                </aside>
             </div>
-            <button id="modal-prev" class="modal-arrow modal-arrow-left">&#10094;</button>
-            <button id="modal-next" class="modal-arrow modal-arrow-right">&#10095;</button>
-            <div id="modal-dots" class="modal-dots"></div>
         </div>
-
-        <!-- Middle: details -->
-        <div class="product-modal-middle">
-            <h2 id="modal-title" class="modal-title"></h2>
-            <p id="modal-price" class="modal-price"></p>
-            <p id="modal-stock" class="modal-stock"></p>
-            <p id="modal-ref" class="modal-ref"></p>
-
-            <h3 class="modal-subheading">Product Information</h3>
-            <ul id="modal-features" class="modal-features"></ul>
-
-            <h3 class="modal-subheading">Description</h3>
-            <p id="modal-description" class="modal-description"></p>
-
-            <button class="modal-buy-btn" type="button">BUY</button>
-        </div>
-
-        <!-- Right: shipping / warranty -->
-        <aside class="product-modal-right">
-            <h3 class="modal-subheading">Shipping</h3>
-            <p class="modal-text-small">
-            FREE SHIPPING ON ALL ORDERS IN CANADA! SHIPPING ANYWHERE IN THE USA FOR $15 USD!
-            </p>
-
-            <h3 class="modal-subheading" style="margin-top:1.5rem;">Warranty</h3>
-            <p class="modal-text-small">
-                Our 90 day warranty covers your system from the date of purchase. Within the 90-day period, we will replace any device that is found to be defective due to manufacturing defects. 
-                User damage/damage caused by misuse or unauthorized modifications will not be covered by this warranty. Tampering with the warranty sticker immediately voids the 90-day warrnaty.
-            </p>
-        </aside>
-        </div>
-    </div>
     </div>
 
 	<!-- Load product data -->
@@ -888,7 +830,7 @@
 		document.getElementById('year').textContent = new Date().getFullYear();
 	</script>
 
-	<!-- Dark mode toggle (same logic as home.html) -->
+	<!-- Dark mode toggle -->
 	<script>
 		const themeToggle = document.querySelector(".theme-toggle");
 		const body = document.body;
@@ -911,7 +853,7 @@
 		}
   	</script>
 
-	<!-- Mobile nav toggle (same as home) -->
+	<!-- Mobile nav toggle -->
 	<script>
 		const navToggle = document.querySelector('.nav-toggle');
 		const headerEl  = document.querySelector('header');
@@ -929,59 +871,7 @@
 		}
 	</script>
 
-	<!-- Render products -->
-	<script>
-		function renderProducts() {
-			const grid = document.getElementById("products-grid");
-
-			if (!Array.isArray(window.products)) {
-				grid.textContent = "No products loaded.";
-				return;
-			}
-
-			const sorted = [...window.products].sort((a, b) => {
-				const da = new Date(a.dateAdded);
-				const db = new Date(b.dateAdded);
-				return db - da; // newest first
-			});
-
-			grid.textContent = "";
-
-			sorted.forEach(p => {
-                const card = document.createElement("article");
-                card.className = "product-card";
-
-                const isSoldOut = p.soldOut === true;
-
-                card.innerHTML = `
-                    <div class="product-image-wrapper">
-                    <img src="${p.image || (p.images && p.images[0]) || ""}" alt="${p.title}" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                    <div>
-                        <h2 class="product-title">${p.title}</h2>
-                        <ul class="product-features">
-                        ${p.features.map(f => `<li>${f}</li>`).join("")}
-                        </ul>
-                    </div>
-                    <div class="product-footer">
-                        <span class="product-ref">Reference #${p.id}</span>
-                        <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
-                        ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
-                        </span>
-                    </div>
-                    </div>
-                `;
-
-                // NEW: open modal on click
-                card.addEventListener("click", () => openProductModal(p));
-
-                grid.appendChild(card);
-            });
-		}
-
-		document.addEventListener("DOMContentLoaded", renderProducts);
-	</script>
+    <!-- MAIN PRODUCTS + MODAL SCRIPT -->
     <script>
         // ---------- Scroll lock helpers (prevent jump to top) ----------
         let scrollLockY = 0;
@@ -1009,53 +899,52 @@
             const grid = document.getElementById("products-grid");
 
             if (!Array.isArray(window.products)) {
-            grid.textContent = "No products loaded.";
-            return;
+                grid.textContent = "No products loaded.";
+                return;
             }
 
             const sorted = [...window.products].sort((a, b) => {
-            const da = new Date(a.dateAdded);
-            const db = new Date(b.dateAdded);
-            return db - da; // newest first
+                const da = new Date(a.dateAdded);
+                const db = new Date(b.dateAdded);
+                return db - da; // newest first
             });
 
             grid.textContent = "";
 
             sorted.forEach(p => {
-            const card = document.createElement("article");
-            card.className = "product-card";
+                const card = document.createElement("article");
+                card.className = "product-card";
 
-            const isSoldOut = p.soldOut === true;
-            const thumb = p.image || (p.images && p.images[0]) || "";
+                const isSoldOut = p.soldOut === true;
+                const thumb = p.image || (p.images && p.images[0]) || "";
 
-            card.innerHTML = `
-                <div class="product-image-wrapper">
-                <img src="${thumb}" alt="${p.title}" loading="lazy">
-                </div>
-                <div class="product-info">
-                <div>
-                    <h2 class="product-title">${p.title}</h2>
-                    <ul class="product-features">
-                    ${p.features.map(f => `<li>${f}</li>`).join("")}
-                    </ul>
-                </div>
-                <div class="product-footer">
-                    <span class="product-ref">Reference #${p.id}</span>
-                    <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
-                    ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
-                    </span>
-                </div>
-                </div>
-            `;
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img src="${thumb}" alt="${p.title}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h2 class="product-title">${p.title}</h2>
+                            <ul class="product-features">
+                                ${p.features.map(f => `<li>${f}</li>`).join("")}
+                            </ul>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-ref">Reference #${p.id}</span>
+                            <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
+                                ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
+                            </span>
+                        </div>
+                    </div>
+                `;
 
-            // Prevent any default scroll/focus weirdness and open modal
-            card.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openProductModal(p);
-            });
+                card.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openProductModal(p);
+                });
 
-            grid.appendChild(card);
+                grid.appendChild(card);
             });
         }
 
@@ -1091,44 +980,37 @@
 
             const images = getImagesForProduct(product);
 
-            // Basic details
             modalTitle.textContent = product.title;
             modalPrice.textContent = `PRICE: $${product.price.toFixed(2)}${product.currency}`;
             modalStock.textContent = product.stockText || "";
             modalRef.textContent   = `Reference Number # ${product.id}`;
             modalDescription.textContent = product.description || "";
 
-            // Features list
             modalFeatures.innerHTML = product.features
-            .map(f => `<li>${f}</li>`)
-            .join("");
+              .map(f => `<li>${f}</li>`)
+              .join("");
 
-            // Build dots
             modalDots.innerHTML = images.map((_, i) =>
-            `<span class="modal-dot ${i === 0 ? "active" : ""}" data-index="${i}"></span>`
+              `<span class="modal-dot ${i === 0 ? "active" : ""}" data-index="${i}"></span>`
             ).join("");
 
             modalDots.querySelectorAll(".modal-dot").forEach(dot => {
-            dot.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const index = parseInt(dot.dataset.index, 10);
-                setModalImage(index);
-            });
+                dot.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(dot.dataset.index, 10);
+                    setModalImage(index);
+                });
             });
 
-            // Set initial image (no fade for first)
             setModalImage(0, true);
 
-            // Show modal with animation
             modalEl.classList.add("open");
 
-            // Clear any focused element to avoid scroll jumps (esp. iOS)
             if (document.activeElement && typeof document.activeElement.blur === "function") {
-            document.activeElement.blur();
+                document.activeElement.blur();
             }
 
-            // Lock scroll without snapping to top
             lockScroll();
         }
 
@@ -1146,33 +1028,30 @@
             modalCurrentIndex = newIndex;
             const newSrc = images[modalCurrentIndex];
 
-            // Update dots
             if (modalDots) {
-            modalDots.querySelectorAll(".modal-dot").forEach((dot, i) => {
-                dot.classList.toggle("active", i === modalCurrentIndex);
-            });
+                modalDots.querySelectorAll(".modal-dot").forEach((dot, i) => {
+                    dot.classList.toggle("active", i === modalCurrentIndex);
+                });
             }
 
             if (firstLoad || !modalMainImage.src) {
-            modalMainImage.src = newSrc;
-            modalMainImage.alt = modalCurrentProduct.title;
-            modalMainImage.classList.remove("fade-out");
-            return;
+                modalMainImage.src = newSrc;
+                modalMainImage.alt = modalCurrentProduct.title;
+                modalMainImage.classList.remove("fade-out");
+                return;
             }
 
-            // Fade-out current image, then swap and fade back in
             modalMainImage.classList.add("fade-out");
 
             const onTransitionEnd = () => {
-            modalMainImage.removeEventListener("transitionend", onTransitionEnd);
+                modalMainImage.removeEventListener("transitionend", onTransitionEnd);
 
-            modalMainImage.src = newSrc;
-            modalMainImage.alt = modalCurrentProduct.title;
+                modalMainImage.src = newSrc;
+                modalMainImage.alt = modalCurrentProduct.title;
 
-            // Force reflow so browser notices class change
-            void modalMainImage.offsetWidth;
+                void modalMainImage.offsetWidth;
 
-            modalMainImage.classList.remove("fade-out");
+                modalMainImage.classList.remove("fade-out");
             };
 
             modalMainImage.addEventListener("transitionend", onTransitionEnd);
@@ -1184,7 +1063,6 @@
             modalCurrentProduct = null;
         }
 
-        // Arrow buttons
         modalPrevBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -1199,7 +1077,6 @@
             setModalImage(modalCurrentIndex + 1);
         });
 
-        // Close handlers
         modalCloseBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -1212,11 +1089,10 @@
             closeProductModal();
         });
 
-        // ESC key closes modal
         window.addEventListener("keydown", (e) => {
             if (e.key === "Escape" && modalEl.classList.contains("open")) {
-            e.preventDefault();
-            closeProductModal();
+                e.preventDefault();
+                closeProductModal();
             }
         });
     </script>

@@ -682,7 +682,7 @@ window.products = [
         ],
 
         // extra info just for the popup
-        stockText: "*SOLD OUT*",
+        stockText: "*ONLY 1 LEFT IN STOCK*",
         description: "Clean Jasper console with custom blue lighting and JTAG, ideal for homebrew, system link play, and online play.",
         dateAdded: "2025-11-18"
     },
