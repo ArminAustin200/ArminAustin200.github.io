@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Shop Pre-Built Consoles</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Google Fonts (same as home.html) -->
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+	<style>
+		/* ---------- Reset / Base ---------- */
+		*, *::before, *::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			color: #000;
+			background-color: #ffffff;
+			line-height: 1.5;
+			transition: background 0.25s ease, color 0.25s ease;
+		}
+
+		html, body {
+  			max-width: 100%;
+  			overflow-x: hidden;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+
+		img {
+			max-width: 100%;
+			display: block;
+		}
+
+		/* ---------- Layout Helpers ---------- */
+		.page-wrapper {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+            justify-content: space-between;
+		}
+
+		.container {
+			width: min(1200px, 100% - 3rem);
+			margin: 0 auto;
+		}
+
+		/* ---------- Header / Nav (from home.html) ---------- */
+		header {
+			border-bottom: 1px solid #ddd;
+			background: #fff;
+			position: sticky;
+			top: 0;
+			z-index: 20;
+		}
+
+		.nav {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0.75rem 0;
+		}
+
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+		}
+
+		.logo-img {
+			width: 120px;
+			height: auto;
+		}
+
+		.logo-text {
+			font-family: "Playfair Display", serif;
+			font-size: 1.25rem;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+
+		.nav-center {
+			display: flex;
+			gap: 3rem;
+			font-family: "Playfair Display", serif;
+			font-size: 1.5rem;
+		}
+
+		.nav-link {
+			position: relative;
+			padding-bottom: 0.2rem;
+		}
+
+		.nav-link::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 0;
+			height: 2px;
+			background: #000;
+			transition: width 0.2s ease-out;
+		}
+
+		.nav-link:hover::after {
+			width: 100%;
+		}
+
+		.nav-link.active::after {
+      		width: 100%;
+    	}
+
+    	.nav-right {
+      		display: flex;
+      		align-items: center;
+      		gap: 0.6rem;
+    	}
+
+		.contact-btn {
+			font-family: "Playfair Display", serif;
+			font-size: 1.2rem;
+			padding: 0.35rem 1.4rem;
+			border-radius: 999px;
+			border: 3px solid #000;
+			background: #d97917;
+			color: #000;
+			box-shadow: 0 3px 0 #000;
+			cursor: pointer;
+			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+		}
+
+		.theme-toggle {
+			border-radius: 999px;
+			border: 2px solid #000;
+			background: #fff;
+			cursor: pointer;
+			padding: 0.25rem 0.7rem;
+			font-size: 1rem;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 0 #000;
+			transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    	}
+
+		/* Dark Mode Toggle Button */
+		.theme-toggle {
+			border: 2px solid #000;
+			border-radius: 999px;
+			background: #fff;
+			cursor: pointer;
+			padding: 0.35rem 0.55rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 0 #000;
+			transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+		}
+
+		.theme-toggle:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #f0f0f0;
+		}
+
+		.theme-icon {
+			width: 22px;
+			height: 22px;
+			transition: transform 0.35s ease, filter 0.25s ease;
+		}
+
+		body.dark-mode .theme-icon {
+			filter: invert(1);
+			transform: rotate(180deg);
+		}
+
+		.nav-right .contact-btn:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #e98c28;
+		}
+		
+		/*---------------DARK MODE OVERRIDES---------------*/
+		body.dark-mode { 
+     		background: #0b0b0b; 
+      		color: #f7f7f7; 
+    	}
+
+		body.dark-mode header { 
+			background: #111; 
+			border-bottom-color: #333; 
+		}
+
+		body.dark-mode .nav-link::after {
+			background: #f7f7f7;
+		}
+
+		body.dark-mode .nav-right .contact-btn {
+			border-color: #f7f7f7;
+			box-shadow: 0 3px 0 #f7f7f7;
+		}
+
+		body.dark-mode .theme-toggle { 
+			background:#222; 
+			border-color:#f7f7f7; 
+			box-shadow:0 2px 0 #f7f7f7; 
+		}
+
+		body.dark-mode footer { 
+			background:#050505; 
+		}
+
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0,0,0,0.55); 
+        }
+
+        body.dark-mode .store-hero {
+            color: #fff;
+        }
+
+        /* Product cards in dark mode */
+        body.dark-mode .product-card {
+            background: #181818;
+            border-color: #444;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        }
+
+        body.dark-mode .product-image-wrapper {
+            border-color: #444;
+            background: #222;
+        }
+
+        body.dark-mode .product-info {
+            color: #f7f7f7;
+        }
+
+        body.dark-mode .product-title {
+        color: #ffffff;
+        }
+
+        body.dark-mode .product-features li::before {
+            color: #f7f7f7; /* arrow color */
+        }
+
+        body.dark-mode .product-ref {
+            opacity: 0.7;
+        }
+
+        body.dark-mode .product-price {
+            color: #ffffff;
+        }
+
+        body.dark-mode .product-price--soldout {
+            color: #ff5a5a;
+        }
+
+        /* Optional: darken hero overlay & section heading */
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            color: #f7f7f7;
+        }
+
+        body.dark-mode .section-heading {
+            color: #f7f7f7;
+        }
+
+		/*----MOBILE NAV TOGGLE----*/
+		.nav-toggle {
+			display: none;
+			border: 2px solid #000;
+			border-radius: 999px;
+			background: #fff;
+			padding: 0.25rem 0.6rem;
+			font-size: 1.2rem;
+			cursor: pointer;
+		}
+
+		.no-scroll {
+			overflow: hidden !important;
+  			height: 100vh;
+		}
+
+		@media (max-width: 960px) {
+			.nav-center {
+				display: none;
+			}
+
+			.nav-left {
+				display: none;
+			}
+
+			.nav-toggle {
+				display: inline-flex;
+				align-items: center;
+				justify-content: start;
+			}
+
+			header.nav-open .nav-center {
+				display: flex;
+				flex-direction: column;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				background: #111;
+				color: #fff;
+				padding: 0.75rem 1.25rem 1rem;
+				gap: 0.75rem;
+				border-bottom: 1px solid #333;
+				font-size: 1.2rem;
+			}
+
+			header.nav-open .nav-link::after {
+				background: #fff;
+			}
+		}
+
+		body.dark-mode header.nav-open .nav-center {
+			background: #111;
+		}
+
+		/* ---------- Store Hero & Products (pre-built specific) ---------- */
+
+		.store-hero {
+            height: 260px;
+			background-image: url("assets/Send-In/Hero_Banner.jpg");
+			background-size: cover;
+			background-position: center;
+            filter: grayscale(0.1);
+            color: #000;
+		}
+
+		.store-hero-overlay {
+			background: rgba(255,255,255,0.7);
+            transition: background 0.25s ease;
+            position: absolute;
+            inset: 0;
+			margin: 0 auto;
+			padding: 1.5rem 1rem 1.2rem;
+			text-align: center;
+		}
+
+		.store-hero-title {
+            font-family: "Playfair Display", serif;
+			margin: 0 0 0.5rem;
+			font-size: clamp(2rem, 3vw, 2.6rem);
+			font-weight: 700;
+		}
+
+		.store-hero-subtitle {
+			margin: 0 0 0.6rem;
+            font-size: 1.25rem;
+		}
+
+		.store-hero-free {
+			margin: 0.1rem 0;
+			font-size: 0.9rem;
+			color: #c00;
+			font-weight: bold;
+		}
+
+		.prebuilt-main {
+			max-width: 1100px;
+			margin: 1.8rem auto 3rem;
+			padding: 0 1rem;
+		}
+
+		.section-heading {
+			text-align: center;
+			font-weight: bold;
+			text-decoration: underline;
+			margin-bottom: 1.5rem;
+		}
+
+		.products-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		@media (min-width: 900px) {
+			.products-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		.product-card {
+			display: flex;
+			flex-direction: row;
+			border: 1px solid #000;
+			background: #f7f7f7;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+		}
+
+		@media (max-width: 600px) {
+			.product-card {
+				flex-direction: column;
+			}
+		}
+
+		.product-image-wrapper {
+			flex: 0 0 40%;
+			border-right: 1px solid #000;
+			background: #ddd;
+		}
+
+		@media (max-width: 600px) {
+			.product-image-wrapper {
+				border-right: none;
+				border-bottom: 1px solid #000;
+			}
+		}
+
+		.product-image-wrapper img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.product-info {
+			flex: 1;
+			padding: 0.75rem 1rem 0.9rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.product-title {
+			text-align: center;
+			font-weight: bold;
+			margin: 0 0 0.5rem;
+			text-decoration: underline;
+		}
+
+		.product-features {
+			list-style: none;
+			padding: 0;
+			margin: 0 0 0.75rem;
+			font-size: 0.95rem;
+		}
+
+		.product-features li::before {
+			content: "→ ";
+		}
+
+		.product-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			font-size: 0.9rem;
+			margin-top: 0.25rem;
+		}
+
+		.product-ref {
+			font-size: 0.75rem;
+			opacity: 0.8;
+		}
+
+		.product-price {
+			font-weight: bold;
+			font-size: 1rem;
+		}
+
+		.product-price--soldout {
+			color: #c00;
+			font-weight: bold;
+		}
+
+		/* ---------- Footer (same look as home) ---------- */
+		footer {
+			padding: 1.8rem 0 2.4rem;
+			background: #000;
+			color: #fff;
+			text-align: center;
+			font-size: 0.9rem;
+		}
+
+		.footer-contact {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.8rem;
+			margin-bottom: 0.3rem;
+		}
+
+		.footer-contact .contact-btn {
+			font-family: "Playfair Display", serif;
+			font-size: 1.3rem;
+			padding: 0.5rem 2rem;
+			border-radius: 999px;
+			border: 3px solid #000;
+			background: #d97917;
+			color: #000;
+			box-shadow: 0 3px 0 #000;
+			cursor: pointer;
+			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+		}
+
+		.footer-contact .contact-btn:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #e98c28;
+		}
+
+		body.dark-mode footer {
+			background: #050505;
+		}
+
+        /* ---------- Product Modal ---------- */
+        .product-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        }
+
+        /* When open: fade in and allow interaction */
+        .product-modal.open {
+        opacity: 1;
+        pointer-events: auto;
+        }
+
+        /* Backdrop fades in too */
+        .product-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        }
+
+        .product-modal.open .product-modal-backdrop {
+        opacity: 1;
+        }
+
+        /* Dialog scales & fades in */
+        .product-modal-dialog {
+        position: relative;
+        max-width: 1100px;
+        height: 80vh;
+        margin: 3rem auto;
+        background: #000 url("assets/backgrounds/pixel_pattern.png") center/cover no-repeat;
+        color: #fff;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+
+        /* start slightly smaller & lower */
+        transform: scale(0.96) translateY(10px);
+        opacity: 0;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        /* When modal is open, animate to full size */
+        .product-modal.open .product-modal-dialog {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        }
+
+        .product-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        }
+
+        .product-modal-dialog {
+        position: relative;
+        max-width: 1100px;
+        height: 80vh;
+        margin: 3rem auto;
+        background: #000 url("assets/backgrounds/pixel_pattern.png") center/cover no-repeat;
+        color: #fff;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .product-modal-close {
+        position: absolute;
+        top: 0.4rem;
+        right: 0.7rem;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        z-index: 2;
+        }
+
+        .product-modal-inner {
+        display: grid;
+        grid-template-columns: 2fr 2.2fr 1.2fr;
+        height: 100%;
+        }
+
+        /* Left (carousel) */
+        .product-modal-left {
+        position: relative;
+        padding: 0.35rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .product-modal-image-frame {
+        border: 2px solid #fff;
+        background: #111;
+        max-width: 100%;
+        max-height: 100%;
+        }
+
+        .product-modal-image-frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.25s ease;   /* smooth fade */
+        }
+
+        /* temporary class used while switching images */
+        .product-modal-image-frame img.fade-out {
+        opacity: 0;
+        }
+
+        .modal-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        font-size: 2rem;
+        padding: 0.2rem 0.5rem;
+        cursor: pointer;
+        }
+
+        .modal-arrow-left { left: 0.4rem; }
+        .modal-arrow-right { right: 0.4rem; }
+
+        .modal-dots {
+        margin-top: 0.5rem;
+        text-align: center;
+        }
+
+        .modal-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #666;
+        margin: 0 3px;
+        cursor: pointer;
+        }
+
+        .modal-dot.active {
+        background: #fff;
+        }
+
+        /* Middle (details) */
+        .product-modal-middle {
+        padding: 1.2rem 1.5rem;
+        overflow-y: auto;
+        }
+
+        .modal-title {
+        font-size: 1.8rem;
+        text-decoration: underline;
+        margin-bottom: 0.75rem;
+        }
+
+        .modal-price {
+        font-weight: bold;
+        }
+
+        .modal-stock {
+        color: #ff5555;
+        font-weight: bold;
+        }
+
+        .modal-ref {
+        margin-top: 0.4rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        }
+
+        .modal-subheading {
+        font-size: 1rem;
+        text-decoration: underline;
+        margin-top: 1rem;
+        margin-bottom: 0.4rem;
+        }
+
+        .modal-features {
+        list-style: none;
+        padding-left: 0;
+        margin: 0 0 0.5rem;
+        }
+
+        .modal-features li::before {
+        content: "→ ";
+        }
+
+        .modal-description {
+        font-size: 0.95rem;
+        }
+
+        .modal-buy-btn {
+        margin-top: 1.5rem;
+        padding: 0.4rem 1.4rem;
+        border-radius: 999px;
+        border: 2px solid #00ff00;
+        background: #00cc00;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+        /* Right (shipping/warranty) */
+        .product-modal-right {
+        padding: 1.2rem 1rem;
+        border-left: 1px solid rgba(255,255,255,0.3);
+        font-size: 0.9rem;
+        }
+
+        /* Dark-mode tweak */
+        body.dark-mode .product-modal-dialog {
+        background-color: #05020b;
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+        .product-modal-dialog {
+            margin: 1.5rem auto;
+            height: 85vh;
+        }
+
+        .product-modal-inner {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+        }
+
+        .product-modal-right {
+            border-left: none;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        .product-card:focus {
+            outline: none;
+        }
+
+        /* Carousel main image with fade transition */
+        .product-modal-image-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+        }
+
+        .product-modal-image-frame img.fade-out {
+            opacity: 0;
+        }
+    }
+	</style>
+</head>
+<body>
+	<div class="page-wrapper">
+		<!-- NAVBAR (copied from home.html, pre-built link marked active) -->
+		<header>
+			<div class="container nav">
+				<div class="nav-left">
+					<a href="home.html">
+						<img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
+					</a>
+				</div>
+
+				<button class="nav-toggle" type="button" aria-label="Toggle navigation">
+					☰
+				</button>
+
+				<nav class="nav-center">
+					<a href="home.html" class="nav-link">Home</a>
+					<a href="pre-built.html" class="nav-link active">Shop Pre-Built Consoles</a>
+					<a href="send-in.html" class="nav-link">Send-In Service</a>
+				</nav>
+
+				<div class="nav-right">
+					<button class="theme-toggle" type="button">
+						<img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
+					</button>
+
+					<a href="contact-us.html">
+						<button class="contact-btn" type="button">Contact Us</button>
+					</a>
+				</div>
+			</div>
+		</header>
+
+		<!-- Store Hero -->
+		<section class="store-hero">
+			<div class="store-hero-overlay">
+				<h1 class="store-hero-title">Welcome to Our Online Store!</h1>
+				<p class="store-hero-subtitle">
+					Browse all the systems we currently have in stock! Currently shipping only to CANADA and the USA.
+				</p>
+				<p class="store-hero-free">***FREE SHIPPING ON ALL ORDERS IN CANADA***</p>
+				<p class="store-hero-free">***SHIPPING ANYWHERE IN THE USA FOR $15 USD***</p>
+			</div>
+		</section>
+
+		<!-- Main Pre-Built Consoles Section -->
+		<main class="prebuilt-main">
+			<h2 class="section-heading">CONSOLES IN STOCK</h2>
+			<div id="products-grid" class="products-grid"></div>
+		</main>
+
+		<!-- Footer -->
+		<footer id="contact">
+			&copy; <span id="year"></span> WareHouseX360 – Send-In Modding &amp; Refurbishment Services
+		</footer>
+	</div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="product-modal" aria-hidden="true">
+    <div class="product-modal-backdrop"></div>
+
+    <div class="product-modal-dialog" role="dialog" aria-modal="true">
+        <button class="product-modal-close" type="button">&times;</button>
+
+        <div class="product-modal-inner">
+        <!-- Left: image + carousel -->
+        <div class="product-modal-left">
+            <div class="product-modal-image-frame">
+            <img id="modal-main-image" src="" alt="">
+            </div>
+            <button id="modal-prev" class="modal-arrow modal-arrow-left">&#10094;</button>
+            <button id="modal-next" class="modal-arrow modal-arrow-right">&#10095;</button>
+            <div id="modal-dots" class="modal-dots"></div>
+        </div>
+
+        <!-- Middle: details -->
+        <div class="product-modal-middle">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p id="modal-price" class="modal-price"></p>
+            <p id="modal-stock" class="modal-stock"></p>
+            <p id="modal-ref" class="modal-ref"></p>
+
+            <h3 class="modal-subheading">Product Information</h3>
+            <ul id="modal-features" class="modal-features"></ul>
+
+            <h3 class="modal-subheading">Description</h3>
+            <p id="modal-description" class="modal-description"></p>
+
+            <button class="modal-buy-btn" type="button">BUY</button>
+        </div>
+
+        <!-- Right: shipping / warranty -->
+        <aside class="product-modal-right">
+            <h3 class="modal-subheading">Shipping</h3>
+            <p class="modal-text-small">
+            FREE SHIPPING ON ALL ORDERS IN CANADA! SHIPPING ANYWHERE IN THE USA FOR $15 USD!
+            </p>
+
+            <h3 class="modal-subheading" style="margin-top:1.5rem;">Warranty</h3>
+            <p class="modal-text-small">
+                Our 90 day warranty covers your system from the date of purchase. Within the 90-day period, we will replace any device that is found to be defective due to manufacturing defects. 
+                User damage/damage caused by misuse or unauthorized modifications will not be covered by this warranty. Tampering with the warranty sticker immediately voids the 90-day warrnaty.
+            </p>
+        </aside>
+        </div>
+    </div>
+    </div>
+
+	<!-- Load product data -->
+	<script src="assets/products.js"></script>
+
+	<!-- Auto year -->
+	<script>
+		document.getElementById('year').textContent = new Date().getFullYear();
+	</script>
+
+	<!-- Dark mode toggle (same logic as home.html) -->
+	<script>
+		const themeToggle = document.querySelector(".theme-toggle");
+		const body = document.body;
+
+		function applyTheme(theme){
+			if(theme === "dark") body.classList.add("dark-mode");
+			else body.classList.remove("dark-mode");
+		}
+
+		const savedTheme = localStorage.getItem("theme");
+		if(savedTheme){ applyTheme(savedTheme); }
+		else if(window.matchMedia("(prefers-color-scheme: dark)").matches){ applyTheme("dark"); }
+
+		if (themeToggle) {
+			themeToggle.addEventListener("click", () => {
+				const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+				localStorage.setItem("theme", newTheme);
+				applyTheme(newTheme);
+			});
+		}
+  	</script>
+
+	<!-- Mobile nav toggle (same as home) -->
+	<script>
+		const navToggle = document.querySelector('.nav-toggle');
+		const headerEl  = document.querySelector('header');
+
+		if (navToggle && headerEl) {
+			navToggle.addEventListener('click', () => {
+				headerEl.classList.toggle('nav-open');
+			});
+
+			headerEl.querySelectorAll('.nav-center .nav-link').forEach(link => {
+				link.addEventListener('click', () => {
+					headerEl.classList.remove('nav-open');
+				});
+			});
+		}
+	</script>
+
+	<!-- Render products -->
+	<script>
+		function renderProducts() {
+			const grid = document.getElementById("products-grid");
+
+			if (!Array.isArray(window.products)) {
+				grid.textContent = "No products loaded.";
+				return;
+			}
+
+			const sorted = [...window.products].sort((a, b) => {
+				const da = new Date(a.dateAdded);
+				const db = new Date(b.dateAdded);
+				return db - da; // newest first
+			});
+
+			grid.textContent = "";
+
+			sorted.forEach(p => {
+                const card = document.createElement("article");
+                card.className = "product-card";
+
+                const isSoldOut = p.soldOut === true;
+
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                    <img src="${p.image || (p.images && p.images[0]) || ""}" alt="${p.title}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                    <div>
+                        <h2 class="product-title">${p.title}</h2>
+                        <ul class="product-features">
+                        ${p.features.map(f => `<li>${f}</li>`).join("")}
+                        </ul>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-ref">Reference #${p.id}</span>
+                        <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
+                        ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
+                        </span>
+                    </div>
+                    </div>
+                `;
+
+                // NEW: open modal on click
+                card.addEventListener("click", () => openProductModal(p));
+
+                grid.appendChild(card);
+            });
+		}
+
+		document.addEventListener("DOMContentLoaded", renderProducts);
+	</script>
+    <script>
+        // ---------- Scroll lock helpers (prevent jump to top) ----------
+        let scrollLockY = 0;
+
+        function lockScroll() {
+            scrollLockY = window.scrollY || window.pageYOffset || 0;
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollLockY}px`;
+            document.body.style.left = "0";
+            document.body.style.right = "0";
+            document.body.style.width = "100%";
+        }
+
+        function unlockScroll() {
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.left = "";
+            document.body.style.right = "";
+            document.body.style.width = "";
+            window.scrollTo(0, scrollLockY);
+        }
+
+        // ---------- Render product cards ----------
+        function renderProducts() {
+            const grid = document.getElementById("products-grid");
+
+            if (!Array.isArray(window.products)) {
+            grid.textContent = "No products loaded.";
+            return;
+            }
+
+            const sorted = [...window.products].sort((a, b) => {
+            const da = new Date(a.dateAdded);
+            const db = new Date(b.dateAdded);
+            return db - da; // newest first
+            });
+
+            grid.textContent = "";
+
+            sorted.forEach(p => {
+            const card = document.createElement("article");
+            card.className = "product-card";
+
+            const isSoldOut = p.soldOut === true;
+            const thumb = p.image || (p.images && p.images[0]) || "";
+
+            card.innerHTML = `
+                <div class="product-image-wrapper">
+                <img src="${thumb}" alt="${p.title}" loading="lazy">
+                </div>
+                <div class="product-info">
+                <div>
+                    <h2 class="product-title">${p.title}</h2>
+                    <ul class="product-features">
+                    ${p.features.map(f => `<li>${f}</li>`).join("")}
+                    </ul>
+                </div>
+                <div class="product-footer">
+                    <span class="product-ref">Reference #${p.id}</span>
+                    <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
+                    ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
+                    </span>
+                </div>
+                </div>
+            `;
+
+            // Prevent any default scroll/focus weirdness and open modal
+            card.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openProductModal(p);
+            });
+
+            grid.appendChild(card);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", renderProducts);
+
+        // ---------- Modal + Carousel Logic ----------
+        let modalCurrentProduct = null;
+        let modalCurrentIndex = 0;
+
+        const modalEl          = document.getElementById("product-modal");
+        const modalMainImage   = document.getElementById("modal-main-image");
+        const modalDots        = document.getElementById("modal-dots");
+        const modalTitle       = document.getElementById("modal-title");
+        const modalPrice       = document.getElementById("modal-price");
+        const modalStock       = document.getElementById("modal-stock");
+        const modalRef         = document.getElementById("modal-ref");
+        const modalFeatures    = document.getElementById("modal-features");
+        const modalDescription = document.getElementById("modal-description");
+        const modalCloseBtn    = document.querySelector(".product-modal-close");
+        const modalPrevBtn     = document.getElementById("modal-prev");
+        const modalNextBtn     = document.getElementById("modal-next");
+        const modalBackdrop    = document.querySelector(".product-modal-backdrop");
+
+        function getImagesForProduct(product) {
+            if (product.images && product.images.length) return product.images;
+            if (product.image) return [product.image];
+            return [];
+        }
+
+        function openProductModal(product) {
+            modalCurrentProduct = product;
+            modalCurrentIndex = 0;
+
+            const images = getImagesForProduct(product);
+
+            // Basic details
+            modalTitle.textContent = product.title;
+            modalPrice.textContent = `PRICE: $${product.price.toFixed(2)}${product.currency}`;
+            modalStock.textContent = product.stockText || "";
+            modalRef.textContent   = `Reference Number # ${product.id}`;
+            modalDescription.textContent = product.description || "";
+
+            // Features list
+            modalFeatures.innerHTML = product.features
+            .map(f => `<li>${f}</li>`)
+            .join("");
+
+            // Build dots
+            modalDots.innerHTML = images.map((_, i) =>
+            `<span class="modal-dot ${i === 0 ? "active" : ""}" data-index="${i}"></span>`
+            ).join("");
+
+            modalDots.querySelectorAll(".modal-dot").forEach(dot => {
+            dot.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const index = parseInt(dot.dataset.index, 10);
+                setModalImage(index);
+            });
+            });
+
+            // Set initial image (no fade for first)
+            setModalImage(0, true);
+
+            // Show modal with animation
+            modalEl.classList.add("open");
+
+            // Clear any focused element to avoid scroll jumps (esp. iOS)
+            if (document.activeElement && typeof document.activeElement.blur === "function") {
+            document.activeElement.blur();
+            }
+
+            // Lock scroll without snapping to top
+            lockScroll();
+        }
+
+        // firstLoad = true skips fade-out on first image
+        function setModalImage(index, firstLoad = false) {
+            if (!modalCurrentProduct) return;
+
+            const images = getImagesForProduct(modalCurrentProduct);
+            if (!images.length) return;
+
+            const newIndex = (index + images.length) % images.length;
+
+            if (!firstLoad && newIndex === modalCurrentIndex && modalMainImage.src) return;
+
+            modalCurrentIndex = newIndex;
+            const newSrc = images[modalCurrentIndex];
+
+            // Update dots
+            if (modalDots) {
+            modalDots.querySelectorAll(".modal-dot").forEach((dot, i) => {
+                dot.classList.toggle("active", i === modalCurrentIndex);
+            });
+            }
+
+            if (firstLoad || !modalMainImage.src) {
+            modalMainImage.src = newSrc;
+            modalMainImage.alt = modalCurrentProduct.title;
+            modalMainImage.classList.remove("fade-out");
+            return;
+            }
+
+            // Fade-out current image, then swap and fade back in
+            modalMainImage.classList.add("fade-out");
+
+            const onTransitionEnd = () => {
+            modalMainImage.removeEventListener("transitionend", onTransitionEnd);
+
+            modalMainImage.src = newSrc;
+            modalMainImage.alt = modalCurrentProduct.title;
+
+            // Force reflow so browser notices class change
+            void modalMainImage.offsetWidth;
+
+            modalMainImage.classList.remove("fade-out");
+            };
+
+            modalMainImage.addEventListener("transitionend", onTransitionEnd);
+        }
+
+        function closeProductModal() {
+            modalEl.classList.remove("open");
+            unlockScroll();
+            modalCurrentProduct = null;
+        }
+
+        // Arrow buttons
+        modalPrevBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!modalCurrentProduct) return;
+            setModalImage(modalCurrentIndex - 1);
+        });
+
+        modalNextBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!modalCurrentProduct) return;
+            setModalImage(modalCurrentIndex + 1);
+        });
+
+        // Close handlers
+        modalCloseBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeProductModal();
+        });
+
+        modalBackdrop.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeProductModal();
+        });
+
+        // ESC key closes modal
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modalEl.classList.contains("open")) {
+            e.preventDefault();
+            closeProductModal();
+            }
+        });
+    </script>
+</body>
+</html>
