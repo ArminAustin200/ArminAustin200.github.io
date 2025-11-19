@@ -302,32 +302,67 @@
 		}
 
 		/* ---------- Store Hero & Products (pre-built specific) ---------- */
-        /* Hero banner (responsive) */
+        /* ---------- Store hero with overlay like contact-us ---------- */
         .store-hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* background image layer */
+        .store-hero-bg {
+            height: 220px; /* same as contact page */
             background-image: url("assets/Send-In/Hero_Banner.jpg");
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             filter: grayscale(0.1);
-            color: #000;
+        }
 
-            /* let it grow with content instead of cropping */
-            min-height: 260px;
-            padding: 3.2rem 1rem 2.2rem;
+        /* semi-transparent overlay on top of the image */
+        .store-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.7);
+            transition: background 0.25s ease;
+        }
 
+        /* centered text content */
+        .store-hero-content {
+            position: absolute;
+            inset: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            padding-inline: 1rem;
         }
 
-        .store-hero-overlay {
-            position: relative;
-            background: rgba(255,255,255,0.78);
-            transition: background 0.25s ease;
-            padding: 1.4rem 1.1rem 1.2rem;
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
+        .store-hero-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
+
+        .store-hero-subtitle {
+            font-size: 0.98rem;
+            max-width: 900px;
+            margin-bottom: 0.5rem;
+        }
+
+        .store-hero-free {
+            margin: 0.1rem 0;
+            font-size: 0.9rem;
+            color: #c00;
+            font-weight: bold;
+        }
+
+        /* dark mode overlay colour */
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
 
         /* tweak text on very small screens */
         @media (max-width: 600px) {
@@ -778,16 +813,20 @@
 		</header>
 
 		<!-- Store Hero -->
-		<section class="store-hero">
-			<div class="store-hero-overlay">
-				<h1 class="store-hero-title">Welcome to Our Online Store!</h1>
-				<p class="store-hero-subtitle">
-					Browse all the systems we currently have in stock! Currently shipping only to CANADA and the USA.
-				</p>
-				<p class="store-hero-free">***FREE SHIPPING ON ALL ORDERS IN CANADA***</p>
-				<p class="store-hero-free">***SHIPPING ANYWHERE IN THE USA FOR $15 USD***</p>
-			</div>
-		</section>
+        <section class="store-hero">
+            <div class="store-hero-bg"></div>
+            <div class="store-hero-overlay"></div>
+
+            <div class="store-hero-content">
+                <h1 class="store-hero-title">Welcome to Our Online Store!</h1>
+                <p class="store-hero-subtitle">
+                Browse all the systems we currently have in stock! Currently shipping only to CANADA and the USA.
+                </p>
+                <p class="store-hero-free">***FREE SHIPPING ON ALL ORDERS IN CANADA***</p>
+                <p class="store-hero-free">***SHIPPING ANYWHERE IN THE USA FOR $15 USD***</p>
+            </div>
+        </section>
+
 
 		<!-- Main Pre-Built Consoles Section -->
 		<main class="prebuilt-main">
