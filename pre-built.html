@@ -528,7 +528,6 @@
 		}
 
 		/* ---------- CLEAN PRODUCT MODAL CSS ---------- */
-
         .product-modal {
             position: fixed;
             inset: 0;
@@ -727,6 +726,141 @@
             background-color: #05020b;
         }
 
+        /* ---------- BUY POPUP ---------- */
+        .buy-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+            z-index: 99999;
+        }
+
+        .buy-popup.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .buy-popup-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+        }
+
+        .buy-popup-content {
+            background: #ffffff;          /* light mode card */
+            color: #000;
+            padding: 25px 24px 22px;
+            border-radius: 10px;
+            max-width: 350px;
+            width: 85%;
+            text-align: center;
+            border: 2px solid #ddd;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .email-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #28a745;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #28a745;
+        }
+        .buy-popup-card {
+            position: relative;
+            background: #ffffff;
+            color: #000;
+            padding: 1.5rem 1.8rem 2rem;
+            width: min(90%, 380px);
+            border-radius: 10px;
+            z-index: 20;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            transform: scale(0.92);
+            transition: transform 0.25s ease;
+        }
+
+        .buy-popup.open .buy-popup-card {
+            transform: scale(1);
+        }
+
+        .buy-popup-close {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #000;                 /* close icon matches light card */
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .buy-popup-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.6rem;
+            font-weight: bold;
+        }
+
+        .buy-popup-text {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .buy-popup-ref {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .buy-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .buy-popup-email-btn {
+            display: inline-block;
+            padding: 0.55rem 1.2rem;
+            background: #00cc00;
+            color: #000;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 2px solid #00ff00;
+        }
+
+        body.dark-mode .buy-popup-card {
+            background: #111;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        body.dark-mode .buy-popup-email-btn {
+            background: #00aa00;
+        }
+
+        /* ---------- Dark mode overrides ---------- */
+        body.dark-mode .buy-popup-content {
+            background: #111;
+            color: #f7f7f7;
+            border-color: #444;
+        }
+
+        body.dark-mode .buy-popup-close {
+            color: #f7f7f7;
+        }
+
+        body.dark-mode .email-btn {
+            background: #00aa00;
+            border-color: #00ff00;
+        }
+
         /* ---------- Mobile modal: full-screen, smaller carousel, no inner scrollbars ---------- */
         @media (max-width: 900px) {
             .product-modal {
@@ -892,6 +1026,27 @@
         </div>
     </div>
 
+    <!-- BUY MESSAGE POPUP -->
+    <div id="buy-popup" class="buy-popup">
+        <div class="buy-popup-backdrop"></div>
+
+        <div class="buy-popup-card">
+            <button class="buy-popup-close">&times;</button>
+
+            <h2 class="buy-popup-title">How to Purchase</h2>
+
+            <p class="buy-popup-text">
+                Please email us with the reference number below so we can assist you further:
+            </p>
+
+            <p id="buy-popup-ref" class="buy-popup-ref"></p>
+
+            <a href="mailto:warehousex360@gmail.com" class="buy-popup-email-btn">
+                Email Us
+            </a>
+        </div>
+    </div>
+
 	<!-- Load product data -->
 	<script src="assets/products.js"></script>
 
@@ -1037,6 +1192,20 @@
         const modalPrevBtn     = document.getElementById("modal-prev");
         const modalNextBtn     = document.getElementById("modal-next");
         const modalBackdrop    = document.querySelector(".product-modal-backdrop");
+        // BUY POPUP ELEMENTS
+        const buyPopup = document.getElementById("buy-popup");
+        const buyPopupRef = document.getElementById("buy-popup-ref");
+        const buyPopupClose = document.querySelector(".buy-popup-close");
+        const buyPopupBackdrop = document.querySelector(".buy-popup-backdrop");
+
+        function openBuyPopup(referenceNumber) {
+            buyPopupRef.textContent = referenceNumber;
+            buyPopup.classList.add("open");
+        }
+
+        function closeBuyPopup() {
+            buyPopup.classList.remove("open");
+        }
 
         function getImagesForProduct(product) {
             if (product.images && product.images.length) return product.images;
@@ -1045,6 +1214,11 @@
         }
 
         function openProductModal(product) {
+            const buyBtn = document.querySelector(".modal-buy-btn");
+            buyBtn.onclick = () => {
+                openBuyPopup(product.id);
+            };
+
             modalCurrentProduct = product;
             modalCurrentIndex = 0;
 
@@ -1132,6 +1306,9 @@
             unlockScroll();
             modalCurrentProduct = null;
         }
+
+        buyPopupClose.addEventListener("click", closeBuyPopup);
+        buyPopupBackdrop.addEventListener("click", closeBuyPopup);
 
         modalPrevBtn.addEventListener("click", (e) => {
             e.preventDefault();
