@@ -241,6 +241,11 @@
             color: #ff5a5a;
         }
 
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0,0,0,0.55);
+        }
+
+
 		/*----MOBILE NAV TOGGLE----*/
 		.nav-toggle {
 			display: none;
@@ -297,23 +302,49 @@
 		}
 
 		/* ---------- Store Hero & Products (pre-built specific) ---------- */
-
-		.store-hero {
-            height: 260px;
-			background-image: url("assets/Send-In/Hero_Banner.jpg");
-			background-size: cover;
-			background-position: center;
+        /* Hero banner (responsive) */
+        .store-hero {
+            background-image: url("assets/Send-In/Hero_Banner.jpg");
+            background-size: cover;
+            background-position: center;
             filter: grayscale(0.1);
             color: #000;
-		}
 
-		.store-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.7);
+            /* let it grow with content instead of cropping */
+            min-height: 260px;
+            padding: 3.2rem 1rem 2.2rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .store-hero-overlay {
+            position: relative;
+            background: rgba(255,255,255,0.78);
             transition: background 0.25s ease;
+            padding: 1.4rem 1.1rem 1.2rem;
             text-align: center;
-		}
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* tweak text on very small screens */
+        @media (max-width: 600px) {
+            .store-hero {
+                padding: 3.8rem 0.75rem 2rem;
+            }
+
+            .store-hero-title {
+                font-size: 1.8rem;
+                line-height: 1.15;
+            }
+
+            .store-hero-subtitle {
+                font-size: 1.05rem;
+            }
+        }
+
 
 		.store-hero-title {
             font-family: "Playfair Display", serif;
