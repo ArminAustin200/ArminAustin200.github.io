@@ -1028,24 +1028,27 @@
 
     <!-- BUY MESSAGE POPUP -->
     <div id="buy-popup" class="buy-popup">
-        <div class="buy-popup-backdrop"></div>
+        <div class="buy-popup-content">
+            <button id="buy-popup-close" class="buy-popup-close">&times;</button>
 
-        <div class="buy-popup-card">
-            <button class="buy-popup-close">&times;</button>
+            <h2 id="buy-popup-title">Contact Us</h2>
 
-            <h2 class="buy-popup-title">How to Purchase</h2>
-
-            <p class="buy-popup-text">
-                Please email us with the reference number below so we can assist you further:
+            <p id="buy-popup-message">
+                Email us with the reference number so we can assist you further.
             </p>
 
-            <p id="buy-popup-ref" class="buy-popup-ref"></p>
+            <p id="buy-popup-sold" style="display:none; color:#ff4444; font-weight:bold;">
+                This system has already been sold out. Please choose another unit.
+            </p>
 
-            <a href="mailto:warehousex360@gmail.com" class="buy-popup-email-btn">
+            <p id="buy-popup-ref"></p>
+
+            <a href="mailto:warehousex360@gmail.com" id="buy-popup-email" class="email-btn">
                 Email Us
             </a>
         </div>
     </div>
+
 
 	<!-- Load product data -->
 	<script src="assets/products.js"></script>
@@ -1193,18 +1196,42 @@
         const modalNextBtn     = document.getElementById("modal-next");
         const modalBackdrop    = document.querySelector(".product-modal-backdrop");
         // BUY POPUP ELEMENTS
-        const buyPopup = document.getElementById("buy-popup");
-        const buyPopupRef = document.getElementById("buy-popup-ref");
-        const buyPopupClose = document.querySelector(".buy-popup-close");
-        const buyPopupBackdrop = document.querySelector(".buy-popup-backdrop");
+        const buyPopup        = document.getElementById("buy-popup");
+        const buyPopupRef     = document.getElementById("buy-popup-ref");
+        const buyPopupMessage = document.getElementById("buy-popup-message");
+        const buyPopupSold    = document.getElementById("buy-popup-sold");
+        const buyPopupEmail   = document.getElementById("buy-popup-email");
+        const buyPopupClose   = document.getElementById("buy-popup-close");
 
-        function openBuyPopup(referenceNumber) {
-            buyPopupRef.textContent = referenceNumber;
-            buyPopup.classList.add("open");
+        function openBuyPopup(product) {
+            if (!product) return;
+
+            // Always show the reference number
+            buyPopupRef.textContent = `Reference: #${product.id}`;
+
+            // Decide if it's sold out
+            const soldOut =
+                product.soldOut === true ||
+                (typeof product.stock === "number" && product.stock <= 0) ||
+                (product.stockText && product.stockText.toLowerCase().includes("sold"));
+
+            if (soldOut) {
+                // SOLD OUT — show warning, hide email button
+                buyPopupMessage.style.display = "none";
+                buyPopupSold.style.display    = "block";
+                buyPopupEmail.style.display   = "none";
+            } else {
+                // IN STOCK — normal flow
+                buyPopupMessage.style.display = "block";
+                buyPopupSold.style.display    = "none";
+                buyPopupEmail.style.display   = "inline-block";
+            }
+
+            buyPopup.classList.add("show");
         }
 
         function closeBuyPopup() {
-            buyPopup.classList.remove("open");
+            buyPopup.classList.remove("show");
         }
 
         function getImagesForProduct(product) {
@@ -1216,7 +1243,7 @@
         function openProductModal(product) {
             const buyBtn = document.querySelector(".modal-buy-btn");
             buyBtn.onclick = () => {
-                openBuyPopup(product.id);
+                openBuyPopup(product);
             };
 
             modalCurrentProduct = product;
@@ -1307,8 +1334,15 @@
             modalCurrentProduct = null;
         }
 
+        // Close popup with X
         buyPopupClose.addEventListener("click", closeBuyPopup);
-        buyPopupBackdrop.addEventListener("click", closeBuyPopup);
+
+        // Close popup when clicking outside the card
+        buyPopup.addEventListener("click", (e) => {
+            if (e.target === buyPopup) {
+                closeBuyPopup();
+            }
+        });
 
         modalPrevBtn.addEventListener("click", (e) => {
             e.preventDefault();
