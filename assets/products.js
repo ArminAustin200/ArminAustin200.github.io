@@ -792,7 +792,43 @@ window.products = [
 
         // extra info just for the popup
         stockText: "*SOLD OUT*",
-        description: "Clean Jasper console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
+        description: "Clean Falcon console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
         dateAdded: "2024-07-09"
+    },
+
+    //XYCD1194
+    {
+        id: "XYCD1194",
+        title: "Tonasket RGH Bundle",
+        price: 164.99,
+        currency: "USD",
+        soldOut: true,
+
+        // use the first image as the card thumbnail
+        images: [
+        "assets/Products/XYCD_1194/1.jpeg",
+        "assets/Products/XYCD_1194/2.jpeg",
+        "assets/Products/XYCD_1194/3.jpeg",
+        "assets/Products/XYCD_1194/4.jpeg",
+        "assets/Products/XYCD_1194/5.jpeg",
+        "assets/Products/XYCD_1194/6.jpeg",
+        "assets/Products/XYCD_1194/7.jpeg",
+        "assets/Products/XYCD_1194/8.jpeg"
+        ],
+        image: "assets/Products/XYCD_1194/1.jpeg",   // thumbnail
+
+        features: [
+        "RGH1.2 Mod",
+        "Green ROL Mod",
+        "Green Vent LED Mod",
+        "500GB HDD",
+        "Stealth Server",
+        "Power Supply Included"
+        ],
+
+        // extra info just for the popup
+        stockText: "*SOLD OUT*",
+        description: "Clean Tonasket console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
+        dateAdded: "2025-09-12"
     },
 ];
