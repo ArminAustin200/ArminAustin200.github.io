@@ -979,6 +979,14 @@
 						<button class="contact-btn" type="button">Contact Us</button>
 					</a>
 				</div>
+
+                <label for="currencySelect">Currency:</label>
+                <select id="currencySelect">
+                <option value="CAD">CAD ($)</option>
+                <option value="USD">USD ($)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="EUR">EUR (€)</option>
+                </select>
 			</div>
 		</header>
 
@@ -1193,9 +1201,13 @@
                         </div>
                         <div class="product-footer">
                             <span class="product-ref">Reference #${p.id}</span>
-                            <span class="product-price ${isSoldOut ? "product-price--soldout" : ""}">
-                                ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} ${p.currency}`}
+                            <span
+                            class="product-price ${isSoldOut ? "product-price--soldout" : ""}"
+                            ${isSoldOut ? "" : `data-price-usd="${p.price}"`}
+                            >
+                            ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} USD`}
                             </span>
+
                         </div>
                     </div>
                 `;
@@ -1283,10 +1295,15 @@
             modalCurrentProduct = product;
             modalCurrentIndex = 0;
 
+            //Update price based on dropdown
+            updateAllPrices();
+            updateModalCurrency();
+
             const images = getImagesForProduct(product);
 
             modalTitle.textContent = product.title;
-            modalPrice.textContent = `PRICE: $${product.price.toFixed(2)}${product.currency}`;
+            modalPrice.dataset.priceUsd = product.price;
+            //modalPrice.textContent = `PRICE: $${product.price.toFixed(2)} USD`;
             modalStock.textContent = product.stockText || "";
             modalRef.textContent   = `Reference Number # ${product.id}`;
             modalDescription.textContent = product.description || "";
@@ -1410,6 +1427,161 @@
                 closeProductModal();
             }
         });
+    </script>
+
+    <script>
+    const currencySelect = document.getElementById("currencySelect");
+
+    function formatMoney(value, currency) {
+        return new Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency
+        }).format(value);
+    }
+
+    function getSelectedCurrency() {
+        return (currencySelect && currencySelect.value) || "USD";
+    }
+
+    function convertFromUSD(usd, currency) {
+        const rate = rates[currency] ?? 1;
+        return usd * rate;
+    }
+
+    function updateAllPrices() {
+        const currency = getSelectedCurrency();
+
+        // Update all price elements (cards, and anything else) that have data-price-usd
+        document.querySelectorAll("[data-price-usd]").forEach((el) => {
+        const usd = Number(el.dataset.priceUsd);
+        if (Number.isNaN(usd)) return;
+
+        const converted = convertFromUSD(usd, currency);
+        el.textContent = formatMoney(converted, currency);
+        });
+    }
+
+    function updateModalCurrency() {
+        if (!modalCurrentProduct) return;
+
+        const currency = getSelectedCurrency();
+        const usd = Number(modalCurrentProduct.price);
+        if (Number.isNaN(usd)) return;
+
+        const converted = convertFromUSD(usd, currency);
+
+        // modalPrice is the <p id="modal-price"> you already have
+        modalPrice.textContent = `PRICE: ${formatMoney(converted, currency)}`;
+    }
+
+    // Init: set dropdown from storage and apply conversion after products render
+    document.addEventListener("DOMContentLoaded", () => {
+        const saved = localStorage.getItem("warehouse_currency") || "USD";
+        currencySelect.value = saved;
+
+        // renderProducts runs on DOMContentLoaded too, so wait a tick so the cards exist
+        setTimeout(() => {
+        updateAllPrices();
+        updateModalCurrency();
+        }, 0);
+    });
+
+    currencySelect.addEventListener("change", () => {
+        localStorage.setItem("warehouse_currency", getSelectedCurrency());
+        updateAllPrices();
+        updateModalCurrency();
+    });
+    </script>
+
+    <script>
+    const RATE_CACHE_KEY = "warehouse_rates";
+    const RATE_CACHE_TIME = "warehouse_rates_time";
+    const CACHE_TTL = 1000 * 60 * 60 * 6; // 6 hours
+
+    async function getRates() {
+        const cached = localStorage.getItem(RATE_CACHE_KEY);
+        const cachedTime = localStorage.getItem(RATE_CACHE_TIME);
+
+        if (cached && cachedTime && Date.now() - cachedTime < CACHE_TTL) {
+        return JSON.parse(cached);
+        }
+
+        const res = await fetch("https://open.er-api.com/v6/latest/USD");
+        if (!res.ok) throw new Error("Failed to fetch exchange rates");
+
+        const data = await res.json();
+
+        localStorage.setItem(RATE_CACHE_KEY, JSON.stringify(data.rates));
+        localStorage.setItem(RATE_CACHE_TIME, Date.now());
+
+        return data.rates;
+    }
+
+    const currencyPrefixes = {
+      USD: "US$",
+      CAD: "CA$",
+      GBP: "GB£",
+      EUR: "EU€"
+    };
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
+    function formatMoneyWithPrefix(value, currency) {
+        const prefix = currencyPrefixes[currency] || currency;
+        return `${prefix} ${formatNumber(value)}`;
+    }
+
+    function getSelectedCurrency() {
+        return currencySelect.value || "USD";
+    }
+
+    async function updateAllPrices() {
+        const currency = getSelectedCurrency();
+        const rates = await getRates();
+        const rate = rates[currency] ?? 1;
+
+        document.querySelectorAll("[data-price-usd]").forEach(el => {
+        const usd = Number(el.dataset.priceUsd);
+        if (Number.isNaN(usd)) return;
+
+        const converted = usd * rate;
+        //el.textContent = formatMoney(converted, currency);
+        el.textContent = formatMoneyWithPrefix(converted, currency);
+        });
+    }
+
+    async function updateModalCurrency() {
+        if (!modalCurrentProduct) return;
+
+        const currency = getSelectedCurrency();
+        const rates = await getRates();
+        const rate = rates[currency] ?? 1;
+
+        const usd = Number(modalCurrentProduct.price);
+        if (Number.isNaN(usd)) return;
+
+        const converted = usd * rate;
+        modalPrice.textContent = `PRICE: ${formatMoneyWithPrefix(converted, currency)}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const saved = localStorage.getItem("warehouse_currency") || "USD";
+        currencySelect.value = saved;
+
+        await updateAllPrices();
+        await updateModalCurrency();
+    });
+
+    currencySelect.addEventListener("change", async () => {
+        localStorage.setItem("warehouse_currency", getSelectedCurrency());
+        await updateAllPrices();
+        await updateModalCurrency();
+    });
     </script>
 </body>
 </html>

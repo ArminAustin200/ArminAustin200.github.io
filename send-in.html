@@ -549,6 +549,14 @@
           <button class="contact-btn" type="button">Contact Us</button>
         </a>
       </div>
+
+      <label for="currencySelect">Currency:</label>
+      <select id="currencySelect">
+      <option value="CAD">CAD ($)</option>
+      <option value="USD">USD ($)</option>
+      <option value="GBP">GBP (£)</option>
+      <option value="EUR">EUR (€)</option>
+      </select>
     </div>
   </header>
 
@@ -584,9 +592,9 @@
 
               <ul class="service-list">
                 <li>Fresh application of Arctic MX-4</li>
-                <li><span class="price">$75US</span> for just an RGH install</li>
-                <li><span class="price">$95US</span> for RGH + Custom LEDs</li>
-                <li><span class="price">$110US</span> for RGH + LEDs + 500GB HDD upgrade</li>
+                <li><span class="price" data-price-usd="75"></span> for just an RGH install</li>
+                <li><span class="price" data-price-usd="95"></span> for RGH + Custom LEDs</li>
+                <li><span class="price" data-price-usd="110"></span> for RGH + LEDs + 500GB HDD upgrade</li>
               </ul>
 
               <p class="service-note">➜ Custom built consoles may take 2–5 business days to make.</p>
@@ -704,6 +712,76 @@
         });
       });
     }
+  </script>
+
+  <script>
+    const RATE_CACHE_KEY = "warehouse_rates";
+    const RATE_CACHE_TIME = "warehouse_rates_time";
+    const CACHE_TTL = 1000 * 60 * 60 * 6; // 6 hours
+
+    async function getRates() {
+        const cached = localStorage.getItem(RATE_CACHE_KEY);
+        const cachedTime = localStorage.getItem(RATE_CACHE_TIME);
+
+        if (cached && cachedTime && Date.now() - cachedTime < CACHE_TTL) {
+        return JSON.parse(cached);
+        }
+
+        const res = await fetch("https://open.er-api.com/v6/latest/USD");
+        if (!res.ok) throw new Error("Failed to fetch exchange rates");
+
+        const data = await res.json();
+
+        localStorage.setItem(RATE_CACHE_KEY, JSON.stringify(data.rates));
+        localStorage.setItem(RATE_CACHE_TIME, Date.now());
+
+        return data.rates;
+    }
+
+    function getSelectedCurrency() {
+        return currencySelect.value || "USD";
+    }
+
+    const currencyPrefixes = {
+      USD: "US$",
+      CAD: "CA$",
+      GBP: "GB£",
+      EUR: "EU€"
+    };
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
+    async function updateSendInPrices() {
+      const currency = getSelectedCurrency();
+      const rates = await getRates();
+      const rate = rates[currency] ?? 1;
+      const prefix = currencyPrefixes[currency] || currency;
+
+      document.querySelectorAll(".price[data-price-usd]").forEach(el => {
+        const usd = Number(el.dataset.priceUsd);
+        if (Number.isNaN(usd)) return;
+
+        const converted = usd * rate;
+        el.textContent = `${prefix} ${formatNumber(converted)}`;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const saved = localStorage.getItem("warehouse_currency") || "USD";
+        currencySelect.value = saved;
+
+        await updateSendInPrices();
+    });
+
+    currencySelect.addEventListener("change", async () => {
+        localStorage.setItem("warehouse_currency", getSelectedCurrency());
+        await updateSendInPrices();
+    });
   </script>
 </body>
 </html>
