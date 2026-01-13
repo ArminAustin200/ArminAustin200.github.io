@@ -427,6 +427,11 @@
     padding-bottom: 0.2rem;
   }
 
+  .currency-container {
+      display: flex;
+      flex-direction: column;
+  }
+
   .nav-link::after {
     content: "";
     position: absolute;
@@ -550,13 +555,15 @@
         </a>
       </div>
 
-      <label for="currencySelect">Currency:</label>
-      <select id="currencySelect">
-      <option value="CAD">CAD ($)</option>
-      <option value="USD">USD ($)</option>
-      <option value="GBP">GBP (£)</option>
-      <option value="EUR">EUR (€)</option>
-      </select>
+      <div class="currency-container">
+        <label for="currencySelect">Currency:</label>
+        <select id="currencySelect">
+        <option value="CAD">CAD ($)</option>
+        <option value="USD">USD ($)</option>
+        <option value="GBP">GBP (£)</option>
+        <option value="EUR">EUR (€)</option>
+        </select>
+      </div>
     </div>
   </header>
 

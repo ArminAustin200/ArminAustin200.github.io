@@ -895,6 +895,13 @@
             background: rgba(0,0,0,0.9);
         }
 
+        .currency-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
         /* ---------- Mobile modal: full-screen, smaller carousel, no inner scrollbars ---------- */
         @media (max-width: 900px) {
             .product-modal {
@@ -980,13 +987,15 @@
 					</a>
 				</div>
 
-                <label for="currencySelect">Currency:</label>
-                <select id="currencySelect">
-                <option value="CAD">CAD ($)</option>
-                <option value="USD">USD ($)</option>
-                <option value="GBP">GBP (£)</option>
-                <option value="EUR">EUR (€)</option>
+                <div class = "currency-container">
+                    <label for="currencySelect">Currency:</label>
+                    <select id="currencySelect">
+                    <option value="CAD">CAD ($)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
                 </select>
+                </div>
 			</div>
 		</header>
 
