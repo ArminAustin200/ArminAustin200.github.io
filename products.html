@@ -722,7 +722,7 @@
         }
 
         .modal-description {
-            font-size: 0.95rem;
+            font-size: 0.90rem;
         }
 
         .modal-buy-btn {
@@ -1296,6 +1296,50 @@
             return [];
         }
 
+        function linkify(text) {
+            // Detect URLs
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+            return text.replace(urlRegex, function(url) {
+                try {
+                    const urlObj = new URL(url);
+                    const pathParts = urlObj.pathname.split("/").filter(Boolean);
+
+                    // If it's GitHub + repo, use repo name only
+                    if (urlObj.hostname === "github.com" && pathParts.length >= 2) {
+                        const repoName = pathParts[1]; // "FreeRunner"
+                        return `<a href="${url}" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style="color:#4ea3ff; text-decoration:underline; font-weight:500;">
+                            ${repoName} (GitHub)
+                        </a>`;
+                    }
+
+                    // Default: show full URL
+                    return `<a href="${url}" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style="color:#4ea3ff; text-decoration:underline; font-weight:500;">
+                        ${url}
+                    </a>`;
+                } catch (e) {
+                    return url;
+                }
+            });
+        }
+
+        function styleFirstLine(text) {
+            const lines = text.split("\n");
+
+            if (lines.length > 0) {
+                // Wrap ONLY the first line in a red span
+                lines[0] = `<span style="color:#ff4444; font-weight:bold;">${lines[0]}</span>`;
+            }
+
+            return lines.join("\n");
+        }
+
         function openProductModal(product) {
             const buyBtn = document.querySelector(".modal-buy-btn");
             buyBtn.onclick = () => {
@@ -1316,7 +1360,13 @@
             //modalPrice.textContent = `PRICE: $${product.price.toFixed(2)} USD`;
             modalStock.textContent = product.stockText || "";
             modalRef.textContent   = `Reference Number # ${product.id}`;
-            modalDescription.textContent = product.description || "";
+            const rawDesc = product.description || "";
+            let styled = styleFirstLine(rawDesc);
+            styled = styled.replace(/\n/g, "<br>");
+
+            const htmlDesc = linkify(styled);
+
+            modalDescription.innerHTML = htmlDesc;
 
             modalFeatures.innerHTML = product.features
               .map(f => `<li>${f}</li>`)

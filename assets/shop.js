@@ -1,14 +1,14 @@
 // assets/products.js
 window.products = [ {
-  id : "XXXX0000",
-  title : "Coming Soon...",
-  price : 0.00,
+  id : "FREE0420",
+  title : "FreeRunner",
+  price : 8.8,
   currency : "USD",
-  soldOut : true,
-  images : ["assets/logo/website_logo.png"],
+  soldOut : false,
+  images : [ "assets/logo/website_logo.png" ],
   image : "assets/logo/website_logo.png",
-  features : [],
-  stockText : "*SOLD OUT*",
-  description : "",
+  features : [ "RGH1.2 support for Phat and Slim", "Multi-NAND support", "XSB support via muxing", "Built-in 68nF cap", "Multiple Debug LEDs for easy debugging" ],
+  stockText : "*Coming Soon...*",
+  description : "ONCE SOLDER HAS TOUCHED THE PRODUCT YOU ARE NO LONGER UNDER ANY WARRANTY.\nMore info on: https://github.com/ArminAustin200/FreeRunner",
   dateAdded : "2026-02-26"
-}];
+} ];

@@ -1316,7 +1316,11 @@
             //modalPrice.textContent = `PRICE: $${product.price.toFixed(2)} USD`;
             modalStock.textContent = product.stockText || "";
             modalRef.textContent   = `Reference Number # ${product.id}`;
-            modalDescription.textContent = product.description || "";
+            //modalDescription.textContent = product.description || "";
+            const rawDesc   = product.description || "";
+            const withBreaks = rawDesc.replace(/\n/g, "<br>");
+
+            modalDescription.innerHTML = withBreaks;
 
             modalFeatures.innerHTML = product.features
               .map(f => `<li>${f}</li>`)
