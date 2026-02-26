@@ -1184,9 +1184,15 @@
             }
 
             const sorted = [...window.products].sort((a, b) => {
+                // First: in-stock items should appear above sold-out items
+                if (a.soldOut !== b.soldOut) {
+                    return a.soldOut ? 1 : -1;
+                }
+
+                // Second: within each group, sort by dateAdded (newest first)
                 const da = new Date(a.dateAdded);
                 const db = new Date(b.dateAdded);
-                return db - da; // newest first
+                return db - da;
             });
 
             grid.textContent = "";

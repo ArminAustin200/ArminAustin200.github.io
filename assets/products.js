@@ -10,7 +10,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-08"
+  dateAdded : "2024-08-01"
 }, {
   id : "XYCD1170",
   title : "Waitsburg RGH Bundle",
@@ -22,7 +22,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Waitsburg console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-08"
+  dateAdded : "2024-08-03"
 }, {
   id : "XYCD1171",
   title : "Jasper RGH Bundle",
@@ -34,7 +34,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Blue ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Jasper console with custom blue and purple lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-08-08"
 }, {
   id : "XYCD1172",
   title : "Jasper RGH Bundle",
@@ -46,7 +46,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "White ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Jasper console with custom blue and purple lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-07-31"
 }, {
   id : "XYCD1173",
   title : "Falcon RGH Bundle",
@@ -58,7 +58,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Green ROL Mod", "Green Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom green lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-07-15"
 }, {
   id : "XYCD1174",
   title : "Jasper RGH Bundle",
@@ -70,7 +70,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Orange ROL Mod", "Orange Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Jasper console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-07-30"
 }, {
   id : "XYCD1175",
   title : "Falcon JTAG Bundle",
@@ -82,7 +82,7 @@ window.products = [ {
   features : [ "JTAG Mod", "Orange ROL Mod", "Orange Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom orange lighting and JTAG, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-07-17"
 }, {
   id : "XYCD1177",
   title : "Corona RGH Bundle",
@@ -94,7 +94,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Orange ROL Mod", "Orange Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Corona console with custom orange lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-08-07"
 }, {
   id : "XYCD1178",
   title : "Trinity RGH Bundle",
@@ -106,7 +106,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue/Purple ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom blue and purple lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-07-30"
 }, {
   id : "XYCD1179",
   title : "Falcon RGH Bundle",
@@ -118,7 +118,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Pink ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom pink and purple lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-08-08"
 }, {
   id : "XYCD1180",
   title : "Falcon RGH Bundle",
@@ -130,7 +130,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Red ROL Mod", "Red Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom red lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-08-28"
 }, {
   id : "XYCD1181",
   title : "Trinity RGH Bundle",
@@ -142,7 +142,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "White ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-08-02"
 }, {
   id : "XYCD1182",
   title : "Stingray RGH Bundle",
@@ -154,7 +154,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Rainbow ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Stingray console with rainbow and purple lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-09-24"
 }, {
   id : "XYCD1183",
   title : "Stingray RGH Bundle",
@@ -166,7 +166,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Rainbow ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Stingray console with custom rainbow and blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-10-18"
 }, {
   id : "XYCD1184",
   title : "Trinity RGH Bundle",
@@ -178,7 +178,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2024-12-13"
 }, {
   id : "XYCD1187",
   title : "MW3 RGH Bundle",
@@ -190,7 +190,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-02-01"
 }, {
   id : "XYCD1188",
   title : "Falcon RGH Bundle",
@@ -202,7 +202,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "White ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom white and purple lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-01-25"
 }, {
   id : "XYCD1189",
   title : "Zephyr JTAG Bundle",
@@ -214,7 +214,7 @@ window.products = [ {
   features : [ "JTAG Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Zephyr console with custom blue lighting and JTAG, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2026-02-26"
 }, {
   id : "XYCD1190",
   title : "Jasper JTAG Bundle",
@@ -226,7 +226,7 @@ window.products = [ {
   features : [ "JTAG Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*ONLY 1 LEFT IN STOCK*",
   description : "Clean Jasper console with custom blue lighting and JTAG, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2025-11-18"
+  dateAdded : "2026-02-26"
 }, {
   id : "XYCD1191",
   title : "Corona RGH Bundle",
@@ -238,7 +238,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Corona console with custom blue lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-04-18"
 }, {
   id : "XYCD1192",
   title : "Trinity RGH Bundle",
@@ -250,7 +250,7 @@ window.products = [ {
   features : [ "RGH3 Mod", "Orange ROL Mod", "Orange Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Trinity console with custom orange lighting and RGH3, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-07-02"
 }, {
   id : "XYCD1193",
   title : "Falcon RGH Bundle",
@@ -262,7 +262,7 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Orange ROL Mod", "Orange Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2024-07-09"
+  dateAdded : "2025-08-24"
 }, {
   id : "XYCD1194",
   title : "Tonasket RGH Bundle",
@@ -274,5 +274,5 @@ window.products = [ {
   features : [ "RGH1.2 Mod", "Green ROL Mod", "Green Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
   stockText : "*SOLD OUT*",
   description : "Clean Tonasket console with custom orange lighting and RGH1.2, ideal for homebrew, system link play, and online play.",
-  dateAdded : "2025-09-12"
+  dateAdded : "2025-12-09"
 } ];
