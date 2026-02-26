@@ -1,687 +1,1509 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Send-In Service | WareHouseX360</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <link rel="icon" type="image/x-icon" href="assets/logo/website_logo.png">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-  <!-- Same fonts as home -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-
-  <style>
-    /* ---------- Reset ---------- */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      color: #000;
-      background: #ffffff;
-      line-height: 1.5;
-      transition: background 0.25s ease, color 0.25s ease;
-    }
-
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-
-    .page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      width: min(1200px, 100% - 3rem);
-      margin: 0 auto;
-    }
-
-    /* ---------- Header / Nav ---------- */
-    header {
-      border-bottom: 1px solid #ddd;
-      background: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 0;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .logo-img { width: 120px; height: auto; }
-
-    .nav-center {
-      display: flex;
-      gap: 3rem;
-      font-family: "Playfair Display", serif;
-      font-size: 1.5rem;
-    }
-
-    .nav-link {
-      position: relative;
-      padding-bottom: 0.2rem;
-    }
-
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      left: 0; bottom: 0;
-      width: 0; height: 2px;
-      background: currentColor;
-      transition: width 0.2s ease-out;
-    }
-    .nav-link:hover::after,
-    .nav-link.active::after { width: 100%; }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .contact-btn {
-      font-family: "Playfair Display", serif;
-      font-size: 1.2rem;
-      padding: 0.35rem 1.4rem;
-      border-radius: 999px;
-      border: 3px solid #000;
-      background: #d97917;
-      color: #000;
-      box-shadow: 0 3px 0 #000;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
-    }
-    .contact-btn:hover {
-      transform: translateY(1px);
-      box-shadow: 0 1px 0 #000;
-      background: #e98c28;
-    }
-
-    /* Dark mode toggle button */
-    .theme-toggle {
-      border-radius: 999px;
-      border: 2px solid #000;
-      background: #fff;
-      cursor: pointer;
-      padding: 0.3rem 0.65rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 0 #000;
-      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    .theme-toggle:hover {
-      transform: translateY(1px);
-      box-shadow: 0 1px 0 #000;
-      background: #f0f0f0;
-    }
-
-    .theme-icon {
-      width: 22px;
-      height: 22px;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    }
-
-    /* ---------- TOP HERO ---------- */
-    .send-hero { position: relative; overflow: hidden; }
-
-    .send-hero-bg {
-      height: 260px;
-      background-image: url("assets/Send-In/Hero_Banner.jpg");
-      background-size: cover;
-      background-position: center;
-      filter: grayscale(0.1);
-    }
-
-    .send-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.7);
-      transition: background 0.25s ease;
-    }
-
-    .send-hero-content {
-      position: absolute;
-      inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding-inline: 1rem;
-    }
-
-    .send-hero-title {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-    }
-
-    .send-hero-subtitle {
-      font-size: 1.25rem;
-      max-width: 900px;
-    }
-
-    /* ---------- MAIN CONTENT ---------- */
-    main {
-      flex: 1;
-      padding: 2.5rem 0 3rem;
-    }
-
-    .send-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1.1fr 1.2fr;
-      gap: 1.5rem;
-      align-items: flex-start;
-    }
-
-    .send-photo-frame {
-      border: 6px solid #000;
-      border-radius: 0.5rem;
-      overflow: hidden;
-    }
-
-    .service-panel,
-    .shipping-panel {
-      background: #e0e0e0;
-      border-radius: 2rem;
-      padding: 2rem;
-      box-shadow: 0 6px 0 #c7c7c7;
-      font-weight: 700;
-    }
-
-    .board-photo-frame {
-      margin-top: 1.2rem;
-      border-radius: 2rem;
-      overflow: hidden;
-      border: 6px solid #000;
-    }
-
-    /* Hover zoom */
-    .zoomable-board {
-      transition: transform 0.25s ease;
-      cursor: pointer;
-    }
-    .zoomable-board:hover { transform: scale(1.06); }
-
-    /* ---------- LIGHTBOX WITH CLOSE BUTTON ---------- */
-    .image-modal {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.85);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease;
-      z-index: 200;
-    }
-
-    .image-modal.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .image-modal-content {
-      position: relative;
-      max-width: 95vw;
-      max-height: 90vh;
-      transform: scale(0.96);
-      transition: transform 0.25s ease;
-    }
-
-    .image-modal.open .image-modal-content {
-      transform: scale(1);
-    }
-
-    .image-modal-img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 0.75rem;
-      background: #000;
-    }
-
-    .image-modal-close {
-      position: absolute;
-      top: -14px;
-      right: -14px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      background: #ffffff;
-      color: #000;
-      font-size: 1.2rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s ease, transform 0.1s ease;
-    }
-
-    .image-modal-close:hover {
-      background: #ddd;
-      transform: translateY(1px);
-    }
-
-
-    /* Lightbox */
-    .image-lightbox {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: flex; align-items: center; justify-content: center;
-      padding: 2rem;
-      z-index: 200;
-      cursor: zoom-out;
-    }
-    .image-lightbox img {
-      max-width: 95vw; max-height: 95vh;
-      object-fit: contain;
-      border-radius: 1rem;
-      box-shadow: 0 0 25px rgba(0,0,0,0.5);
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      padding: 1.8rem 0 2.4rem;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      font-size: 0.9rem;
-      transition: background 0.25s ease, color 0.25s ease;
-    }
-
-    /* ---------- DARK MODE OVERRIDES ---------- */
-    body.dark-mode { 
-      background: #0b0b0b; 
-      color: #f7f7f7; 
-    }
-
-    body.dark-mode header { 
-      background: #111; 
-      border-bottom-color: #333; 
-    }
-
-    body.dark-mode .nav-right .contact-btn {
-      border-color: #f7f7f7;
-      box-shadow: 0 3px 0 #f7f7f7;
-    }
-
-    body.dark-mode .theme-toggle { 
-      background:#222; 
-      border-color:#f7f7f7; 
-      box-shadow:0 2px 0 #f7f7f7; 
-    }
-
-    body.dark-mode .theme-icon { 
-      transform: rotate(180deg); 
-      filter: invert(1) brightness(1.6); 
-    }
-
-    body.dark-mode .send-hero-overlay { 
-      background: rgba(0,0,0,0.55); 
-    }
-
-    body.dark-mode .service-panel,
-    body.dark-mode .shipping-panel { 
-      background:#171717; 
-      box-shadow:0 6px 0 #000; 
-    }
-
-    body.dark-mode .board-photo-frame { 
-      border-color:#333; 
-    }
-
-    body.dark-mode .send-photo-frame {
-      border-color:#333; 
-    }
-    
-    body.dark-mode footer { 
-      background:#050505; 
-    }
-
-    .service-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.95rem;
-      text-align: center;
-      margin-bottom: 1.8rem;
-      text-decoration: underline;
-      text-underline-offset: 0.18em;
-    }
-
-    .shipping-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      text-decoration: underline;
-      text-underline-offset: 0.18em;
-    }
-    
-    .service-subheading {
-      text-align: center;
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-      text-decoration: underline;
-      text-underline-offset: 0.18em;
-    }
-
-    .service-list {
-      list-style: none;
-      font-size: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .service-list li::before {
-      content: "➜ ";
-      font-weight: 700;
-    }
-
-    .price {
-      color: #e00000;
-      font-weight: 900;
-    }
-
-    .service-note {
-      margin-top: 1.4rem;
-      font-weight: 700;
-    }
-  /* Base nav layout (already similar to what you have) */
-  .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-  }
-
-  .nav-center {
-    display: flex;
-    gap: 3rem;
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-  }
-
-  .nav-link {
-    position: relative;
-    padding-bottom: 0.2rem;
-  }
-
-  .currency-container {
-      display: flex;
-      flex-direction: column;
-  }
-
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background: currentColor; /* works in light + dark mode */
-    transition: width 0.2s ease-out;
-  }
-
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
-  }
-
-  /* Mobile toggle button: hidden on desktop */
-  .nav-toggle {
-    display: none;
-    border: 2px solid #000;
-    border-radius: 999px;
-    background: #fff;
-    padding: 0.25rem 0.6rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-
-  /* ------- Mobile layout ------- */
-  @media (max-width: 960px) {
-    .nav-center {
-      display: none; /* hide menu by default on small screens */
-    }
-
-    .nav-left {
-      display: none;
-    }
-
-    .nav-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* When header has .nav-open, show a dropdown menu */
-    header.nav-open .nav-center {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #111;
-      color: #fff;
-      padding: 0.75rem 1.25rem 1rem;
-      gap: 0.75rem;
-      border-bottom: 1px solid #333;
-    }
-
-    header.nav-open .nav-link::after {
-      background: #fff; /* underline visible on dark dropdown */
-    }
-
-    /* Optional: shrink nav text a bit on phones */
-    header.nav-open .nav-center {
-      font-size: 1.2rem;
-    }
-
-    footer {
-      font-size: 0.75rem;
-    }
-  }
-
-  /* Dark-mode tweak so the underline is visible on desktop too */
-  body.dark-mode .nav-link::after {
-    background: #f7f7f7;
-  }
-
-  body.dark-mode header.nav-open .nav-center {
-    background: #111;
-  }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 800px) {
-      .nav-center { display:none; }
-      .send-grid { grid-template-columns:1fr; }
-      .service-panel, .shipping-panel { margin-top:1rem; }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="page-wrapper">
-
-    <!-- NAVBAR -->
-  <header>
-    <div class="container nav">
-      <div class="nav-left">
-        <a href="home.html">
-          <img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
-        </a>
-      </div>
-
-      <!-- Toggle button for mobile -->
-      <button class="nav-toggle" type="button" aria-label="Toggle navigation">
-        ☰
-      </button>
-
-      <nav class="nav-center">
-        <a href="home.html" class="nav-link">Home</a>
-        <a href="pre-built.html" class="nav-link">Shop Pre-Built Consoles</a>
-        <a href="send-in.html" class="nav-link">Send-In Service</a>
-        <a href="products.html" class="nav-link active">Products</a>
-      </nav>
-
-      <div class="nav-right">
-        <button class="theme-toggle" type="button">
-          <img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
-        </button>
-
-        <a href="contact-us.html">
-          <button class="contact-btn" type="button">Contact Us</button>
-        </a>
-      </div>
-
-      <div class="currency-container">
-        <label for="currencySelect">Currency:</label>
-        <select id="currencySelect">
-        <option value="CAD">CAD ($)</option>
-        <option value="USD">USD ($)</option>
-        <option value="GBP">GBP (£)</option>
-        <option value="EUR">EUR (€)</option>
-        </select>
-      </div>
-    </div>
-  </header>
-
-
-    <!-- TOP HERO -->
-    <section class="send-hero">
-      <div class="send-hero-bg"></div>
-      <div class="send-hero-overlay"></div>
-
-      <div class="send-hero-content">
-        <h1 class="send-hero-title">Welcome to Our Online Store!</h1>
-        <p class="send-hero-subtitle">
-          View all the products we currently have available! Currently shipping only to CANADA and the USA.
-        </p>
-      </div>
-    </section>
-
-    <!-- MAIN CONTENT -->
-    <main>
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-      &copy; <span id="year"></span> WareHouseX360 – Send-In Modding & Refurbishment Services
-    </footer>
-  </div>
-
-    <!-- LIGHTBOX MODAL -->
-  <div class="image-modal" id="imageModal" aria-hidden="true">
-    <div class="image-modal-content">
-      <img src="" alt="Enlarged board image" class="image-modal-img" id="imageModalImg">
-      <button class="image-modal-close" type="button" aria-label="Close image">&times;</button>
-    </div>
-  </div>
-  
-  <!-- Scripts -->
-  <script>
-    // Auto year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-
-  <script>
-    // Lightbox for board image with close button + ESC
-    const boardImg = document.querySelector('.zoomable-board');
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('imageModalImg');
-    const closeBtn = document.querySelector('.image-modal-close');
-
-    if (boardImg) {
-      function openModal() {
-        modalImg.src = boardImg.src;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-      }
-
-      function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        modalImg.src = '';
-      }
-
-      boardImg.addEventListener('click', openModal);
-      closeBtn.addEventListener('click', closeModal);
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
-          closeModal();
+	<meta charset="UTF-8" />
+	<title>Shop Pre-Built Consoles</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/x-icon" href="assets/logo/website_logo.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<!-- Google Fonts (same as home.html) -->
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+	<style>
+		/* ---------- Reset / Base ---------- */
+		*, *::before, *::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			color: #000;
+			background-color: #ffffff;
+			line-height: 1.5;
+			transition: background 0.25s ease, color 0.25s ease;
+		}
+
+		html, body {
+  			max-width: 100%;
+  			overflow-x: hidden;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+		}
+
+		img {
+			max-width: 100%;
+			display: block;
+		}
+
+		/* ---------- Layout Helpers ---------- */
+		.page-wrapper {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+            justify-content: space-between;
+		}
+
+		.container {
+			width: min(1200px, 100% - 3rem);
+			margin: 0 auto;
+		}
+
+		/* ---------- Header / Nav (from home.html) ---------- */
+		header {
+			border-bottom: 1px solid #ddd;
+			background: #fff;
+			position: sticky;
+			top: 0;
+			z-index: 20;
+		}
+
+		.nav {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0.75rem 0;
+		}
+
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+		}
+
+		.logo-img {
+			width: 120px;
+			height: auto;
+		}
+
+		.nav-center {
+			display: flex;
+			gap: 3rem;
+			font-family: "Playfair Display", serif;
+			font-size: 1.5rem;
+		}
+
+		.nav-link {
+			position: relative;
+			padding-bottom: 0.2rem;
+		}
+
+		.nav-link::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 0;
+			height: 2px;
+			background: #000;
+			transition: width 0.2s ease-out;
+		}
+
+		.nav-link:hover::after {
+			width: 100%;
+		}
+
+		.nav-link.active::after {
+      		width: 100%;
+    	}
+
+    	.nav-right {
+      		display: flex;
+      		align-items: center;
+      		gap: 0.6rem;
+    	}
+
+		.contact-btn {
+			font-family: "Playfair Display", serif;
+			font-size: 1.2rem;
+			padding: 0.35rem 1.4rem;
+			border-radius: 999px;
+			border: 3px solid #000;
+			background: #d97917;
+			color: #000;
+			box-shadow: 0 3px 0 #000;
+			cursor: pointer;
+			transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+		}
+
+		.theme-toggle {
+			border-radius: 999px;
+			border: 2px solid #000;
+			background: #fff;
+			cursor: pointer;
+			padding: 0.25rem 0.7rem;
+			font-size: 1rem;
+			line-height: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 0 #000;
+			transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    	}
+
+		.theme-toggle:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #f0f0f0;
+		}
+
+		.theme-icon {
+			width: 22px;
+			height: 22px;
+			transition: transform 0.35s ease, filter 0.25s ease;
+		}
+
+		body.dark-mode .theme-icon {
+			filter: invert(1);
+			transform: rotate(180deg);
+		}
+
+		.nav-right .contact-btn:hover {
+			transform: translateY(1px);
+			box-shadow: 0 1px 0 #000;
+			background: #e98c28;
+		}
+		
+		/*---------------DARK MODE OVERRIDES---------------*/
+		body.dark-mode { 
+     		background: #0b0b0b; 
+      		color: #f7f7f7; 
+    	}
+
+		body.dark-mode header { 
+			background: #111; 
+			border-bottom-color: #333; 
+		}
+
+		body.dark-mode .nav-link::after {
+			background: #f7f7f7;
+		}
+
+		body.dark-mode .nav-right .contact-btn {
+			border-color: #f7f7f7;
+			box-shadow: 0 3px 0 #f7f7f7;
+		}
+
+		body.dark-mode .theme-toggle { 
+			background:#222; 
+			border-color:#f7f7f7; 
+			box-shadow:0 2px 0 #f7f7f7; 
+		}
+
+		body.dark-mode footer { 
+			background:#050505; 
+		}
+
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0,0,0,0.55); 
         }
-      });
-    }
-  </script>
 
-  <script>
-    // Dark Mode Toggle
-    const themeToggle = document.querySelector(".theme-toggle");
-    const body = document.body;
+        body.dark-mode .store-hero {
+            color: #fff;
+        }
 
-    function applyTheme(theme){
-      if(theme === "dark") body.classList.add("dark-mode");
-      else body.classList.remove("dark-mode");
-    }
+        /* Product cards in dark mode */
+        body.dark-mode .product-card {
+            background: #181818;
+            border-color: #444;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        }
 
-    const savedTheme = localStorage.getItem("theme");
-    if(savedTheme){ applyTheme(savedTheme); }
-    else if(window.matchMedia("(prefers-color-scheme: dark)").matches){ applyTheme("dark"); }
+        body.dark-mode .product-image-wrapper {
+            border-color: #444;
+            background: #222;
+        }
 
-    themeToggle.addEventListener("click", () => {
-      const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
-      localStorage.setItem("theme", newTheme);
-      applyTheme(newTheme);
-    });
-  </script>
+        body.dark-mode .product-info {
+            color: #f7f7f7;
+        }
 
-  <script>
-    // Mobile nav toggle
-    const navToggle = document.querySelector('.nav-toggle');
-    const headerEl  = document.querySelector('header');
+        body.dark-mode .product-title {
+            color: #ffffff;
+        }
 
-    if (navToggle && headerEl) {
-      navToggle.addEventListener('click', () => {
-        headerEl.classList.toggle('nav-open');
-      });
+        body.dark-mode .product-features li::before {
+            color: #f7f7f7;
+        }
 
-      // Close menu if you click a link (optional, nice on mobile)
-      headerEl.querySelectorAll('.nav-center .nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          headerEl.classList.remove('nav-open');
+        body.dark-mode .product-ref {
+            opacity: 0.7;
+        }
+
+        body.dark-mode .product-price {
+            color: #ffffff;
+        }
+
+        body.dark-mode .product-price--soldout {
+            color: #ff5a5a;
+        }
+
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0,0,0,0.55);
+        }
+
+
+		/*----MOBILE NAV TOGGLE----*/
+		.nav-toggle {
+			display: none;
+			border: 2px solid #000;
+			border-radius: 999px;
+			background: #fff;
+			padding: 0.25rem 0.6rem;
+			font-size: 1.2rem;
+			cursor: pointer;
+		}
+
+		.no-scroll {
+			overflow: hidden !important;
+  			height: 100vh;
+		}
+
+		@media (max-width: 960px) {
+			.nav-center {
+				display: none;
+			}
+
+			.nav-left {
+				display: none;
+			}
+
+			.nav-toggle {
+				display: inline-flex;
+				align-items: center;
+				justify-content: start;
+			}
+
+			header.nav-open .nav-center {
+				display: flex;
+				flex-direction: column;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				background: #111;
+				color: #fff;
+				padding: 0.75rem 1.25rem 1rem;
+				gap: 0.75rem;
+				border-bottom: 1px solid #333;
+				font-size: 1.2rem;
+			}
+
+			header.nav-open .nav-link::after {
+				background: #fff;
+			}
+		}
+
+		body.dark-mode header.nav-open .nav-center {
+			background: #111;
+		}
+
+		/* ---------- Store Hero & Products (pre-built specific) ---------- */
+        /* ---------- Store hero with overlay like contact-us ---------- */
+        .store-hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* background image layer */
+        .store-hero-bg {
+            height: 220px; /* same as contact page */
+            background-image: url("assets/Send-In/Hero_Banner.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: grayscale(0.1);
+        }
+
+        /* semi-transparent overlay on top of the image */
+        .store-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.7);
+            transition: background 0.25s ease;
+        }
+
+        /* centered text content */
+        .store-hero-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-inline: 1rem;
+        }
+
+        .store-hero-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .store-hero-subtitle {
+            font-size: 0.98rem;
+            max-width: 900px;
+            margin-bottom: 0.5rem;
+        }
+
+        .store-hero-free {
+            margin: 0.1rem 0;
+            font-size: 0.9rem;
+            color: #c00;
+            font-weight: bold;
+        }
+
+        /* dark mode overlay colour */
+        body.dark-mode .store-hero-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+
+        /* tweak text on very small screens */
+        @media (max-width: 600px) {
+            .store-hero {
+                padding: 3.8rem 0.75rem 2rem;
+            }
+
+            .store-hero-title {
+                font-size: 1.8rem;
+                line-height: 1.15;
+            }
+
+            .store-hero-subtitle {
+                font-size: 1.05rem;
+            }
+        }
+
+
+		.store-hero-title {
+            font-family: "Playfair Display", serif;
+			margin: 0 0 0.5rem;
+			font-size: clamp(2rem, 3vw, 2.6rem);
+			font-weight: 700;
+		}
+
+		.store-hero-subtitle {
+			margin: 0 0 0.6rem;
+            font-size: 1.25rem;
+		}
+
+		.store-hero-free {
+			margin: 0.1rem 0;
+			font-size: 0.9rem;
+			color: #c00;
+			font-weight: bold;
+		}
+
+		.prebuilt-main {
+			max-width: 1100px;
+			margin: 1.8rem auto 3rem;
+			padding: 0 1rem;
+		}
+
+		.section-heading {
+			text-align: center;
+			font-weight: bold;
+			text-decoration: underline;
+			margin-bottom: 1.5rem;
+		}
+
+        /* ---------- Product grid & cards ---------- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 1100px) {
+            .products-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* Mobile: image on top, text below */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #000;
+            background: #f7f7f7;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            border-bottom: 1px solid #000;
+            border-right: none;
+            background: #ddd;
+        }
+
+        .product-image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* Desktop: image left, text right */
+        @media (min-width: 900px) {
+            .product-card {
+                flex-direction: row;
+            }
+
+            .product-image-wrapper {
+                flex: 0 0 40%;
+                border-right: 1px solid #000;
+                border-bottom: none;
+            }
+        }
+
+		.product-info {
+			flex: 1;
+			padding: 0.75rem 1rem 0.9rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.product-title {
+			text-align: center;
+			font-weight: bold;
+			margin: 0 0 0.5rem;
+			text-decoration: underline;
+		}
+
+		.product-features {
+			list-style: none;
+			padding: 0;
+			margin: 0 0 0.75rem;
+			font-size: 0.95rem;
+		}
+
+		.product-features li::before {
+			content: "→ ";
+		}
+
+		.product-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			font-size: 0.9rem;
+			margin-top: 0.25rem;
+		}
+
+		.product-ref {
+			font-size: 0.75rem;
+			opacity: 0.8;
+		}
+
+		.product-price {
+			font-weight: bold;
+			font-size: 1rem;
+		}
+
+		.product-price--soldout {
+			color: #c00;
+			font-weight: bold;
+		}
+
+		/* ---------- Footer ---------- */
+		footer {
+			padding: 1.8rem 0 2.4rem;
+			background: #000;
+			color: #fff;
+			text-align: center;
+			font-size: 0.9rem;
+		}
+
+		body.dark-mode footer {
+			background: #050505;
+		}
+
+		/* ---------- CLEAN PRODUCT MODAL CSS ---------- */
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.25s ease;
+        }
+
+        .product-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .product-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .product-modal-dialog {
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            margin: 3rem auto;
+            background: #000 url("assets/Home/Background.png") center/cover no-repeat;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            overflow: hidden;
+
+            transform: scale(0.96) translateY(10px);
+            opacity: 0;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .product-modal.open .product-modal-dialog {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* CLOSE BUTTON — improved visibility */
+        .product-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.85);
+            border: 2px solid #000;
+            border-radius: 50%;
+
+            font-size: 1.55rem;
+            font-weight: bold;
+            line-height: 0;                 /* removes default vertical spacing */
+            transform: translateY(-1px);    /* nudges glyph into perfect center */
+
+            color: #000;
+            cursor: pointer;
+
+            z-index: 3;
+            transition: background .25s ease, color .25s ease, border-color .25s ease;
+        }
+
+
+        /* hover effect (optional but nice) */
+        .product-modal-close:hover {
+            background: #fff;
+        }
+
+        .product-modal-inner {
+            display: grid;
+            grid-template-columns: 2fr 2.2fr 1.2fr;
+            height: 100%;
+        }
+
+        /* Left (carousel) */
+        .product-modal-left {
+            position: relative;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-modal-image-frame {
+            border: 2px solid #fff;
+            background: #111;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .product-modal-image-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+        }
+
+        .product-modal-image-frame img.fade-out {
+            opacity: 0;
+        }
+
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 2rem;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+        }
+
+        .modal-arrow-left { left: 0.4rem; }
+        .modal-arrow-right { right: 0.4rem; }
+
+        .modal-dots {
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .modal-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #666;
+            margin: 0 3px;
+            cursor: pointer;
+        }
+
+        .modal-dot.active {
+            background: #fff;
+        }
+
+        /* Middle (details) */
+        .product-modal-middle {
+            padding: 1.2rem 1.5rem;
+            overflow-y: auto; /* desktop: allow scrolling if very long */
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            text-decoration: underline;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-price {
+            font-weight: bold;
+        }
+
+        .modal-stock {
+            color: #ff5555;
+            font-weight: bold;
+        }
+
+        .modal-ref {
+            margin-top: 0.4rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .modal-subheading {
+            font-size: 1rem;
+            text-decoration: underline;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 0.5rem;
+        }
+
+        .modal-features li::before {
+            content: "→ ";
+        }
+
+        .modal-description {
+            font-size: 0.95rem;
+        }
+
+        .modal-buy-btn {
+            margin-top: 1.5rem;
+            padding: 0.4rem 1.4rem;
+            border-radius: 999px;
+            border: 2px solid #00ff00;
+            background: #00cc00;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Right (shipping/warranty) */
+        .product-modal-right {
+            padding: 1.2rem 1rem;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            background-color: rgba(0,0,0,0.85);
+            font-size: 0.9rem;
+            overflow-y: auto; /* desktop only; overridden on mobile */
+        }
+
+        /* Dark mode tweak */
+        body.dark-mode .product-modal-dialog {
+            background-color: #05020b;
+        }
+
+        /* ---------- BUY POPUP ---------- */
+        .buy-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+            z-index: 99999;
+        }
+
+        .buy-popup.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .buy-popup-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+        }
+
+        .buy-popup-content {
+            background: #ffffff;          /* light mode card */
+            color: #000;
+            padding: 25px 24px 22px;
+            border-radius: 10px;
+            max-width: 350px;
+            width: 85%;
+            text-align: center;
+            border: 2px solid #ddd;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .email-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #28a745;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #28a745;
+        }
+        .buy-popup-card {
+            position: relative;
+            background: #ffffff;
+            color: #000;
+            padding: 1.5rem 1.8rem 2rem;
+            width: min(90%, 380px);
+            border-radius: 10px;
+            z-index: 20;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            transform: scale(0.92);
+            transition: transform 0.25s ease;
+        }
+
+        .buy-popup.open .buy-popup-card {
+            transform: scale(1);
+        }
+
+        .buy-popup-close {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #000;                 /* close icon matches light card */
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .buy-popup-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.6rem;
+            font-weight: bold;
+        }
+
+        .buy-popup-text {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .buy-popup-ref {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .buy-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .buy-popup-email-btn {
+            display: inline-block;
+            padding: 0.55rem 1.2rem;
+            background: #00cc00;
+            color: #000;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 2px solid #00ff00;
+        }
+
+        body.dark-mode .buy-popup-card {
+            background: #111;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        body.dark-mode .buy-popup-email-btn {
+            background: #00aa00;
+        }
+
+        /* ---------- Dark mode overrides ---------- */
+        body.dark-mode .buy-popup-content {
+            background: #111;
+            color: #f7f7f7;
+            border-color: #444;
+        }
+
+        body.dark-mode .buy-popup-close {
+            color: #f7f7f7;
+        }
+
+        body.dark-mode .email-btn {
+            background: #00aa00;
+            border-color: #00ff00;
+        }
+
+        body.dark-mode .product-modal-close {
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        body.dark-mode .product-modal-close:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
+        .currency-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+        /* ---------- Mobile modal: full-screen, smaller carousel, no inner scrollbars ---------- */
+        @media (max-width: 900px) {
+            .product-modal {
+                align-items: stretch;
+            }
+
+            .product-modal-dialog {
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                overflow-y: auto; /* single scrollbar for whole modal */
+            }
+
+            .product-modal-inner {
+                display: flex;
+                flex-direction: column;
+                min-height: 100%;
+            }
+
+            .product-modal-left {
+                flex: 0 0 auto;
+                padding: 0.75rem 0.75rem 0.25rem;
+            }
+
+            .product-modal-image-frame {
+                max-height: 40vh; /* smaller carousel */
+            }
+
+            .product-modal-image-frame img {
+                max-height: 40vh;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+
+            .product-modal-middle,
+            .product-modal-right {
+                overflow: visible; /* no inner scrollbars */
+            }
+
+            .product-modal-right {
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.3);
+            }
+
+            .modal-arrow-left { left: 0.3rem; }
+            .modal-arrow-right { right: 0.3rem; }
+        }
+
+	</style>
+</head>
+<body>
+	<div class="page-wrapper">
+		<!-- NAVBAR -->
+		<header>
+			<div class="container nav">
+				<div class="nav-left">
+					<a href="home.html">
+						<img src="assets/logo/website_logo.png" alt="WareHouseX360 logo" class="logo-img">
+					</a>
+				</div>
+
+				<button class="nav-toggle" type="button" aria-label="Toggle navigation">
+					☰
+				</button>
+
+				<nav class="nav-center">
+					<a href="home.html" class="nav-link">Home</a>
+					<a href="pre-built.html" class="nav-link">Shop Pre-Built Consoles</a>
+					<a href="send-in.html" class="nav-link">Send-In Service</a>
+          <a href="products.html" class="nav-link active">Products</a>
+				</nav>
+
+				<div class="nav-right">
+					<button class="theme-toggle" type="button">
+						<img src="assets/icons/mode_toggle.svg" class="theme-icon" alt="Toggle theme">
+					</button>
+
+					<a href="contact-us.html">
+						<button class="contact-btn" type="button">Contact Us</button>
+					</a>
+				</div>
+
+                <div class = "currency-container">
+                    <label for="currencySelect">Currency:</label>
+                    <select id="currencySelect">
+                    <option value="CAD">CAD ($)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
+                </select>
+                </div>
+			</div>
+		</header>
+
+		<!-- Store Hero -->
+        <section class="store-hero">
+            <div class="store-hero-bg"></div>
+            <div class="store-hero-overlay"></div>
+
+            <div class="store-hero-content">
+                <h1 class="store-hero-title">Welcome to Our Online Store!</h1>
+                <p class="store-hero-subtitle">
+                Browse all the items we currently have in stock! Currently shipping only to CANADA and the USA.
+                </p>
+                <p class="store-hero-free">***FREE SHIPPING ON ALL ORDERS IN CANADA***</p>
+                <p class="store-hero-free">***SHIPPING ANYWHERE IN THE USA FOR $15 USD***</p>
+            </div>
+        </section>
+
+
+		<!-- Main Pre-Built Consoles Section -->
+		<main class="prebuilt-main">
+			<h2 class="section-heading">ITEMS IN STOCK</h2>
+			<div id="products-grid" class="products-grid"></div>
+		</main>
+
+		<!-- Footer -->
+		<footer id="contact">
+			&copy; <span id="year"></span> WareHouseX360 – Send-In Modding &amp; Refurbishment Services
+		</footer>
+	</div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="product-modal" aria-hidden="true">
+        <div class="product-modal-backdrop"></div>
+
+        <div class="product-modal-dialog" role="dialog" aria-modal="true">
+            <button class="product-modal-close" type="button">&times;</button>
+
+            <div class="product-modal-inner">
+                <!-- Left: image + carousel -->
+                <div class="product-modal-left">
+                    <div class="product-modal-image-frame">
+                        <img id="modal-main-image" src="" alt="">
+                    </div>
+                    <button id="modal-prev" class="modal-arrow modal-arrow-left">&#10094;</button>
+                    <button id="modal-next" class="modal-arrow modal-arrow-right">&#10095;</button>
+                    <div id="modal-dots" class="modal-dots"></div>
+                </div>
+
+                <!-- Middle: details -->
+                <div class="product-modal-middle">
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <p id="modal-price" class="modal-price"></p>
+                    <p id="modal-stock" class="modal-stock"></p>
+                    <p id="modal-ref" class="modal-ref"></p>
+
+                    <h3 class="modal-subheading">Product Information</h3>
+                    <ul id="modal-features" class="modal-features"></ul>
+
+                    <h3 class="modal-subheading">Description</h3>
+                    <p id="modal-description" class="modal-description"></p>
+
+                    <button class="modal-buy-btn" type="button">BUY</button>
+                </div>
+
+                <!-- Right: shipping / warranty -->
+                <aside class="product-modal-right">
+                    <h3 class="modal-subheading">Shipping</h3>
+                    <p class="modal-text-small">
+                        FREE SHIPPING ON ALL ORDERS IN CANADA! SHIPPING ANYWHERE IN THE USA FOR $15 USD!
+                    </p>
+
+                    <h3 class="modal-subheading" style="margin-top:1.5rem;">Warranty</h3>
+                    <p class="modal-text-small">
+                        Our 90 day warranty covers your system from the date of purchase. Within the 90-day period, we will replace any device that is found to be defective due to manufacturing defects. User damage/damage caused by misuse or unauthorized modifications will not be covered by this warranty. Tampering with the warranty sticker immediately voids the 90-day warranty.
+                    </p>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUY MESSAGE POPUP -->
+    <div id="buy-popup" class="buy-popup">
+        <div class="buy-popup-content">
+            <button id="buy-popup-close" class="buy-popup-close">&times;</button>
+
+            <h2 id="buy-popup-title">Contact Us</h2>
+
+            <p id="buy-popup-message">
+                Email us with the reference number so we can assist you further.
+            </p>
+
+            <p id="buy-popup-sold" style="display:none; color:#ff4444; font-weight:bold;">
+                This system has already been sold out. Please choose another unit.
+            </p>
+
+            <p id="buy-popup-ref"></p>
+
+            <a href="mailto:warehousex360@gmail.com" id="buy-popup-email" class="email-btn">
+                Email Us
+            </a>
+        </div>
+    </div>
+
+
+	<!-- Load product data -->
+	<script src="assets/shop.js"></script>
+
+	<!-- Auto year -->
+	<script>
+		document.getElementById('year').textContent = new Date().getFullYear();
+	</script>
+
+	<!-- Dark mode toggle -->
+	<script>
+		const themeToggle = document.querySelector(".theme-toggle");
+		const body = document.body;
+
+		function applyTheme(theme){
+			if(theme === "dark") body.classList.add("dark-mode");
+			else body.classList.remove("dark-mode");
+		}
+
+		const savedTheme = localStorage.getItem("theme");
+		if(savedTheme){ applyTheme(savedTheme); }
+		else if(window.matchMedia("(prefers-color-scheme: dark)").matches){ applyTheme("dark"); }
+
+		if (themeToggle) {
+			themeToggle.addEventListener("click", () => {
+				const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+				localStorage.setItem("theme", newTheme);
+				applyTheme(newTheme);
+			});
+		}
+  	</script>
+
+	<!-- Mobile nav toggle -->
+	<script>
+		const navToggle = document.querySelector('.nav-toggle');
+		const headerEl  = document.querySelector('header');
+
+		if (navToggle && headerEl) {
+			navToggle.addEventListener('click', () => {
+				headerEl.classList.toggle('nav-open');
+			});
+
+			headerEl.querySelectorAll('.nav-center .nav-link').forEach(link => {
+				link.addEventListener('click', () => {
+					headerEl.classList.remove('nav-open');
+				});
+			});
+		}
+	</script>
+
+    <!-- MAIN PRODUCTS + MODAL SCRIPT -->
+    <script>
+        // ---------- Scroll lock helpers (prevent jump to top) ----------
+        let scrollLockY = 0;
+
+        function lockScroll() {
+            scrollLockY = window.scrollY || window.pageYOffset || 0;
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollLockY}px`;
+            document.body.style.left = "0";
+            document.body.style.right = "0";
+            document.body.style.width = "100%";
+        }
+
+        function unlockScroll() {
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.left = "";
+            document.body.style.right = "";
+            document.body.style.width = "";
+            window.scrollTo(0, scrollLockY);
+        }
+
+        // ---------- Render product cards ----------
+        function renderProducts() {
+            const grid = document.getElementById("products-grid");
+
+            if (!Array.isArray(window.products)) {
+                grid.textContent = "No products loaded.";
+                return;
+            }
+
+            const sorted = [...window.products].sort((a, b) => {
+                const da = new Date(a.dateAdded);
+                const db = new Date(b.dateAdded);
+                return db - da; // newest first
+            });
+
+            grid.textContent = "";
+
+            sorted.forEach(p => {
+                const card = document.createElement("article");
+                card.className = "product-card";
+
+                const isSoldOut = p.soldOut === true;
+                const thumb = p.image || (p.images && p.images[0]) || "";
+
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img src="${thumb}" alt="${p.title}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h2 class="product-title">${p.title}</h2>
+                            <ul class="product-features">
+                                ${p.features.map(f => `<li>${f}</li>`).join("")}
+                            </ul>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-ref">Reference #${p.id}</span>
+                            <span
+                            class="product-price ${isSoldOut ? "product-price--soldout" : ""}"
+                            ${isSoldOut ? "" : `data-price-usd="${p.price}"`}
+                            >
+                            ${isSoldOut ? "SOLD OUT!" : `$${p.price.toFixed(2)} USD`}
+                            </span>
+
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openProductModal(p);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", renderProducts);
+
+        // ---------- Modal + Carousel Logic ----------
+        let modalCurrentProduct = null;
+        let modalCurrentIndex = 0;
+
+        const modalEl          = document.getElementById("product-modal");
+        const modalMainImage   = document.getElementById("modal-main-image");
+        const modalDots        = document.getElementById("modal-dots");
+        const modalTitle       = document.getElementById("modal-title");
+        const modalPrice       = document.getElementById("modal-price");
+        const modalStock       = document.getElementById("modal-stock");
+        const modalRef         = document.getElementById("modal-ref");
+        const modalFeatures    = document.getElementById("modal-features");
+        const modalDescription = document.getElementById("modal-description");
+        const modalCloseBtn    = document.querySelector(".product-modal-close");
+        const modalPrevBtn     = document.getElementById("modal-prev");
+        const modalNextBtn     = document.getElementById("modal-next");
+        const modalBackdrop    = document.querySelector(".product-modal-backdrop");
+        // BUY POPUP ELEMENTS
+        const buyPopup        = document.getElementById("buy-popup");
+        const buyPopupRef     = document.getElementById("buy-popup-ref");
+        const buyPopupMessage = document.getElementById("buy-popup-message");
+        const buyPopupSold    = document.getElementById("buy-popup-sold");
+        const buyPopupEmail   = document.getElementById("buy-popup-email");
+        const buyPopupClose   = document.getElementById("buy-popup-close");
+
+        function openBuyPopup(product) {
+            if (!product) return;
+
+            // Always show the reference number
+            buyPopupRef.textContent = `Reference: #${product.id}`;
+
+            // Decide if it's sold out
+            const soldOut =
+                product.soldOut === true ||
+                (typeof product.stock === "number" && product.stock <= 0) ||
+                (product.stockText && product.stockText.toLowerCase().includes("sold"));
+
+            if (soldOut) {
+                // SOLD OUT — show warning, hide email button
+                buyPopupMessage.style.display = "none";
+                buyPopupSold.style.display    = "block";
+                buyPopupEmail.style.display   = "none";
+            } else {
+                // IN STOCK — normal flow
+                buyPopupMessage.style.display = "block";
+                buyPopupSold.style.display    = "none";
+                buyPopupEmail.style.display   = "inline-block";
+            }
+
+            buyPopup.classList.add("show");
+        }
+
+        function closeBuyPopup() {
+            buyPopup.classList.remove("show");
+        }
+
+        function getImagesForProduct(product) {
+            if (product.images && product.images.length) return product.images;
+            if (product.image) return [product.image];
+            return [];
+        }
+
+        function openProductModal(product) {
+            const buyBtn = document.querySelector(".modal-buy-btn");
+            buyBtn.onclick = () => {
+                openBuyPopup(product);
+            };
+
+            modalCurrentProduct = product;
+            modalCurrentIndex = 0;
+
+            //Update price based on dropdown
+            updateAllPrices();
+            updateModalCurrency();
+
+            const images = getImagesForProduct(product);
+
+            modalTitle.textContent = product.title;
+            modalPrice.dataset.priceUsd = product.price;
+            //modalPrice.textContent = `PRICE: $${product.price.toFixed(2)} USD`;
+            modalStock.textContent = product.stockText || "";
+            modalRef.textContent   = `Reference Number # ${product.id}`;
+            modalDescription.textContent = product.description || "";
+
+            modalFeatures.innerHTML = product.features
+              .map(f => `<li>${f}</li>`)
+              .join("");
+
+            modalDots.innerHTML = images.map((_, i) =>
+              `<span class="modal-dot ${i === 0 ? "active" : ""}" data-index="${i}"></span>`
+            ).join("");
+
+            modalDots.querySelectorAll(".modal-dot").forEach(dot => {
+                dot.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(dot.dataset.index, 10);
+                    setModalImage(index);
+                });
+            });
+
+            setModalImage(0, true);
+
+            modalEl.classList.add("open");
+
+            if (document.activeElement && typeof document.activeElement.blur === "function") {
+                document.activeElement.blur();
+            }
+
+            lockScroll();
+        }
+
+        // firstLoad = true skips fade-out on first image
+        function setModalImage(index, firstLoad = false) {
+            if (!modalCurrentProduct) return;
+
+            const images = getImagesForProduct(modalCurrentProduct);
+            if (!images.length) return;
+
+            const newIndex = (index + images.length) % images.length;
+
+            if (!firstLoad && newIndex === modalCurrentIndex && modalMainImage.src) return;
+
+            modalCurrentIndex = newIndex;
+            const newSrc = images[modalCurrentIndex];
+
+            if (modalDots) {
+                modalDots.querySelectorAll(".modal-dot").forEach((dot, i) => {
+                    dot.classList.toggle("active", i === modalCurrentIndex);
+                });
+            }
+
+            if (firstLoad || !modalMainImage.src) {
+                modalMainImage.src = newSrc;
+                modalMainImage.alt = modalCurrentProduct.title;
+                modalMainImage.classList.remove("fade-out");
+                return;
+            }
+
+            modalMainImage.classList.add("fade-out");
+
+            const onTransitionEnd = () => {
+                modalMainImage.removeEventListener("transitionend", onTransitionEnd);
+
+                modalMainImage.src = newSrc;
+                modalMainImage.alt = modalCurrentProduct.title;
+
+                void modalMainImage.offsetWidth;
+
+                modalMainImage.classList.remove("fade-out");
+            };
+
+            modalMainImage.addEventListener("transitionend", onTransitionEnd);
+        }
+
+        function closeProductModal() {
+            modalEl.classList.remove("open");
+            unlockScroll();
+            modalCurrentProduct = null;
+        }
+
+        // Close popup with X
+        buyPopupClose.addEventListener("click", closeBuyPopup);
+
+        // Close popup when clicking outside the card
+        buyPopup.addEventListener("click", (e) => {
+            if (e.target === buyPopup) {
+                closeBuyPopup();
+            }
         });
-      });
-    }
-  </script>
 
-  <script>
+        modalPrevBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!modalCurrentProduct) return;
+            setModalImage(modalCurrentIndex - 1);
+        });
+
+        modalNextBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!modalCurrentProduct) return;
+            setModalImage(modalCurrentIndex + 1);
+        });
+
+        modalCloseBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeProductModal();
+        });
+
+        modalBackdrop.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeProductModal();
+        });
+
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modalEl.classList.contains("open")) {
+                e.preventDefault();
+                closeProductModal();
+            }
+        });
+    </script>
+
+    <script>
+    const currencySelect = document.getElementById("currencySelect");
+
+    function formatMoney(value, currency) {
+        return new Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency
+        }).format(value);
+    }
+
+    function getSelectedCurrency() {
+        return (currencySelect && currencySelect.value) || "USD";
+    }
+
+    function convertFromUSD(usd, currency) {
+        const rate = rates[currency] ?? 1;
+        return usd * rate;
+    }
+
+    function updateAllPrices() {
+        const currency = getSelectedCurrency();
+
+        // Update all price elements (cards, and anything else) that have data-price-usd
+        document.querySelectorAll("[data-price-usd]").forEach((el) => {
+        const usd = Number(el.dataset.priceUsd);
+        if (Number.isNaN(usd)) return;
+
+        const converted = convertFromUSD(usd, currency);
+        el.textContent = formatMoney(converted, currency);
+        });
+    }
+
+    function updateModalCurrency() {
+        if (!modalCurrentProduct) return;
+
+        const currency = getSelectedCurrency();
+        const usd = Number(modalCurrentProduct.price);
+        if (Number.isNaN(usd)) return;
+
+        const converted = convertFromUSD(usd, currency);
+
+        // modalPrice is the <p id="modal-price"> you already have
+        modalPrice.textContent = `PRICE: ${formatMoney(converted, currency)}`;
+    }
+
+    // Init: set dropdown from storage and apply conversion after products render
+    document.addEventListener("DOMContentLoaded", () => {
+        const saved = localStorage.getItem("warehouse_currency") || "USD";
+        currencySelect.value = saved;
+
+        // renderProducts runs on DOMContentLoaded too, so wait a tick so the cards exist
+        setTimeout(() => {
+        updateAllPrices();
+        updateModalCurrency();
+        }, 0);
+    });
+
+    currencySelect.addEventListener("change", () => {
+        localStorage.setItem("warehouse_currency", getSelectedCurrency());
+        updateAllPrices();
+        updateModalCurrency();
+    });
+    </script>
+
+    <script>
     const RATE_CACHE_KEY = "warehouse_rates";
     const RATE_CACHE_TIME = "warehouse_rates_time";
     const CACHE_TTL = 1000 * 60 * 60 * 6; // 6 hours
@@ -705,10 +1527,6 @@
         return data.rates;
     }
 
-    function getSelectedCurrency() {
-        return currencySelect.value || "USD";
-    }
-
     const currencyPrefixes = {
       USD: "US$",
       CAD: "CA$",
@@ -723,32 +1541,57 @@
       }).format(value);
     }
 
-    async function updateSendInPrices() {
-      const currency = getSelectedCurrency();
-      const rates = await getRates();
-      const rate = rates[currency] ?? 1;
-      const prefix = currencyPrefixes[currency] || currency;
+    function formatMoneyWithPrefix(value, currency) {
+        const prefix = currencyPrefixes[currency] || currency;
+        return `${prefix} ${formatNumber(value)}`;
+    }
 
-      document.querySelectorAll(".price[data-price-usd]").forEach(el => {
+    function getSelectedCurrency() {
+        return currencySelect.value || "USD";
+    }
+
+    async function updateAllPrices() {
+        const currency = getSelectedCurrency();
+        const rates = await getRates();
+        const rate = rates[currency] ?? 1;
+
+        document.querySelectorAll("[data-price-usd]").forEach(el => {
         const usd = Number(el.dataset.priceUsd);
         if (Number.isNaN(usd)) return;
 
         const converted = usd * rate;
-        el.textContent = `${prefix} ${formatNumber(converted)}`;
-      });
+        //el.textContent = formatMoney(converted, currency);
+        el.textContent = formatMoneyWithPrefix(converted, currency);
+        });
+    }
+
+    async function updateModalCurrency() {
+        if (!modalCurrentProduct) return;
+
+        const currency = getSelectedCurrency();
+        const rates = await getRates();
+        const rate = rates[currency] ?? 1;
+
+        const usd = Number(modalCurrentProduct.price);
+        if (Number.isNaN(usd)) return;
+
+        const converted = usd * rate;
+        modalPrice.textContent = `PRICE: ${formatMoneyWithPrefix(converted, currency)}`;
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
         const saved = localStorage.getItem("warehouse_currency") || "USD";
         currencySelect.value = saved;
 
-        await updateSendInPrices();
+        await updateAllPrices();
+        await updateModalCurrency();
     });
 
     currencySelect.addEventListener("change", async () => {
         localStorage.setItem("warehouse_currency", getSelectedCurrency());
-        await updateSendInPrices();
+        await updateAllPrices();
+        await updateModalCurrency();
     });
-  </script>
+    </script>
 </body>
 </html>
