@@ -436,7 +436,8 @@
 
 		.why-title {
 			font-family: "Playfair Display", serif;
-			font-size: 2rem;
+			font-weight: 700;
+			font-size: 3rem;
 			text-align: center;
 			flex: 1;
 		}
@@ -825,6 +826,13 @@
 		body.dark-mode header.nav-open .nav-center {
 			background: #111;
 		}
+
+		.vertical-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 20px;
+		}
 	</style>
 </head>
 <body>
@@ -882,21 +890,30 @@
 						Different Mods/Consoles
 					</p>
 
-					<div class="hero-buttons">
-						<a href="pre-built.html">
-							<button class="primary-btn">
-								<img src="assets/icons/Pre-Built_Icon.svg" alt="" class="btn-icon">
-								<span>Pre-Built Consoles</span>
-							</button>
-						</a>
+						<div class = "vertical-container">
+							<div class="hero-buttons">
+								<a href="pre-built.html">
+									<button class="primary-btn">
+										<img src="assets/icons/Pre-Built_Icon.svg" alt="" class="btn-icon">
+										<span>Pre-Built Consoles</span>
+									</button>
+								</a>
 
-						<a href="send-in.html">
-							<button class="secondary-btn">
-								<img src="assets/icons/Send-In_Icon.svg" alt="" class="btn-icon">
-								<span>Send-in Services</span>
-							</button>
-						</a>
-					</div>
+								<a href="send-in.html">
+									<button class="secondary-btn">
+										<img src="assets/icons/Send-In_Icon.svg" alt="" class="btn-icon">
+										<span>Send-in Services</span>
+									</button>
+								</a>
+							</div>
+
+							<a href="products.html">
+								<button class="secondary-btn">
+									<img src="assets/icons/Products_Icon.svg" alt="" class="btn-icon">
+									<span>Products</span>
+								</button>
+							</a>
+						</div>
 				</section>
 
 				<!-- Right image card with carousel -->
