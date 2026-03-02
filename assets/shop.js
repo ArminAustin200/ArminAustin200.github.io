@@ -1,6 +1,6 @@
 // assets/products.js
 window.products = [ {
-  id : "FREE0420",
+  id : "FREE4020",
   title : "FreeRunner",
   price : 8.8,
   currency : "USD",
