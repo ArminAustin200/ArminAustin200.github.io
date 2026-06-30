@@ -224,7 +224,7 @@ window.products = [ {
   images : [ "assets/Products/XYCD_1190/1.jpeg", "assets/Products/XYCD_1190/2.jpeg", "assets/Products/XYCD_1190/3.jpeg", "assets/Products/XYCD_1190/4.jpeg", "assets/Products/XYCD_1190/5.jpeg", "assets/Products/XYCD_1190/6.png" ],
   image : "assets/Products/XYCD_1190/1.jpeg",
   features : [ "JTAG Mod", "Blue ROL Mod", "Blue Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
-  stockText : "*ONLY 1 LEFT IN STOCK*",
+  stockText : "*SOLD OUT*",
   description : "Clean Jasper console with custom blue lighting and JTAG, ideal for homebrew, system link play, and online play.",
   dateAdded : "2026-02-26"
 }, {
