@@ -284,7 +284,7 @@ window.products = [ {
   images : [ "assets/Products/XYCD_1196/1.jpeg", "assets/Products/XYCD_1196/2.jpeg", "assets/Products/XYCD_1196/3.jpeg", "assets/Products/XYCD_1196/4.jpeg", "assets/Products/XYCD_1196/5.jpeg", "assets/Products/XYCD_1196/6.jpeg", "assets/Products/XYCD_1196/7.jpeg", "assets/Products/XYCD_1196/8.jpeg", "assets/Products/XYCD_1196/9.jpeg", "assets/Products/XYCD_1196/10.jpeg", "assets/Products/XYCD_1196/11.jpeg" ],
   image : "assets/Products/XYCD_1196/1.jpeg",
   features : [ "RGH1.2 Mod", "White ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
-  stockText : "*ONLY 1 AVAILABLE IN STOCK!*",
+  stockText : "*SOLD OUT*",
   description : "Clean Falcon console with custom white and purple lighting, professional RGH1.2 installation using custom FreeRunner chip, ideal for homebrew, system link play, and online play.",
   dateAdded : "2026-17-08"
 } ];
