@@ -280,7 +280,7 @@ window.products = [ {
   title : "Falcon RGH Bundle",
   price : 179.99,
   currency : "USD",
-  soldOut : false,
+  soldOut : true,
   images : [ "assets/Products/XYCD_1196/1.jpeg", "assets/Products/XYCD_1196/2.jpeg", "assets/Products/XYCD_1196/3.jpeg", "assets/Products/XYCD_1196/4.jpeg", "assets/Products/XYCD_1196/5.jpeg", "assets/Products/XYCD_1196/6.jpeg", "assets/Products/XYCD_1196/7.jpeg", "assets/Products/XYCD_1196/8.jpeg", "assets/Products/XYCD_1196/9.jpeg", "assets/Products/XYCD_1196/10.jpeg", "assets/Products/XYCD_1196/11.jpeg" ],
   image : "assets/Products/XYCD_1196/1.jpeg",
   features : [ "RGH1.2 Mod", "White ROL Mod", "Purple Vent LED Mod", "500GB HDD", "Stealth Server", "Power Supply Included" ],
